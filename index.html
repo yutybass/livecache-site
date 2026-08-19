@@ -123,8 +123,8 @@
   .hero-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(44px,7vw,68px); align-items: center; }
   @media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); } }
 
-  .appicon { width: clamp(46px, 9vw, 72px); height: clamp(46px, 9vw, 72px); border-radius: 22%; flex: none; box-shadow: 0 10px 26px rgba(0,0,0,.5); }
-  .wordmark { font-size: clamp(44px, 10vw, 82px); line-height: .92; letter-spacing: -.05em; font-weight: 800; }
+  .appicon { width: clamp(40px, 7vw, 58px); height: clamp(40px, 7vw, 58px); border-radius: 22%; flex: none; box-shadow: 0 10px 26px rgba(0,0,0,.5); }
+  .wordmark { font-size: clamp(34px, 6.5vw, 62px); line-height: .95; letter-spacing: -.04em; font-weight: 800; white-space: nowrap; }
   .wordmark em { font-style: normal; color: var(--indigo-300); }
   .claim { margin: 18px 0 0; font-size: clamp(15px,2.4vw,19px); color: var(--fg-2); font-weight: 500; }
 
@@ -310,7 +310,7 @@
        テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
        手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
      ========================================================== */
-  .vid { position: relative; height: 712px; background: var(--s950); }
+  .vid { position: relative; height: 748px; background: var(--s950); }
   /* iPhone らしい枠。ステータスバー・アイランド・ホームバーまで描く */
   .device { border-radius: 44px; padding: 10px; border-color: #3D4961; box-shadow: 0 34px 80px rgba(0,0,0,.62), inset 0 0 3px rgba(255,255,255,.06); }
   .device .phone-inner { border-radius: 34px; }
@@ -533,10 +533,17 @@
   footer { border-top: 1px solid var(--line-soft); padding: 28px 0 42px; font-size: 12.5px; color: var(--fg-3); }
   .foot-grid { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; }
 
-  /* 実機 2 枚並べ（タグの節） */
-  .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; max-width: 520px; margin-inline: auto; align-items: start; }
-  .duo .phone { max-width: none; padding: 6px; border-radius: 22px; }
-  .duo .phone-inner { border-radius: 16px; }
+  /* ---- 上部ナビ ---- */
+  .topnav { position: relative; z-index: 2; }
+  .topnav-in { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; }
+  .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+  .brand img { border-radius: 6px; display: block; }
+  .topnav-links a {
+    color: var(--fg-2); text-decoration: none; font-size: 13.5px; font-weight: 600;
+    padding: 8px 15px; border: 1px solid var(--line); border-radius: 10px; white-space: nowrap;
+  }
+  .topnav-links a:hover { color: var(--fg); border-color: var(--s700); }
+  .topnav-links a:focus-visible { outline: 2px solid var(--indigo-300); outline-offset: 3px; }
 
   /* ---- web 用に足したもの ---- */
   .site-foot { border-top:1px solid var(--line-soft); padding:28px 0 46px; font-size:12.5px; color:var(--fg-3); }
@@ -545,6 +552,15 @@
   .site-foot a:hover { color:var(--fg-2); border-bottom-color:var(--line); }
 </style>
 
+
+<header class="topnav">
+  <div class="wrap topnav-in">
+    <span class="brand"><img src="./img/icon.svg" alt="" width="22" height="22">LiveCache</span>
+    <nav class="topnav-links">
+      <a href="./support.html">サポート</a>
+    </nav>
+  </div>
+</header>
 
 <div class="hero">
   <div class="wrap">
@@ -562,7 +578,6 @@
         </p>
         <div class="cta-row">
           <a class="cta" href="#speed">何ができるか見る <span aria-hidden="true">↓</span></a>
-          <a class="ghost" href="#vault">記録はどこに残る？</a>
         </div>
         <p class="platform">iOS / Android — 近日公開</p>
       </div>
@@ -886,73 +901,6 @@
   </div>
 </section>
 
-<!-- ============ 2. プレイヤー × ハンドの紐付け ============ -->
-<section class="street-sec">
-  <div class="wrap">
-    <div class="sec-grid flip">
-      <div class="copy">
-        <p class="eyebrow">LINK · 人とハンドがつながる</p>
-        <h2>プレイヤーのハンド履歴が、<br />一覧でわかる</h2>
-        <p class="body">
-          ハンドの席に人を座らせておくと、その人のページに
-          そのハンドが並びます。しかも<b style="color:var(--fg)">その人の視点</b>で。
-        </p>
-        <ul class="points">
-          <li><b>相手の席・相手の手札・相手の収支で並ぶ。</b>「プレイヤーA が BB の K♦Q♠ で −13bb」が、その人の視点のまま読み返せます。</li>
-          <li><b>名前を知らなくても紐付く。</b>「白帽子の人」で登録して、本名を聞いたら書き換えるだけ。タグとメモもその人に付きます。</li>
-          <li><b>ハンド → 人、人 → ハンド。</b>どちらからでも辿れるので、「この人と前どう打ったっけ」が卓で 2 タップ。</li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner shotcrop">
-            <img class="shot" loading="lazy" decoding="async" alt="プレイヤー詳細の実際の画面。プレイヤーA にタグが 3 つ付き、その人のハンドが 2 件、−117.7bb と −2.0bb の収支つきで並ぶ" src="./img/shot-player.png" />
-          </div>
-        </div>
-        <p class="caption">プレイヤー詳細 — タグ・メモと、この人のハンド（実際の画面）</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ タグ ============ -->
-<section class="street-sec">
-  <div class="wrap">
-    <div class="sec-grid">
-      <div class="copy">
-        <p class="eyebrow">TAG · 人となりを一言で</p>
-        <h2>相手の特徴は、<br />タグで貼っておく</h2>
-        <p class="body">
-          ルースアグレ・タフコール・good reg。色分けしたタグを人に
-          貼っておけば、一覧を開いた瞬間に「どんな相手か」が戻ってきます。
-        </p>
-        <ul class="points">
-          <li><b>色は自分の物差しで。</b>レッドはプレイスタイル、ブルーは腕前、グリーンは癖 ―― グループごと自由に作れます。</li>
-          <li><b>あとから直せる。</b>タグ管理で名前も色も編集でき、何人に付いているかも一覧で見える。付け替えても記録は消えません。</li>
-          <li><b>タグから人へ辿れる。</b>「タイトアグレ」を押せば、そのタグが付いた 3 人が並ぶ。逆引きの絞り込みも 2 タップ。</li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="duo">
-          <div class="phone">
-            <div class="phone-inner">
-              <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="プレイヤー一覧の実際の画面。プレイヤーA〜D にルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付く" src="./img/shot-tags.png" />
-            </div>
-          </div>
-          <div class="phone">
-            <div class="phone-inner">
-              <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="タグ管理の実際の画面。レッド・ブルー・グリーンのグループにタグが並び、それぞれに人数と編集・削除のボタンが付く" src="./img/shot-tagmanage.png" />
-            </div>
-          </div>
-        </div>
-        <p class="caption">プレイヤー一覧とタグ管理 — 貼るのも、作って直すのも（実際の画面）</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 3. 再生 ============ -->
 <section class="street-sec">
   <div class="wrap">
@@ -1013,6 +961,66 @@
   </div>
 </section>
 
+<!-- ============ 2. プレイヤー × ハンドの紐付け ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid flip">
+      <div class="copy">
+        <p class="eyebrow">LINK · 人とハンドがつながる</p>
+        <h2>プレイヤーのハンド履歴が、<br />一覧でわかる</h2>
+        <p class="body">
+          ハンドの席に人を座らせておくと、その人のページに
+          そのハンドが並びます。しかも<b style="color:var(--fg)">その人の視点</b>で。
+        </p>
+        <ul class="points">
+          <li><b>相手の席・相手の手札・相手の収支で並ぶ。</b>「プレイヤーA が BB の K♦Q♠ で −13bb」が、その人の視点のまま読み返せます。</li>
+          <li><b>名前を知らなくても紐付く。</b>「白帽子の人」で登録して、本名を聞いたら書き換えるだけ。タグとメモもその人に付きます。</li>
+          <li><b>ハンド → 人、人 → ハンド。</b>どちらからでも辿れるので、「この人と前どう打ったっけ」が卓で 2 タップ。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner shotcrop">
+            <img class="shot" loading="lazy" decoding="async" alt="プレイヤー詳細の実際の画面。プレイヤーA にタグが 3 つ付き、その人のハンドが 2 件、−117.7bb と −2.0bb の収支つきで並ぶ" src="./img/shot-player.png" />
+          </div>
+        </div>
+        <p class="caption">プレイヤー詳細 — タグ・メモと、この人のハンド（実際の画面）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ タグ ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid">
+      <div class="copy">
+        <p class="eyebrow">TAG · 人となりを一言で</p>
+        <h2>相手の特徴は、<br />タグで貼っておく</h2>
+        <p class="body">
+          ルースアグレ・タフコール・good reg。色分けしたタグを人に
+          貼っておけば、一覧を開いた瞬間に「どんな相手か」が戻ってきます。
+        </p>
+        <ul class="points">
+          <li><b>色は自分の物差しで。</b>レッドはプレイスタイル、ブルーは腕前、グリーンは癖 ―― グループごと自由に作れます。</li>
+          <li><b>あとから直せる。</b>タグ管理で名前も色も編集でき、何人に付いているかも一覧で見える。付け替えても記録は消えません。</li>
+          <li><b>タグから人へ辿れる。</b>「タイトアグレ」を押せば、そのタグが付いた 3 人が並ぶ。逆引きの絞り込みも 2 タップ。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner">
+            <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="プレイヤー一覧の実際の画面。プレイヤーA〜D にルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付く" src="./img/shot-tags.png" />
+          </div>
+        </div>
+        <p class="caption">プレイヤー一覧 — タグで人となりが一目で分かる（実際の画面）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ 守り ============ -->
 <section class="vault" id="vault">
   <div class="wrap">
@@ -1037,7 +1045,10 @@
     <p class="eyebrow">SHOWDOWN</p>
     <h2 style="max-width:22ch; margin-inline:auto">今夜のハンドを、<br />今夜のうちに</h2>
     <p class="lede" style="margin-top:14px">思い出せるうちに残す。それだけで、次の卓が変わります。</p>
-    <div class="cta-row"><a class="cta" href="#speed">もう一度見る</a></div>
+    <div class="cta-row">
+      <a class="cta" href="#speed">もう一度見る</a>
+      <a class="ghost" href="./support.html">困りごと・要望はサポートへ</a>
+    </div>
     <p class="platform">iOS / Android — 近日公開</p>
   </div>
 </section>
