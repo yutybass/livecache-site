@@ -310,7 +310,10 @@
        テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
        手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
      ========================================================== */
-  .vid { position: relative; height: 780px; background: var(--s950); }
+  .vid { position: relative; height: 708px; background: var(--s950); }
+  /* 卓の上の空きを刈る。座標はそのまま、負のマージンで上 22px をクロップ */
+  .stagecrop { overflow: hidden; }
+  .stagecrop .stage { margin-top: -22px; }
   /* iPhone らしい枠。ステータスバー・アイランド・ホームバーまで描く */
   .device { border-radius: 44px; padding: 10px; border-color: #3D4961; box-shadow: 0 34px 80px rgba(0,0,0,.62), inset 0 0 3px rgba(255,255,255,.06); }
   .device .phone-inner { border-radius: 34px; }
@@ -625,7 +628,7 @@
                     <span class="info-i" aria-hidden="true">i</span>
                   </div>
 
-                  <div class="stage" style="aspect-ratio: 370/360">
+                  <div class="stagecrop"><div class="stage" style="aspect-ratio: 370/360">
                     <div class="felt" style="left:9%; right:9%; top:31%; bottom:2%"></div>
 
                     <div class="board" style="top:51%">
@@ -691,6 +694,8 @@
                     <div class="wager" id="w-bb" style="left:24.5%; top:45%"><span class="chipstack"></span><span class="wl">BB</span><span class="amt mono">3</span></div>
                     <div class="wager" id="w-sb" style="left:20%; top:61%"><span class="chipstack"></span><span class="wl">SB</span><span class="amt mono">1</span></div>
                     <div class="wager" id="w-btn" style="left:50%; top:78%"><span class="chipstack"></span><span class="wl">RAISE</span><span class="amt mono">6</span></div>
+                  </div>
+
                   </div>
 
                   <!-- 実装と同じ並び: 出す額が大きい順（ALLin → Raise → Call → Fold） -->
