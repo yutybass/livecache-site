@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LiveCache — ライブポーカーのハンドと対戦相手を記録する</title>
-<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。">
+<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドとハンドの合間に打ち込める速さ。プレイヤーごとに、ハンド履歴が残る。記録はすべて端末内に保存されます。">
 <link rel="canonical" href="https://yutybass.github.io/livecache-site/">
 <link rel="icon" href="./img/icon.svg">
 <link rel="apple-touch-icon" href="./img/icon.svg">
@@ -15,15 +15,15 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://yutybass.github.io/livecache-site/">
 <meta property="og:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
-<meta property="og:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。">
-<meta property="og:image" content="https://yutybass.github.io/livecache-site/img/og.png">
+<meta property="og:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドとハンドの合間に打ち込める速さ。プレイヤーごとに、ハンド履歴が残る。記録はすべて端末内に保存されます。">
+<meta property="og:image" content="https://yutybass.github.io/livecache-site/img/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="LiveCache — Track your hands. Read the table.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
-<meta name="twitter:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。">
-<meta name="twitter:image" content="https://yutybass.github.io/livecache-site/img/og.png">
+<meta name="twitter:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドとハンドの合間に打ち込める速さ。プレイヤーごとに、ハンド履歴が残る。記録はすべて端末内に保存されます。">
+<meta name="twitter:image" content="https://yutybass.github.io/livecache-site/img/og.png?v=2">
 
 <meta name="theme-color" content="#06090F">
 
@@ -37,8 +37,8 @@
   "operatingSystem": "iOS",
   "inLanguage": "ja",
   "url": "https://yutybass.github.io/livecache-site/",
-  "image": "https://yutybass.github.io/livecache-site/img/og.png",
-  "description": "ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。",
+  "image": "https://yutybass.github.io/livecache-site/img/og.png?v=2",
+  "description": "ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドとハンドの合間に打ち込める速さ。プレイヤーごとに、ハンド履歴が残る。記録はすべて端末内に保存されます。",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
   "author": { "@type": "Person", "name": "YUTO YOSHIDA" }
 }
@@ -906,7 +906,7 @@
       <div>
         <div class="phone">
           <div class="phone-inner">
-            <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="ハンド入力の実際の画面。リバーで BB（プレイヤーA）の席が光り、額の欄に 16、テンキーの右にポットの 33%・50%・75%・125% のプリセットが並ぶ" src="./img/shot-input.png" />
+            <img class="shot" style="margin-top:0" decoding="async" alt="ハンド入力の実際の画面。リバーで BB（プレイヤーA）の席が光り、額の欄に 16、テンキーの右にポットの 33%・50%・75%・125% のプリセットが並ぶ" src="./img/shot-input.png" />
           </div>
         </div>
         <p class="caption">ハンド入力 — 額はプリセットかテンキーで（実際の画面）</p>
@@ -936,7 +936,7 @@
       <div>
         <div class="phone">
           <div class="phone-inner shotcrop">
-            <img class="shot" loading="lazy" decoding="async" alt="ハンド詳細の実際の画面。9 人卓の中央に BB WIN・Full House・+354 (118.0bb)、下にストリートごとのアクション履歴" src="./img/shot-replay.png" />
+            <img class="shot" decoding="async" alt="ハンド詳細の実際の画面。9 人卓の中央に BB WIN・Full House・+354 (118.0bb)、下にストリートごとのアクション履歴" src="./img/shot-replay.png" />
           </div>
         </div>
         <p class="caption">ハンド詳細 — Full House で +118.0bb。下に 1 手ずつの履歴（実際の画面）</p>
@@ -966,7 +966,7 @@
       <div>
         <div class="phone">
           <div class="phone-inner shotcrop">
-            <img class="shot" loading="lazy" decoding="async" alt="ハンド一覧の実際の画面。検索と絞り込みの札の下に、収支 −2.0bb / +118.0bb / +2.3bb の 3 行が並ぶ" src="./img/shot-hands.png" />
+            <img class="shot" decoding="async" alt="ハンド一覧の実際の画面。検索と絞り込みの札の下に、収支 −2.0bb / +118.0bb / +2.3bb の 3 行が並ぶ" src="./img/shot-hands.png" />
           </div>
         </div>
         <p class="caption">ハンド一覧 — 「自分のハンド」「SRP」で絞り込み中（実際の画面）</p>
@@ -996,7 +996,7 @@
       <div>
         <div class="phone">
           <div class="phone-inner shotcrop">
-            <img class="shot" loading="lazy" decoding="async" alt="プレイヤー詳細の実際の画面。プレイヤーA にタグが 3 つ付き、その人のハンドが 2 件、−117.7bb と −2.0bb の収支つきで並ぶ" src="./img/shot-player.png" />
+            <img class="shot" decoding="async" alt="プレイヤー詳細の実際の画面。プレイヤーA にタグが 3 つ付き、その人のハンドが 2 件、−117.7bb と −2.0bb の収支つきで並ぶ" src="./img/shot-player.png" />
           </div>
         </div>
         <p class="caption">プレイヤー詳細 — タグ・メモと、この人のハンド（実際の画面）</p>
@@ -1026,7 +1026,7 @@
       <div>
         <div class="phone">
           <div class="phone-inner shotcrop">
-            <img class="shot" style="margin-top:-14.3%" loading="lazy" decoding="async" alt="プレイヤー一覧の実際の画面。★ のみで絞り込んだプレイヤーA〜D に、ルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付く" src="./img/shot-tags.png" />
+            <img class="shot" style="margin-top:-14.3%" decoding="async" alt="プレイヤー一覧の実際の画面。★ のみで絞り込んだプレイヤーA〜D に、ルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付く" src="./img/shot-tags.png" />
           </div>
         </div>
         <p class="caption">プレイヤー一覧 — タグで人となりが一目で分かる（実際の画面）</p>
