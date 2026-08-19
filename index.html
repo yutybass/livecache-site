@@ -220,7 +220,7 @@
   .nm { font-size: 8.5px; color: var(--s300); line-height: 1; max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .stk { font-size: 10px; font-weight: 700; color: var(--s100); line-height: 1; }
 
-  .seat.hero .pill { background: #9A3412; color: #FED7AA; }
+  .seat.myseat .pill { background: #9A3412; color: #FED7AA; }
   .seat.folded .sbox { border-color: var(--s800); background: #0F172A66; opacity: .5; }
   .seat.folded .pill { background: var(--s800); color: var(--s600); }
   .seat.folded .nm, .seat.folded .stk { color: var(--s600); }
@@ -242,11 +242,6 @@
   .board { position: absolute; left: 50%; top: 39%; transform: translate(-50%, -50%); width: max-content; display: flex; gap: 4px; }
   .center-info { position: absolute; left: 0; right: 0; top: 53.5%; display: grid; place-items: center; text-align: center; }
   .pot-label { font-size: 7.5px; font-weight: 800; letter-spacing: .12em; color: var(--s500); }
-  .pot-num { position: relative; height: 22px; width: 90px; }
-  .pot-num span {
-    position: absolute; inset: 0; display: grid; place-items: center;
-    font-size: 19px; font-weight: 900; letter-spacing: -.02em; color: #fff; line-height: 1; opacity: 0;
-  }
 
   .showdown { position: absolute; left: 0; right: 0; top: 47%; display: grid; place-items: center; text-align: center; opacity: 0; }
   .showdown .who { font-size: 13px; font-weight: 900; letter-spacing: -.01em; text-transform: uppercase; color: var(--indigo-300); }
@@ -304,39 +299,116 @@
   .col-win .n { font-size: 11px; font-weight: 800; color: var(--win); }
   .col-win .bb { font-size: 7.5px; color: #6EE7B7AA; }
 
-  /* ---------- 入力ボタン・テンキー ---------- */
-  .act-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
-  .act-btn {
-    text-align: center; border-radius: 9px; padding: 10px 0;
-    font-size: 11.5px; font-weight: 800; letter-spacing: .03em;
-    background: var(--s800); white-space: nowrap;
+  /* ==========================================================
+     動く実機。入力（1 手 1 タップ）→ プレイヤー詳細（紐付け）の 2 場面。
+     寸法・配色は**実装の値そのまま**:
+       アクションボタン … 高さ 42 / 角丸 7（rounded-lg）/ 13px 黒太字の大文字
+         ALLin=indigo-600、Bet/Raise=rose-500/15+red-400、
+         Check/Call=emerald-500/15+emerald-400、Fold=slate-700/50+slate-400
+         並びは出す額が大きい順（ALLin → Raise → Call → Fold）
+       テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
+       手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
+     ========================================================== */
+  .vid { position: relative; height: 652px; background: var(--s950); }
+  /* プレイヤー詳細はタブの中の画面なので、下のナビが見えている（実機どおり） */
+  .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 12px; }
+  .bnav span { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; color: var(--s500); }
+  .bnav .ic { font-size: 15px; line-height: 1; }
+  .bnav span.onb { color: var(--indigo-300); }
+  .bnav .fab {
+    width: 34px; height: 34px; border-radius: 999px; margin-top: -18px;
+    background: var(--indigo); color: #fff; display: grid; place-items: center;
+    font-size: 18px; font-weight: 700; box-shadow: 0 6px 14px rgba(79,70,229,.45);
   }
-  .act-btn.fold { color: var(--s400); }
-  .act-btn.call { color: var(--win); }
-  .act-btn.raise { color: var(--orange); }
+  .scene { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+  .scene.on { opacity: 1; }
 
-  .pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 6px; }
-  .pad span { text-align: center; border-radius: 8px; padding: 8px 0; background: #1E293B99; color: var(--s200); font-size: 13px; font-weight: 700; }
-  .pad span.go { background: var(--indigo); color: #fff; font-size: 11px; letter-spacing: .06em; }
+  .abtn-row { display: flex; gap: 7px; }
+  .abtn {
+    flex: 1; height: 42px; border-radius: 7px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .01em;
+    transition: transform .12s, filter .12s; white-space: nowrap;
+  }
+  .abtn small { font-size: 12px; font-weight: 700; margin-top: 1px; }
+  .abtn.allin { background: var(--indigo); color: #fff; }
+  .abtn.br { background: rgba(244,63,94,.15); color: #F87171; }
+  .abtn.cc { background: rgba(16,185,129,.15); color: #34D399; }
+  .abtn.fd { background: rgba(51,65,85,.5); color: var(--s400); }
 
-  /* ---------- 再生の操作列 ---------- */
-  .replay-bar { margin-top: 10px; display: grid; gap: 8px; }
-  .scrub { position: relative; height: 5px; border-radius: 999px; background: #1E293B; overflow: visible; }
-  .scrub .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: var(--indigo); width: 100%; }
-  .scrub .knob {
-    position: absolute; top: 50%; left: 100%;
-    width: 13px; height: 13px; border-radius: 999px;
-    background: #fff; transform: translate(-50%, -50%);
-    box-shadow: 0 0 0 4px #6366F133;
+  /* 押した瞬間の沈み（実装は 0.96 倍 + 少し暗く） */
+  .pressed { transform: scale(.94); filter: brightness(.8); }
+
+  /* ---- AmountPad（実装の構成そのまま） ---- */
+  .amt-bar { display: flex; align-items: center; border: 1px solid var(--s800); background: var(--s950); border-radius: 7px; padding: 8px; margin-bottom: 8px; }
+  .amt-bar .lb { width: 52px; font-size: 11px; font-weight: 700; color: var(--s500); }
+  .amt-mid { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .stepbtn { width: 24px; height: 24px; border-radius: 999px; background: var(--s800); color: var(--s400); display: grid; place-items: center; font-size: 12px; flex: none; }
+  .amt-val { min-width: 90px; text-align: center; font-size: 27px; font-weight: 900; letter-spacing: -.03em; color: #fff; line-height: 1.1; }
+  .amt-bar .undo { width: 52px; text-align: right; color: var(--s500); font-size: 13px; }
+  .padgrid { display: flex; gap: 6px; margin-bottom: 8px; }
+  .keys { flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .key { height: 33px; border-radius: 7px; background: rgba(51,65,85,.5); color: var(--s300); font-size: 18px; font-weight: 700; display: grid; place-items: center; transition: transform .12s, filter .12s; }
+  .key.zero { grid-column: span 2; }
+  .presets { flex: 1; display: grid; gap: 6px; }
+  .preset { height: 33px; border-radius: 7px; background: rgba(99,102,241,.15); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform .12s, filter .12s; }
+  .preset .p1 { font-size: 11px; font-weight: 700; color: var(--indigo-300); line-height: 1; }
+  .preset .p2 { font-size: 8.5px; font-weight: 700; color: var(--s400); line-height: 1; margin-top: 3px; }
+  .pad-foot { display: flex; gap: 6px; }
+  .pad-foot .pcancel { flex: 1; height: 42px; border-radius: 7px; background: rgba(51,65,85,.5); color: var(--s400); font-size: 13px; font-weight: 900; display: grid; place-items: center; }
+  .pad-foot .pok { flex: 1; height: 42px; border-radius: 7px; background: var(--indigo); color: #fff; font-size: 13px; font-weight: 900; display: grid; place-items: center; transition: transform .12s, filter .12s; }
+
+  /* ---- タップの指跡 ---- */
+  .tapdot {
+    position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px;
+    border-radius: 999px; background: rgba(255,255,255,.3);
+    box-shadow: 0 0 0 2px rgba(255,255,255,.4);
+    opacity: 0; pointer-events: none; z-index: 6;
   }
-  .replay-ctl { display: flex; align-items: center; justify-content: center; gap: 10px; }
-  .rbtn {
-    width: 34px; height: 34px; border-radius: 999px;
-    display: grid; place-items: center;
-    background: var(--s800); color: var(--s300); font-size: 13px;
+  .tapdot.go { animation: tapgo .38s ease-out; }
+  @keyframes tapgo { 0% {opacity:0; transform:scale(.4)} 25% {opacity:1; transform:scale(1)} 100% {opacity:0; transform:scale(1.55)} }
+
+  /* ---- 手番の席 ---- */
+  .seat.acting .sbox { border-color: var(--indigo-400); background: #1E1B4B; }
+  .seat.acting .glow { animation: seatpulse 1.5s ease-in-out infinite; }
+  @keyframes seatpulse { 0%, 100% {opacity:.35} 50% {opacity:1} }
+
+  .vid .wager { transition: opacity .2s; }
+  .flipin { animation: flipin .3s ease-out both; }
+  @keyframes flipin { from {opacity:0; transform:scaleX(.2)} to {opacity:1; transform:none} }
+  .potpop { display: inline-block; animation: potpop .35s ease-out; }
+  @keyframes potpop { 0% {transform:scale(1)} 40% {transform:scale(1.16)} 100% {transform:scale(1)} }
+
+  .street-tab.sel { background: var(--indigo); color: #fff; font-weight: 700; }
+  .street-tab.off { font-weight: 400; color: var(--s500); }
+
+  /* ---- プレイヤー詳細に行が届く ---- */
+  .rowin { opacity: 0; transform: translateY(-8px); transition: opacity .5s, transform .5s; }
+  .rowin.show { opacity: 1; transform: none; }
+  .rownew.show { animation: newglow 2s ease-out .15s both; }
+  @keyframes newglow { 0% {box-shadow: 0 0 0 1.5px var(--indigo-400)} 100% {box-shadow: 0 0 0 1.5px transparent} }
+
+  /* 実機の細部: タブの区切り線・情報アイコン・チップの束・ディーラーボタン */
+  .tsep { width: 1px; height: 12px; background: #47556966; margin: 0 1px; align-self: center; }
+  .info-i { width: 16px; height: 16px; border-radius: 999px; border: 1.5px solid var(--s600); color: var(--s500); font-size: 9px; font-weight: 700; font-style: italic; display: grid; place-items: center; }
+  .chipstack { width: 13px; height: 8px; border-radius: 999px; background: linear-gradient(#E2E8F0, #94A3B8); box-shadow: 0 2px 0 #475569, 0 4px 0 #334155; margin-bottom: 5px; }
+  .vid .wager .wl { font-size: 7px; font-weight: 800; letter-spacing: .08em; color: var(--s400); line-height: 1; }
+  .vid .wager .amt { font-size: 10.5px; font-weight: 800; color: #fff; line-height: 1; margin-top: 1px; }
+  .dbtn { position: absolute; width: 16px; height: 16px; border-radius: 999px; background: #fff; color: #0F172A; font-size: 9px; font-weight: 900; display: grid; place-items: center; transform: translate(-50%, -50%); }
+  .card.ghost { background: #1E293B99; }
+  .undo-row { display: flex; gap: 6px; margin-top: 8px; }
+  .undo-row span { flex: 1; height: 32px; border-radius: 7px; background: #1E293B99; color: var(--s400); font-size: 10.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
+  .hrow { opacity: 0; transition: opacity .25s; }
+  .hrow.on { opacity: 1; }
+  .t.w { color: var(--indigo-300); }
+  .tag.green { background: #064E3B80; color: #6EE7B7; }
+  .hr-div { width: 1px; align-self: stretch; background: #33415580; margin: 2px 6px 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seat.acting .glow { animation: none; opacity: .8; }
+    .scene, .rowin { transition: none; }
+    .rownew.show { animation: none; }
   }
-  .rbtn.play { width: 44px; height: 44px; background: var(--indigo); color: #fff; font-size: 16px; }
-  .speed { font-size: 11px; font-weight: 800; color: var(--s400); background: #1E293B99; border-radius: 999px; padding: 3px 10px; }
 
   /* ---------- 共有 ---------- */
   .share-text {
@@ -370,7 +442,7 @@
   .hr-body { display: flex; align-items: flex-start; gap: 4px; }
   .hr-col { display: grid; gap: 4px; }
   .hr-col.netcol { width: 74px; flex: none; }
-  .hr-col.board { margin-left: 10px; }
+  .hr-col.bcol { margin-left: 10px; }
   .hr-h { font-size: 8px; font-weight: 800; letter-spacing: .12em; color: var(--s500); white-space: nowrap; }
   .hr-h.right { text-align: right; }
   .hr-cards { display: flex; gap: 2px; flex-wrap: nowrap; }
@@ -448,106 +520,6 @@
   footer { border-top: 1px solid var(--line-soft); padding: 28px 0 42px; font-size: 12.5px; color: var(--fg-3); }
   .foot-grid { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; }
 
-  /* ==========================================================
-     再生アニメーション（16 秒ループ）。ヒーローの端末で 1 ハンドが流れ続ける。
-     `prefers-reduced-motion` では止め、決着まで進んだ姿を出す。
-     ========================================================== */
-  @media (prefers-reduced-motion: no-preference) {
-    .anim .step { animation: var(--kf) 16s linear infinite; }
-
-    @keyframes in06 { 0%,5.9% {opacity:0; transform:translateY(3px)} 6.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in16 { 0%,15.9% {opacity:0; transform:translateY(3px)} 16.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in22 { 0%,21.9% {opacity:0; transform:translateY(3px)} 22.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in38 { 0%,37.9% {opacity:0; transform:translateY(3px)} 38.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in44 { 0%,43.9% {opacity:0; transform:translateY(3px)} 44.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in58 { 0%,57.9% {opacity:0; transform:translateY(3px)} 58.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in64 { 0%,63.9% {opacity:0; transform:translateY(3px)} 64.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes in70 { 0%,69.9% {opacity:0; transform:translateY(3px)} 70.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
-
-    @keyframes flip30 { 0%,29.9% {opacity:0; transform:scaleX(.2)} 31.2%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes flip31 { 0%,30.7% {opacity:0; transform:scaleX(.2)} 32%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes flip32 { 0%,31.5% {opacity:0; transform:scaleX(.2)} 32.8%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes flip52 { 0%,51.9% {opacity:0; transform:scaleX(.2)} 53.2%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes flip78 { 0%,77.9% {opacity:0; transform:scaleX(.2)} 79.2%,97% {opacity:1; transform:none} 100% {opacity:0} }
-    @keyframes back30 { 0%,29.9% {opacity:1} 30.9%,100% {opacity:0} }
-    @keyframes back52 { 0%,51.9% {opacity:1} 52.9%,100% {opacity:0} }
-    @keyframes back78 { 0%,77.9% {opacity:1} 78.9%,100% {opacity:0} }
-
-    @keyframes w06-30 { 0%,5.9% {opacity:0; transform:translate(-50%,-40%)} 6.8%,29% {opacity:1; transform:translate(-50%,-50%)} 30%,100% {opacity:0} }
-    @keyframes w16-30 { 0%,15.9% {opacity:0; transform:translate(-50%,-40%)} 16.8%,29% {opacity:1; transform:translate(-50%,-50%)} 30%,100% {opacity:0} }
-    @keyframes w22-30 { 0%,21.9% {opacity:0; transform:translate(-50%,-40%)} 22.8%,29% {opacity:1; transform:translate(-50%,-50%)} 30%,100% {opacity:0} }
-    @keyframes w38-52 { 0%,37.9% {opacity:0; transform:translate(-50%,-40%)} 38.8%,51% {opacity:1; transform:translate(-50%,-50%)} 52%,100% {opacity:0} }
-    @keyframes w44-52 { 0%,43.9% {opacity:0; transform:translate(-50%,-40%)} 44.8%,51% {opacity:1; transform:translate(-50%,-50%)} 52%,100% {opacity:0} }
-    @keyframes w64-78 { 0%,63.9% {opacity:0; transform:translate(-50%,-40%)} 64.8%,77% {opacity:1; transform:translate(-50%,-50%)} 78%,100% {opacity:0} }
-    @keyframes w70-78 { 0%,69.9% {opacity:0; transform:translate(-50%,-40%)} 70.8%,77% {opacity:1; transform:translate(-50%,-50%)} 78%,100% {opacity:0} }
-
-    @keyframes glowCO {
-      0%,3% {opacity:0} 4%,14% {opacity:1} 16%,20% {opacity:0}
-      21%,28% {opacity:1} 30%,42% {opacity:0} 43%,50% {opacity:1}
-      52%,62% {opacity:0} 63%,68% {opacity:1} 70%,100% {opacity:0}
-    }
-    @keyframes glowBB {
-      0%,14% {opacity:0} 16%,20% {opacity:1} 21%,35% {opacity:0}
-      36%,42% {opacity:1} 43%,55% {opacity:0} 56%,62% {opacity:1}
-      63%,68% {opacity:0} 69%,76% {opacity:1} 78%,100% {opacity:0}
-    }
-    @keyframes boxCO {
-      0%,3% {border-color:var(--s700); background:var(--s900)}
-      4%,14% {border-color:var(--indigo-400); background:#1E1B4B}
-      16%,20% {border-color:var(--s700); background:var(--s900)}
-      21%,28% {border-color:var(--indigo-400); background:#1E1B4B}
-      30%,42% {border-color:var(--s700); background:var(--s900)}
-      43%,50% {border-color:var(--indigo-400); background:#1E1B4B}
-      52%,62% {border-color:var(--s700); background:var(--s900)}
-      63%,68% {border-color:var(--indigo-400); background:#1E1B4B}
-      70%,100% {border-color:var(--s700); background:var(--s900)}
-    }
-    @keyframes boxBB {
-      0%,14% {border-color:var(--s700); background:var(--s900)}
-      16%,20% {border-color:var(--indigo-400); background:#1E1B4B}
-      21%,35% {border-color:var(--s700); background:var(--s900)}
-      36%,42% {border-color:var(--indigo-400); background:#1E1B4B}
-      43%,55% {border-color:var(--s700); background:var(--s900)}
-      56%,62% {border-color:var(--indigo-400); background:#1E1B4B}
-      63%,68% {border-color:var(--s700); background:var(--s900)}
-      69%,76% {border-color:var(--indigo-400); background:#1E1B4B}
-      86%,97% {border-color:var(--indigo-300); background:#312E81}
-      100% {border-color:var(--s700); background:var(--s900)}
-    }
-
-    @keyframes fold04 { 0%,3.9% {opacity:1} 5%,100% {opacity:.5} }
-    @keyframes fold12 { 0%,11.9% {opacity:1} 13%,100% {opacity:.5} }
-
-    @keyframes pot0 { 0%,5% {opacity:1} 6%,100% {opacity:0} }
-    @keyframes pot1 { 0%,5% {opacity:0} 6%,29% {opacity:1} 30%,100% {opacity:0} }
-    @keyframes pot2 { 0%,29% {opacity:0} 30%,51% {opacity:1} 52%,100% {opacity:0} }
-    @keyframes pot3 { 0%,51% {opacity:0} 52%,84% {opacity:1} 85%,100% {opacity:0} }
-    @keyframes potwrap { 0%,84% {opacity:1} 86%,97% {opacity:0} 100% {opacity:0} }
-
-    @keyframes showdown { 0%,85% {opacity:0; transform:scale(.9)} 87.5%,97% {opacity:1; transform:scale(1)} 100% {opacity:0} }
-
-    @keyframes tabPRE   { 0%,29% {background:var(--indigo); color:#fff; font-weight:700} 30%,100% {background:transparent; color:var(--s400)} }
-    @keyframes tabFLOP  { 0%,29% {background:transparent; color:var(--s400)} 30%,51% {background:var(--indigo); color:#fff} 52%,100% {background:transparent; color:var(--s400)} }
-    @keyframes tabTURN  { 0%,51% {background:transparent; color:var(--s400)} 52%,77% {background:var(--indigo); color:#fff} 78%,100% {background:transparent; color:var(--s400)} }
-    @keyframes tabRIVER { 0%,77% {background:transparent; color:var(--s400)} 78%,97% {background:var(--indigo); color:#fff} 100% {background:transparent; color:var(--s400)} }
-
-    @keyframes col30 { 0%,29% {opacity:.38} 30%,100% {opacity:1} }
-    @keyframes col52 { 0%,51% {opacity:.38} 52%,100% {opacity:1} }
-    @keyframes colwin { 0%,85% {opacity:.25} 87%,100% {opacity:1} }
-
-    /* 再生バー: つまみと塗りが 1 ハンドぶん進む */
-    @keyframes scrubFill { 0% {width:0} 97% {width:100%} 100% {width:100%} }
-    @keyframes scrubKnob { 0% {left:0} 97% {left:100%} 100% {left:100%} }
-  }
-
-  /* 基本状態 = 最終フレーム（動きが無い環境でもこの姿で読める） */
-  .anim .st-log, .anim .st-flip { opacity: 1; }
-  .anim .wager, .anim .glow, .anim .st-back, .anim .pot-wrap { opacity: 0; }
-  .anim .showdown { opacity: 1; transform: none; }
-  .anim .seat.bb .sbox { border-color: var(--indigo-300); background: #312E81; }
-  .anim .tab-RIVER { background: var(--indigo); color: #fff; }
-  .anim .colx, .anim .col-win { opacity: 1; }
-
   /* ---- web 用に足したもの ---- */
   .site-foot { border-top:1px solid var(--line-soft); padding:28px 0 46px; font-size:12.5px; color:var(--fg-3); }
   .site-foot .foot-links { display:flex; gap:20px; flex-wrap:wrap; }
@@ -565,7 +537,7 @@
         <p class="claim">Track your hands. Read the table.</p>
         <p class="lede" style="margin-top:22px">
           卓のスピードで打ち込んで、<br />
-          動画のように再生する。誰と打ったかごと。
+          誰と打ったかごと残す。あとから動画のように再生。
         </p>
         <div class="cta-row">
           <a class="cta" href="#speed">何ができるか見る <span aria-hidden="true">↓</span></a>
@@ -574,150 +546,271 @@
         <p class="platform">iOS / Android — 近日公開</p>
       </div>
 
-      <!-- ============ 動く実機: ハンド詳細（再生） ============ -->
+      <!-- ============ 動く実機: 入力 → プレイヤー詳細（JS の台本で動く） ============ -->
       <div>
-        <div class="phone anim">
+        <div class="phone">
           <div class="phone-inner">
-            <div class="bar">
-              <span class="back" aria-hidden="true">‹</span>
-              <span class="title">BB vs CO SRP</span>
-              <span class="acts">
-                <span class="chip-btn on">✎ 編集</span>
-                <span class="chip-btn sq">⋯</span>
-              </span>
-            </div>
+            <div class="vid" id="vid" role="img"
+              aria-label="実機の再現。9 人卓で BTN vs BB のハンドが 1 手 1 タップで記録され、打ち終わると相手プレイヤー『プレイヤーA』のページに、いま打ったハンド（−13.0bb）が並ぶ">
 
-            <div class="screen">
-              <div class="tabs-row">
-                <div class="streets">
-                  <span class="street-tab step" style="--kf:tabPRE">PREFLOP</span>
-                  <span class="street-tab step" style="--kf:tabFLOP">FLOP</span>
-                  <span class="street-tab step" style="--kf:tabTURN">TURN</span>
-                  <span class="street-tab step tab-RIVER" style="--kf:tabRIVER">RIVER</span>
-                </div>
-                <span class="legend"><i class="act">Act</i><i class="in">In</i><i class="fold">Fold</i></span>
-              </div>
-
-              <div class="stage" role="img"
-                aria-label="再生中の 9 人卓。BB と CO の一騎打ちが 1 手ずつ進み、最後に BB が Two Pair で 12,600 のポットを取る">
-                <div class="felt"></div>
-
-                <div class="board">
-                  <span style="position:relative">
-                    <span class="card back sz-board step st-back" style="--kf:back30; position:absolute; inset:0"></span>
-                    <span class="card s sz-board step st-flip" style="--kf:flip30"><b>Q</b><i>♠</i></span>
-                  </span>
-                  <span style="position:relative">
-                    <span class="card back sz-board step st-back" style="--kf:back30; position:absolute; inset:0"></span>
-                    <span class="card h sz-board step st-flip" style="--kf:flip31"><b>7</b><i>♥</i></span>
-                  </span>
-                  <span style="position:relative">
-                    <span class="card back sz-board step st-back" style="--kf:back30; position:absolute; inset:0"></span>
-                    <span class="card d sz-board step st-flip" style="--kf:flip32"><b>2</b><i>♦</i></span>
-                  </span>
-                  <span style="position:relative">
-                    <span class="card back sz-board step st-back" style="--kf:back52; position:absolute; inset:0"></span>
-                    <span class="card c sz-board step st-flip" style="--kf:flip52"><b>K</b><i>♣</i></span>
-                  </span>
-                  <span style="position:relative">
-                    <span class="card back sz-board step st-back" style="--kf:back78; position:absolute; inset:0"></span>
-                    <span class="card s sz-board step st-flip" style="--kf:flip78"><b>9</b><i>♠</i></span>
+              <!-- 場面 1: ハンド入力。手番の席が光り、下のボタンを押すだけ -->
+              <div class="scene on" id="scIn">
+                <div class="bar">
+                  <span class="back" aria-hidden="true">‹</span>
+                  <span class="title" id="handTitle">ハンド</span>
+                  <span class="acts">
+                    <span class="chip-btn on">◉ 閲覧</span>
+                    <span class="chip-btn sq">⋯</span>
                   </span>
                 </div>
+                <div class="screen">
+                  <div class="tabs-row">
+                    <div class="streets">
+                      <span class="street-tab sel" id="t-pre">PREFLOP</span><span class="tsep"></span><span class="street-tab off" id="t-flop">FLOP</span><span class="tsep"></span><span class="street-tab off" id="t-turn">TURN</span><span class="tsep"></span><span class="street-tab off" id="t-riv">RIVER</span>
+                    </div>
+                    <span class="info-i" aria-hidden="true">i</span>
+                  </div>
 
-                <div class="center-info pot-wrap step" style="--kf:potwrap">
-                  <div>
-                    <div class="pot-label">POT SIZE</div>
-                    <div class="pot-num mono">
-                      <span class="step" style="--kf:pot0">300</span>
-                      <span class="step" style="--kf:pot1">1,200</span>
-                      <span class="step" style="--kf:pot2">7,200</span>
-                      <span class="step" style="--kf:pot3">12,600</span>
+                  <div class="stage" style="aspect-ratio: 370/360">
+                    <div class="felt" style="left:9%; right:9%; top:31%; bottom:2%"></div>
+
+                    <div class="board" style="top:51%">
+                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf1" style="position:absolute; inset:0; opacity:0"><b>A</b><i>♠</i></span></span>
+                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf2" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♥</i></span></span>
+                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card c sz-board face" id="bf3" style="position:absolute; inset:0; opacity:0"><b>9</b><i>♣</i></span></span>
+                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf4" style="position:absolute; inset:0; opacity:0"><b>5</b><i>♥</i></span></span>
+                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf5" style="position:absolute; inset:0; opacity:0"><b>4</b><i>♠</i></span></span>
+                    </div>
+                    <div class="center-info" style="top:60%">
+                      <div>
+                        <div class="pot-label">POT SIZE</div>
+                        <div class="mono" style="font-size:19px; font-weight:900; color:#fff; line-height:1.2"><span id="pot">4</span></div>
+                      </div>
+                    </div>
+
+                    <!-- 席の配置は実機と同じ（Hero が下の中央、上に UTG の列） -->
+                    <div class="seat" id="s-utg" style="left:30%; top:21%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat" id="s-utg1" style="left:50%; top:21%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat" id="s-utg2" style="left:70%; top:21%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat" id="s-bb" style="left:11%; top:39%">
+                      <div class="hole">
+                        <span style="position:relative"><span class="card ghost sz-seat"></span><span class="card d sz-seat face" id="oc1" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♦</i></span></span>
+                        <span style="position:relative"><span class="card ghost sz-seat"></span><span class="card s sz-seat face" id="oc2" style="position:absolute; inset:0; opacity:0"><b>Q</b><i>♠</i></span></span>
+                      </div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">BB</span><span class="nm">プレイヤーA</span><span class="stk mono" id="stk-bb">428</span></div>
+                    </div>
+                    <div class="seat" id="s-lj" style="left:89%; top:39%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat" id="s-sb" style="left:11%; top:66%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat" id="s-hj" style="left:89%; top:66%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat" id="s-co" style="left:65%; top:85%">
+                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">CO</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                    </div>
+                    <div class="seat myseat" id="s-btn" style="left:34.5%; top:85%">
+                      <div class="hole">
+                        <span class="card h sz-seat"><b>A</b><i>♥</i></span>
+                        <span class="card h sz-seat"><b>8</b><i>♥</i></span>
+                      </div>
+                      <div class="sbox"><span class="glow"></span><span class="pill">BTN</span><span class="nm">Hero</span><span class="stk mono" id="stk-btn">353</span></div>
+                    </div>
+
+                    <div class="dbtn" style="left:41%; top:72%" aria-hidden="true">D</div>
+
+                    <div class="wager" id="w-bb" style="left:24%; top:41%"><span class="chipstack"></span><span class="wl">BB</span><span class="amt mono">3</span></div>
+                    <div class="wager" id="w-sb" style="left:20%; top:61%"><span class="chipstack"></span><span class="wl">SB</span><span class="amt mono">1</span></div>
+                    <div class="wager" id="w-btn" style="left:53%; top:76%"><span class="chipstack"></span><span class="wl">RAISE</span><span class="amt mono">6</span></div>
+                  </div>
+
+                  <!-- 実装と同じ並び: 出す額が大きい順（ALLin → Raise → Call → Fold） -->
+                  <div style="margin-top:8px">
+                    <div class="abtn-row" id="btnRow">
+                      <span class="abtn allin">ALLin</span>
+                      <span class="abtn br" id="btnRaise">Raise</span>
+                      <span class="abtn cc" id="btnCall"><span id="callLabel">Call</span><small class="mono" id="callAmt">3</small></span>
+                      <span class="abtn fd" id="btnFold">Fold</span>
+                    </div>
+                    <div id="pad" style="display:none">
+                      <div class="amt-bar">
+                        <span class="lb">AMOUNT</span>
+                        <span class="amt-mid"><span class="stepbtn">−</span><span class="amt-val mono" id="amtVal">0</span><span class="stepbtn">＋</span></span>
+                        <span class="undo">↺</span>
+                      </div>
+                      <div class="padgrid">
+                        <div class="keys">
+                          <span class="key" id="k1">1</span><span class="key">2</span><span class="key">3</span>
+                          <span class="key">4</span><span class="key">5</span><span class="key">6</span>
+                          <span class="key" id="k7">7</span><span class="key">8</span><span class="key">9</span>
+                          <span class="key zero">0</span><span class="key">⌫</span>
+                        </div>
+                        <div class="presets">
+                          <span class="preset" id="pr1"><span class="p1"></span><span class="p2 mono"></span></span>
+                          <span class="preset" id="pr2"><span class="p1"></span><span class="p2 mono"></span></span>
+                          <span class="preset" id="pr3"><span class="p1"></span><span class="p2 mono"></span></span>
+                          <span class="preset" id="pr4"><span class="p1"></span><span class="p2 mono"></span></span>
+                        </div>
+                      </div>
+                      <div class="pad-foot"><span class="pcancel">キャンセル</span><span class="pok" id="padOk">確定</span></div>
+                    </div>
+                  </div>
+
+                  <div class="undo-row" aria-hidden="true">
+                    <span>↩ 戻る</span><span>🗑 すべて消す</span><span>↪ 進む</span>
+                  </div>
+
+                  <!-- ストリートごとのアクション履歴。打った手から順に積まれる -->
+                  <div class="cols" style="margin-top:8px">
+                    <div class="colx" id="c-pre">
+                      <div class="col-top"><span class="col-name">PREFLOP</span><span class="col-pot mono">4</span></div>
+                      <div class="act hrow" id="r1"><span class="pos me">BTN</span><span class="t r">R</span><span class="n mono">6</span></div>
+                      <div class="act hrow" id="r2"><span class="pos">BB</span><span class="t c">C</span><span class="n mono">6</span></div>
+                    </div>
+                    <div class="colx dim" id="c-flop">
+                      <div class="col-top"><span class="col-name">FLOP</span><span class="col-pot mono hrow" id="cp-flop">13</span></div>
+                      <div class="col-board hrow" id="cb-flop">
+                        <span class="card s sz-tiny"><b>A</b><i>♠</i></span>
+                        <span class="card h sz-tiny"><b>K</b><i>♥</i></span>
+                        <span class="card c sz-tiny"><b>9</b><i>♣</i></span>
+                      </div>
+                      <div class="act hrow" id="r3"><span class="pos">BB</span><span class="t x">X</span></div>
+                      <div class="act hrow" id="r4"><span class="pos me">BTN</span><span class="t b">B</span><span class="n mono">17</span></div>
+                      <div class="act hrow" id="r5"><span class="pos">BB</span><span class="t c">C</span><span class="n mono">17</span></div>
+                    </div>
+                    <div class="colx dim" id="c-turn">
+                      <div class="col-top"><span class="col-name">TURN</span><span class="col-pot mono hrow" id="cp-turn">47</span></div>
+                      <div class="col-board hrow" id="cb-turn"><span class="card h sz-tiny"><b>5</b><i>♥</i></span></div>
+                      <div class="act hrow" id="r6"><span class="pos">BB</span><span class="t x">X</span></div>
+                      <div class="act hrow" id="r7"><span class="pos me">BTN</span><span class="t x">X</span></div>
+                    </div>
+                    <div class="colx dim" id="c-riv">
+                      <div class="col-top"><span class="col-name">RIVER</span><span class="col-pot mono hrow" id="cp-riv">47</span></div>
+                      <div class="col-board hrow" id="cb-riv"><span class="card s sz-tiny"><b>4</b><i>♠</i></span></div>
+                      <div class="act hrow" id="r8"><span class="pos">BB</span><span class="t b">B</span><span class="n mono">16</span></div>
+                      <div class="act hrow" id="r9"><span class="pos me">BTN</span><span class="t c">C</span><span class="n mono">16</span></div>
+                      <div class="act hrow" id="r10"><span class="pos me">BTN</span><span class="t w">WIN</span></div>
                     </div>
                   </div>
                 </div>
-
-                <div class="showdown step mono" style="--kf:showdown">
-                  <div>
-                    <div class="who">BB WIN</div>
-                    <div class="handname">Two Pair</div>
-                    <div class="net">+7,800<small>(39.0bb)</small></div>
-                  </div>
-                </div>
-
-                <div class="seat" style="left:33.5%; top:19%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:boxCO">
-                    <span class="glow step" style="--kf:glowCO"></span>
-                    <span class="pill">CO</span><span class="nm">白帽子</span><span class="stk mono">28,400</span>
-                  </div>
-                </div>
-                <div class="seat folded" style="left:66.5%; top:19%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold12"><span class="pill">BTN</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:92%; top:31%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold12"><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat hero bb" style="left:92%; top:60%">
-                  <div class="hole">
-                    <span class="card h sz-seat"><b>A</b><i>♥</i></span>
-                    <span class="card d sz-seat"><b>K</b><i>♦</i></span>
-                  </div>
-                  <div class="sbox step" style="--kf:boxBB">
-                    <span class="glow step" style="--kf:glowBB"></span>
-                    <span class="pill">BB</span><span class="nm">YOU</span><span class="stk mono">31,200</span>
-                  </div>
-                </div>
-                <div class="seat folded" style="left:70.6%; top:84%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold04"><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:50%; top:84%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold04"><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:29.4%; top:84%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold04"><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:8%; top:60%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold04"><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:8%; top:31%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox step" style="--kf:fold04"><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-
-                <div class="wager step" style="--kf:w06-30; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">600</span></div>
-                <div class="wager step" style="--kf:w16-30; left:80%; top:56%"><span class="chipdot"></span><span class="amt mono">2,400</span></div>
-                <div class="wager step" style="--kf:w22-30; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">2,400</span></div>
-                <div class="wager step" style="--kf:w38-52; left:80%; top:56%"><span class="chipdot"></span><span class="amt mono">1,200</span></div>
-                <div class="wager step" style="--kf:w44-52; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">1,200</span></div>
-                <div class="wager step" style="--kf:w64-78; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">1,800</span></div>
-                <div class="wager step" style="--kf:w70-78; left:80%; top:56%"><span class="chipdot"></span><span class="amt mono">1,800</span></div>
               </div>
 
-              <!-- 再生バー。つまみがハンドと一緒に進む -->
-              <div class="replay-bar">
-                <div class="scrub">
-                  <span class="fill step" style="--kf:scrubFill"></span>
-                  <span class="knob step" style="--kf:scrubKnob"></span>
+              <!-- 場面 2: プレイヤー詳細。いま打ったハンドが「プレイヤーA」のページに並ぶ -->
+              <div class="scene" id="scPl">
+                <div class="bar">
+                  <span class="back" aria-hidden="true">‹</span>
+                  <span class="title">プレイヤー</span>
+                  <span class="acts"><span class="chip-btn on">✎ 編集</span></span>
                 </div>
-                <div class="replay-ctl">
-                  <span class="rbtn" aria-hidden="true">⏮</span>
-                  <span class="rbtn" aria-hidden="true">◂</span>
-                  <span class="rbtn play" aria-hidden="true">❚❚</span>
-                  <span class="rbtn" aria-hidden="true">▸</span>
-                  <span class="speed mono">×1</span>
+                <div class="screen">
+                  <div class="pd-head">
+                    <div class="avatar">🎩</div>
+                    <div class="pd-name">プレイヤーA</div>
+                  </div>
+                  <div class="sec-label"><span class="l">タグ</span></div>
+                  <div class="tags">
+                    <span class="tag rose">ルースアグレ</span>
+                    <span class="tag green">タフコール</span>
+                    <span class="tag sky">good reg</span>
+                  </div>
+
+                  <div class="sec-label" style="margin-top:16px"><span class="l">このプレイヤーの直近 3 ハンド</span><span class="go2">ハンド一覧へ ›</span></div>
+                  <div class="frame">
+                    <div class="hand-row rowin rownew" id="row-new">
+                      <div class="hr-head">
+                        <span class="hr-date">🕒 2026/8/19 | 21:47</span>
+                        <span class="badge pos">BB</span>
+                        <span class="hr-acts"><span class="mini-btn">✎ 編集</span><span class="mini-btn del">🗑 削除</span></span>
+                      </div>
+                      <div class="hr-body">
+                        <div class="hr-col netcol">
+                          <div class="hr-h">収支</div>
+                          <div class="hr-net" style="justify-content:flex-start"><span class="v down mono">−13.0</span><span class="u">bb</span></div>
+                        </div>
+                        <div class="hr-div"></div>
+                        <div class="hr-col">
+                          <div class="hr-h">HAND</div>
+                          <div class="hr-cards">
+                            <span class="card d sz-mini"><b>K</b><i>♦</i></span>
+                            <span class="card s sz-mini"><b>Q</b><i>♠</i></span>
+                          </div>
+                        </div>
+                        <div class="hr-col bcol">
+                          <div class="hr-h">BOARD</div>
+                          <div class="hr-cards">
+                            <span class="card s sz-mini"><b>A</b><i>♠</i></span>
+                            <span class="card h sz-mini"><b>K</b><i>♥</i></span>
+                            <span class="card c sz-mini"><b>9</b><i>♣</i></span>
+                            <span class="card h sz-mini"><b>5</b><i>♥</i></span>
+                            <span class="card s sz-mini"><b>4</b><i>♠</i></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="hr-foot"><span class="who">1-3<span class="sep"> · </span>SRP<span class="sep"> · </span>HERO BTN</span><span class="pot">POT <b class="mono">63</b></span></div>
+                    </div>
+                    <div class="hand-row rowin" id="row-old">
+                      <div class="hr-head">
+                        <span class="hr-date">🕒 2026/8/17 | 21:36</span>
+                        <span class="badge pos">UTG</span>
+                        <span class="hr-acts"><span class="mini-btn">✎ 編集</span><span class="mini-btn del">🗑 削除</span></span>
+                      </div>
+                      <div class="hr-body">
+                        <div class="hr-col netcol">
+                          <div class="hr-h">収支</div>
+                          <div class="hr-net" style="justify-content:flex-start"><span class="v mono" style="color:var(--s300)">0.0</span><span class="u">bb</span></div>
+                        </div>
+                        <div class="hr-div"></div>
+                        <div class="hr-col">
+                          <div class="hr-h">HAND</div>
+                          <div class="hr-cards">
+                            <span class="card h sz-mini"><b>A</b><i>♥</i></span>
+                            <span class="card d sz-mini"><b>A</b><i>♦</i></span>
+                          </div>
+                        </div>
+                        <div class="hr-col bcol">
+                          <div class="hr-h">BOARD</div>
+                          <div class="hr-cards">
+                            <span class="card d sz-mini"><b>T</b><i>♦</i></span>
+                            <span class="card c sz-mini"><b>T</b><i>♣</i></span>
+                            <span class="card s sz-mini"><b>8</b><i>♠</i></span>
+                            <span class="card d sz-mini"><b>6</b><i>♦</i></span>
+                            <span class="card c sz-mini"><b>2</b><i>♣</i></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="hr-foot"><span class="who">1-3<span class="sep"> · </span>Limped<span class="sep"> · </span>HERO BTN</span><span class="pot">POT <b class="mono">4</b></span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bnav">
+                  <span><span class="ic" aria-hidden="true">⌂</span>ホーム</span>
+                  <span><span class="ic" aria-hidden="true">☰</span>ハンド</span>
+                  <span><span class="ic fab" aria-hidden="true">＋</span>ハンド記録</span>
+                  <span class="onb"><span class="ic" aria-hidden="true">👥</span>プレイヤー</span>
+                  <span><span class="ic" aria-hidden="true">⚙︎</span>設定</span>
                 </div>
               </div>
+
+              <div class="tapdot" id="tap"></div>
             </div>
           </div>
         </div>
-        <p class="caption">ハンド詳細 — 再生が 1 手ずつ進む</p>
+        <p class="caption" id="vidCap">ハンド入力 — 手番の席が光る。1 手 1 タップ</p>
       </div>
     </div>
   </div>
@@ -735,8 +828,8 @@
           考えるのはハンドのことだけでいい。
         </p>
         <ul class="points">
-          <li><b>1 手 = 1 タップ。</b>次に打つ席が自動で光り、順番を選ぶ操作がそもそもありません。プリフロップの UTG から降着まで、指は下の 3 つのボタンから動かない。</li>
-          <li><b>額は打たない。</b>1/2・2/3・POT から選べば桁を叩かずに済みます。細かい額だけテンキー。</li>
+          <li><b>1 手 = 1 タップ。</b>次に打つ席が自動で光り、順番を選ぶ操作がそもそもありません。プリフロップの UTG から降着まで、指は下のボタン列から動かない。</li>
+          <li><b>額は打たない。</b>オープンは 2bb〜3bb、レイズは 2x〜5x、ベットはポットの 33〜125% がワンタップ。細かい額だけテンキー。</li>
           <li><b>起動から 2 秒で打ち始められる。</b>＋ を押した瞬間に記録が生まれるので、卓に呼ばれて中断しても書きかけが残ります。必須の欄はゼロ。</li>
         </ul>
       </div>
@@ -792,7 +885,7 @@
                   <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
                   <div class="sbox"><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                 </div>
-                <div class="seat hero" style="left:92%; top:58%">
+                <div class="seat myseat" style="left:92%; top:58%">
                   <div class="hole">
                     <span class="card h sz-seat"><b>A</b><i>♥</i></span>
                     <span class="card d sz-seat"><b>K</b><i>♦</i></span>
@@ -826,21 +919,33 @@
                 <div class="wager" style="opacity:1; left:37%; top:29%"><span class="chipdot"></span><span class="amt mono">600</span></div>
               </div>
 
-              <div class="act-buttons">
-                <span class="act-btn fold">Fold</span>
-                <span class="act-btn call">Call<br /><span class="mono" style="font-size:10px">600</span></span>
-                <span class="act-btn raise">Raise</span>
-              </div>
-              <div class="pad">
-                <span class="mono">1/2</span>
-                <span class="mono">2/3</span>
-                <span class="mono">POT</span>
-                <span class="go">確定</span>
+              <!-- Raise を押した直後。実装の AmountPad と同じ構成（テンキー + プリセット） -->
+              <div style="margin-top:10px">
+                <div class="amt-bar">
+                  <span class="lb">AMOUNT</span>
+                  <span class="amt-mid"><span class="stepbtn">−</span><span class="amt-val mono">2,400</span><span class="stepbtn">＋</span></span>
+                  <span class="undo">↺</span>
+                </div>
+                <div class="padgrid">
+                  <div class="keys">
+                    <span class="key">1</span><span class="key">2</span><span class="key">3</span>
+                    <span class="key">4</span><span class="key">5</span><span class="key">6</span>
+                    <span class="key">7</span><span class="key">8</span><span class="key">9</span>
+                    <span class="key zero">0</span><span class="key">⌫</span>
+                  </div>
+                  <div class="presets">
+                    <span class="preset"><span class="p1">2x</span><span class="p2 mono">（ 1,200 ）</span></span>
+                    <span class="preset"><span class="p1">2.5x</span><span class="p2 mono">（ 1,500 ）</span></span>
+                    <span class="preset"><span class="p1">3x</span><span class="p2 mono">（ 1,800 ）</span></span>
+                    <span class="preset"><span class="p1">5x</span><span class="p2 mono">（ 3,000 ）</span></span>
+                  </div>
+                </div>
+                <div class="pad-foot"><span class="pcancel">キャンセル</span><span class="pok">確定</span></div>
               </div>
             </div>
           </div>
         </div>
-        <p class="caption">ハンド入力 — 光った席を、押すだけ</p>
+        <p class="caption">ベット額 — プリセットで 1 タップ。細かい額だけテンキー</p>
       </div>
     </div>
   </div>
@@ -885,7 +990,7 @@
         <h2>記録が、<br />動画になる</h2>
         <p class="body">
           打ち込んだハンドは、そのまま再生できます。チップが出て、
-          ボードがめくれて、決着が立ち上がる。上の実機で流れているのがそれです。
+          ボードがめくれて、決着が立ち上がる。
         </p>
         <ul class="points">
           <li><b>1 手ずつでも、流しっぱなしでも。</b>▶ で自動再生、送り戻しで 1 手ずつ。速度も変えられます。</li>
@@ -1049,5 +1154,256 @@
     </span>
   </div>
 </footer>
+
+<script>
+/*
+  ヒーローの「動画」。CSS の一本道ではなく **台本（時刻 → 操作）** で動かす。
+  タップ 1 つごとに「指跡 → ボタンが沈む → 卓が応える」を実機と同じ順で
+  見せたいので、キーフレームより台本のほうが素直に書ける。
+
+  再現しているのは実機で撮った 1 ハンドそのもの:
+    1-3 / BTN Hero A♥8♥ vs BB プレイヤーA K♦Q♠ / A♠K♥9♣ 5♥ 4♠ / POT 63。
+  ポット表示はストリート頭の値で止まる（実機と同じ）。
+
+  画面から外れたら止める（IntersectionObserver）。動きを減らす設定では
+  回さず、決着後のプレイヤー詳細だけを見せる。
+*/
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var vid = $('vid');
+  if (!vid) return;
+
+  var seats = {};
+  ['utg', 'utg1', 'utg2', 'bb', 'lj', 'sb', 'hj', 'co', 'btn'].forEach(function (k) {
+    seats[k] = $('s-' + k);
+  });
+
+  function setActing(k) {
+    Object.keys(seats).forEach(function (x) { seats[x].classList.remove('acting'); });
+    if (k) seats[k].classList.add('acting');
+  }
+  function fold(k) { seats[k].classList.add('folded'); }
+  function stack(k, v) { $('stk-' + k).textContent = v; }
+  function pot(v) {
+    var el = $('pot');
+    el.textContent = v;
+    el.classList.remove('potpop');
+    void el.offsetWidth;
+    el.classList.add('potpop');
+  }
+  function wag(id, label, amount) {
+    var w = $(id);
+    if (label === null) { w.style.opacity = 0; return; }
+    w.querySelector('.wl').textContent = label;
+    w.querySelector('.amt').textContent = amount;
+    w.style.opacity = 1;
+  }
+  function clearWagers() { ['w-sb', 'w-bb', 'w-btn'].forEach(function (id) { wag(id, null); }); }
+  function tapEl(el) {
+    var r = el.getBoundingClientRect();
+    var v = vid.getBoundingClientRect();
+    var tap = $('tap');
+    tap.style.left = (r.left + r.width / 2 - v.left) + 'px';
+    tap.style.top = (r.top + r.height / 2 - v.top) + 'px';
+    tap.classList.remove('go');
+    void tap.offsetWidth;
+    tap.classList.add('go');
+    el.classList.add('pressed');
+    setTimeout(function () { el.classList.remove('pressed'); }, 150);
+  }
+  function showPad(presets, amount) {
+    $('btnRow').style.display = 'none';
+    $('pad').style.display = 'block';
+    presets.forEach(function (pr, i) {
+      var el = $('pr' + (i + 1));
+      el.querySelector('.p1').textContent = pr[0];
+      el.querySelector('.p2').textContent = '（ ' + pr[1] + ' ）';
+    });
+    $('amtVal').textContent = amount;
+  }
+  function hidePad() { $('pad').style.display = 'none'; $('btnRow').style.display = 'flex'; }
+  function amt(v) { $('amtVal').textContent = v; }
+  /* チェックできる場面ではボタンが Bet / Check になり、Fold は消える（実装と同じ） */
+  function btnMode(mode, toCall) {
+    if (mode === 'check') {
+      $('btnRaise').textContent = 'Bet';
+      $('callLabel').textContent = 'Check';
+      $('callAmt').textContent = '';
+      $('btnFold').style.display = 'none';
+    } else {
+      $('btnRaise').textContent = 'Raise';
+      $('callLabel').textContent = 'Call';
+      $('callAmt').textContent = toCall;
+      $('btnFold').style.display = 'flex';
+    }
+  }
+  function flip(id) {
+    var f = $(id);
+    f.style.opacity = 1;
+    f.classList.add('flipin');
+  }
+  function street(tabId, colId, key) {
+    ['t-pre', 't-flop', 't-turn', 't-riv'].forEach(function (t) { $(t).classList.remove('sel'); });
+    $(tabId).classList.remove('off');
+    $(tabId).classList.add('sel');
+    $(colId).classList.remove('dim');
+    // その列のポットとボードは、ストリートに入った瞬間に出る
+    $('cp-' + key).classList.add('on');
+    $('cb-' + key).classList.add('on');
+    clearWagers();
+  }
+  function hist(id) { $(id).classList.add('on'); }
+
+  // プリセットは場面で変わる（bet-presets.ts と同じ出し分け。bb=3）
+  var OPEN_PRESETS = [['2bb', '6'], ['2.2bb', '7'], ['2.5bb', '8'], ['3bb', '9']];
+  var BET_FLOP = [['33%', '4'], ['50%', '7'], ['75%', '10'], ['125%', '16']];
+  var BET_RIVER = [['33%', '16'], ['50%', '24'], ['75%', '35'], ['125%', '59']];
+
+  var CAP_IN = 'ハンド入力 — 手番の席が光る。1 手 1 タップ';
+  var CAP_PL = 'プレイヤー詳細 — いま打ったハンドが、この人のページにも並ぶ';
+
+  function reset() {
+    $('scIn').classList.add('on');
+    $('scPl').classList.remove('on');
+    $('handTitle').textContent = 'ハンド';
+    Object.keys(seats).forEach(function (k) { seats[k].classList.remove('folded'); });
+    setActing('utg');
+    stack('btn', '353');
+    stack('bb', '428');
+    $('pot').textContent = '4';
+    $('pot').classList.remove('potpop');
+    wag('w-sb', 'SB', '1');
+    wag('w-bb', 'BB', '3');
+    wag('w-btn', null);
+    hidePad();
+    btnMode('facing', '3');
+    ['bf1', 'bf2', 'bf3', 'bf4', 'bf5', 'oc1', 'oc2'].forEach(function (id) {
+      var f = $(id);
+      f.style.opacity = 0;
+      f.classList.remove('flipin');
+    });
+    $('t-pre').classList.add('sel');
+    ['t-flop', 't-turn', 't-riv'].forEach(function (t) { $(t).classList.remove('sel'); $(t).classList.add('off'); });
+    ['c-flop', 'c-turn', 'c-riv'].forEach(function (c) { $(c).classList.add('dim'); });
+    for (var i = 1; i <= 10; i++) $('r' + i).classList.remove('on');
+    ['cp-flop', 'cb-flop', 'cp-turn', 'cb-turn', 'cp-riv', 'cb-riv'].forEach(function (c) { $(c).classList.remove('on'); });
+    $('row-new').classList.remove('show');
+    $('row-old').classList.remove('show');
+    $('vidCap').textContent = CAP_IN;
+  }
+
+  // 台本。UTG〜CO が畳み、BTN（Hero）が 2bb オープン → BB コール →
+  // フロップで Hero が 17 → ターンはチェックで回り → リバーで BB の 16 をコール。
+  var STEPS = [
+    [600,   function () { tapEl($('btnFold')); fold('utg'); setActing('utg1'); }],
+    [1050,  function () { tapEl($('btnFold')); fold('utg1'); setActing('utg2'); }],
+    [1500,  function () { tapEl($('btnFold')); fold('utg2'); setActing('lj'); }],
+    [1950,  function () { tapEl($('btnFold')); fold('lj'); setActing('hj'); }],
+    [2400,  function () { tapEl($('btnFold')); fold('hj'); setActing('co'); }],
+    [2850,  function () { tapEl($('btnFold')); fold('co'); setActing('btn'); }],
+    [3650,  function () { tapEl($('btnRaise')); showPad(OPEN_PRESETS, '0'); }],
+    [4400,  function () { tapEl($('pr1')); amt('6'); }],
+    [5050,  function () {
+      tapEl($('padOk')); hidePad();
+      wag('w-btn', 'RAISE', '6'); hist('r1'); stack('btn', '347');
+      setActing('sb'); btnMode('facing', '5');
+    }],
+    [5650,  function () { tapEl($('btnFold')); fold('sb'); wag('w-sb', null); setActing('bb'); btnMode('facing', '3'); }],
+    [6300,  function () {
+      tapEl($('btnCall'));
+      wag('w-bb', 'CALL', '6'); hist('r2'); stack('bb', '422');
+      setActing(null);
+      // 2 人になった瞬間、見出しが記録から立つ（suggestHandTitle）
+      $('handTitle').textContent = 'BTN vs BB SRP';
+    }],
+    [7100,  function () {
+      street('t-flop', 'c-flop', 'flop');
+      flip('bf1'); setTimeout(function () { flip('bf2'); }, 130); setTimeout(function () { flip('bf3'); }, 260);
+      pot('13'); btnMode('check'); setActing('bb');
+    }],
+    [7950,  function () { tapEl($('btnCall')); hist('r3'); setActing('btn'); }],
+    [8650,  function () { tapEl($('btnRaise')); showPad(BET_FLOP, '0'); }],
+    [9300,  function () { tapEl($('k1')); amt('1'); }],
+    [9520,  function () { tapEl($('k7')); amt('17'); }],
+    [10100, function () {
+      tapEl($('padOk')); hidePad();
+      wag('w-btn', 'BET', '17'); hist('r4'); stack('btn', '330');
+      setActing('bb'); btnMode('facing', '17');
+    }],
+    [10850, function () {
+      tapEl($('btnCall'));
+      wag('w-bb', 'CALL', '17'); hist('r5'); stack('bb', '405');
+      setActing(null);
+    }],
+    [11650, function () {
+      street('t-turn', 'c-turn', 'turn');
+      flip('bf4');
+      pot('47'); btnMode('check'); setActing('bb');
+    }],
+    [12400, function () { tapEl($('btnCall')); hist('r6'); setActing('btn'); }],
+    [13050, function () { tapEl($('btnCall')); hist('r7'); setActing(null); }],
+    [13750, function () {
+      street('t-riv', 'c-riv', 'riv');
+      flip('bf5');
+      btnMode('check'); setActing('bb');
+    }],
+    [14500, function () { tapEl($('btnRaise')); showPad(BET_RIVER, '0'); }],
+    [15200, function () { tapEl($('pr1')); amt('16'); }],
+    [15850, function () {
+      tapEl($('padOk')); hidePad();
+      wag('w-bb', 'BET', '16'); hist('r8'); stack('bb', '389');
+      setActing('btn'); btnMode('facing', '16');
+    }],
+    [16650, function () {
+      tapEl($('btnCall'));
+      wag('w-btn', 'CALL', '16'); hist('r9'); stack('btn', '314');
+      setActing(null);
+    }],
+    [17350, function () {
+      // ショーダウン。相手の K♦Q♠ が開いて、履歴に BTN WIN が立つ
+      flip('oc1'); setTimeout(function () { flip('oc2'); }, 130);
+      hist('r10');
+    }],
+    [19100, function () {
+      $('scIn').classList.remove('on');
+      $('scPl').classList.add('on');
+      $('vidCap').textContent = CAP_PL;
+    }],
+    [19700, function () { $('row-old').classList.add('show'); }],
+    [20250, function () { $('row-new').classList.add('show'); }],
+  ];
+  var LOOP_MS = 25800;
+
+  var timers = [];
+  function run() {
+    reset();
+    STEPS.forEach(function (st) { timers.push(setTimeout(st[1], st[0])); });
+    timers.push(setTimeout(run, LOOP_MS));
+  }
+  function stop() {
+    timers.forEach(clearTimeout);
+    timers = [];
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // 動かさない。決着まで届いた姿（プレイヤー詳細に 2 件）で読ませる。
+    $('scIn').classList.remove('on');
+    $('scPl').classList.add('on');
+    $('row-old').classList.add('show');
+    $('row-new').classList.add('show');
+    $('vidCap').textContent = '入力からプレイヤー紐付けまで — 実機の画面を再現';
+    return;
+  }
+
+  reset();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { if (timers.length === 0) run(); }
+      else stop();
+    });
+  }, { threshold: 0.25 });
+  io.observe(vid);
+})();
+</script>
 </body>
 </html>
