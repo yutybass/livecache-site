@@ -396,6 +396,11 @@
   .vid .wager .amt { font-size: 10.5px; font-weight: 800; color: #fff; line-height: 1; margin-top: 1px; }
   .dbtn { position: absolute; width: 16px; height: 16px; border-radius: 999px; background: #fff; color: #0F172A; font-size: 9px; font-weight: 900; display: grid; place-items: center; transform: translate(-50%, -50%); }
   .card.ghost { background: #1E293B99; }
+  /* 伏せ札の上に表を重ねる枠。inline のままだと行送りぶん face が伸びる */
+  .slot { position: relative; display: inline-flex; }
+  /* ボード札は実機の比率に合わせて一回り小さく（実機: 幅の 7.4%） */
+  .vid .card.sz-board { width: 24px; height: 34px; font-size: 14px; border-radius: 4px; }
+  .vid .card.sz-board i { font-size: 10px; }
   .undo-row { display: flex; gap: 6px; margin-top: 8px; }
   .undo-row span { flex: 1; height: 32px; border-radius: 7px; background: #1E293B99; color: var(--s400); font-size: 10.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
   .hrow { opacity: 0; transition: opacity .25s; }
@@ -536,8 +541,8 @@
         <p class="wordmark">Live <em>Cache</em></p>
         <p class="claim">Track your hands. Read the table.</p>
         <p class="lede" style="margin-top:22px">
-          卓のスピードで打ち込んで、<br />
-          誰と打ったかごと残す。あとから動画のように再生。
+          ハンドとハンドの合間に打ち込める速さ。<br />
+          誰と打ったかごと、残る。
         </p>
         <div class="cta-row">
           <a class="cta" href="#speed">何ができるか見る <span aria-hidden="true">↓</span></a>
@@ -575,11 +580,11 @@
                     <div class="felt" style="left:9%; right:9%; top:31%; bottom:2%"></div>
 
                     <div class="board" style="top:51%">
-                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf1" style="position:absolute; inset:0; opacity:0"><b>A</b><i>♠</i></span></span>
-                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf2" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♥</i></span></span>
-                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card c sz-board face" id="bf3" style="position:absolute; inset:0; opacity:0"><b>9</b><i>♣</i></span></span>
-                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf4" style="position:absolute; inset:0; opacity:0"><b>5</b><i>♥</i></span></span>
-                      <span style="position:relative"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf5" style="position:absolute; inset:0; opacity:0"><b>4</b><i>♠</i></span></span>
+                      <span class="slot"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf1" style="position:absolute; inset:0; opacity:0"><b>A</b><i>♠</i></span></span>
+                      <span class="slot"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf2" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♥</i></span></span>
+                      <span class="slot"><span class="card ghost sz-board"></span><span class="card c sz-board face" id="bf3" style="position:absolute; inset:0; opacity:0"><b>9</b><i>♣</i></span></span>
+                      <span class="slot"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf4" style="position:absolute; inset:0; opacity:0"><b>5</b><i>♥</i></span></span>
+                      <span class="slot"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf5" style="position:absolute; inset:0; opacity:0"><b>4</b><i>♠</i></span></span>
                     </div>
                     <div class="center-info" style="top:60%">
                       <div>
@@ -603,8 +608,8 @@
                     </div>
                     <div class="seat" id="s-bb" style="left:11%; top:39%">
                       <div class="hole">
-                        <span style="position:relative"><span class="card ghost sz-seat"></span><span class="card d sz-seat face" id="oc1" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♦</i></span></span>
-                        <span style="position:relative"><span class="card ghost sz-seat"></span><span class="card s sz-seat face" id="oc2" style="position:absolute; inset:0; opacity:0"><b>Q</b><i>♠</i></span></span>
+                        <span class="slot"><span class="card ghost sz-seat"></span><span class="card d sz-seat face" id="oc1" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♦</i></span></span>
+                        <span class="slot"><span class="card ghost sz-seat"></span><span class="card s sz-seat face" id="oc2" style="position:absolute; inset:0; opacity:0"><b>Q</b><i>♠</i></span></span>
                       </div>
                       <div class="sbox"><span class="glow"></span><span class="pill">BB</span><span class="nm">プレイヤーA</span><span class="stk mono" id="stk-bb">428</span></div>
                     </div>
@@ -634,9 +639,9 @@
 
                     <div class="dbtn" style="left:41%; top:72%" aria-hidden="true">D</div>
 
-                    <div class="wager" id="w-bb" style="left:24%; top:41%"><span class="chipstack"></span><span class="wl">BB</span><span class="amt mono">3</span></div>
+                    <div class="wager" id="w-bb" style="left:21%; top:41%"><span class="chipstack"></span><span class="wl">BB</span><span class="amt mono">3</span></div>
                     <div class="wager" id="w-sb" style="left:20%; top:61%"><span class="chipstack"></span><span class="wl">SB</span><span class="amt mono">1</span></div>
-                    <div class="wager" id="w-btn" style="left:53%; top:76%"><span class="chipstack"></span><span class="wl">RAISE</span><span class="amt mono">6</span></div>
+                    <div class="wager" id="w-btn" style="left:50%; top:78%"><span class="chipstack"></span><span class="wl">RAISE</span><span class="amt mono">6</span></div>
                   </div>
 
                   <!-- 実装と同じ並び: 出す額が大きい順（ALLin → Raise → Call → Fold） -->
@@ -822,13 +827,13 @@
     <div class="sec-grid">
       <div class="copy">
         <p class="eyebrow">SPEED · 圧倒的な入力速度</p>
-        <h2>卓のスピードに、<br />入力が追いつく</h2>
+        <h2>ハンドの合間に、<br />打ち込み終わる</h2>
         <p class="body">
-          手番はアプリが知っています。光った席のボタンを押すだけ。
-          考えるのはハンドのことだけでいい。
+          カードを持っている間、スマホは触れません。だから、降りてから
+          次のハンドが配られるまでの数十秒で打ち終わる速さにしました。
         </p>
         <ul class="points">
-          <li><b>1 手 = 1 タップ。</b>次に打つ席が自動で光り、順番を選ぶ操作がそもそもありません。プリフロップの UTG から降着まで、指は下のボタン列から動かない。</li>
+          <li><b>1 手 = 1 タップ、畳む席はまとめて 1 タップ。</b>打った席を直接タップすると、間の席は自動でフォールド（スマートフォールド）。9 人卓のプリフロップが数秒で終わります。</li>
           <li><b>額は打たない。</b>オープンは 2bb〜3bb、レイズは 2x〜5x、ベットはポットの 33〜125% がワンタップ。細かい額だけテンキー。</li>
           <li><b>起動から 2 秒で打ち始められる。</b>＋ を押した瞬間に記録が生まれるので、卓に呼ばれて中断しても書きかけが残ります。必須の欄はゼロ。</li>
         </ul>
@@ -981,16 +986,46 @@
   </div>
 </section>
 
-<!-- ============ 3. 再生 ============ -->
+<!-- ============ タグ ============ -->
 <section class="street-sec">
   <div class="wrap">
     <div class="sec-grid">
       <div class="copy">
-        <p class="eyebrow">REPLAY · 動画のように</p>
-        <h2>記録が、<br />動画になる</h2>
+        <p class="eyebrow">TAG · 人となりを一言で</p>
+        <h2>相手の特徴は、<br />タグで貼っておく</h2>
         <p class="body">
-          打ち込んだハンドは、そのまま再生できます。チップが出て、
-          ボードがめくれて、決着が立ち上がる。
+          ルースアグレ・タフコール・good reg。色分けしたタグを人に
+          貼っておけば、一覧を開いた瞬間に「どんな相手か」が戻ってきます。
+        </p>
+        <ul class="points">
+          <li><b>色は自分の物差しで。</b>レッドはプレイスタイル、ブルーは腕前、グリーンは癖 ―― グループごと自由に作って、名前も色もあとから変えられます。</li>
+          <li><b>タグから人へ辿れる。</b>「タイトアグレ」を押せば、そのタグが付いた 3 人が並ぶ。逆引きの絞り込みも 2 タップ。</li>
+          <li><b>ハンドにも効いてくる。</b>タグを付けた人が座っているハンドは、その人のページからその人の視点で読み返せます。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner">
+            <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="プレイヤー一覧の実際の画面。プレイヤーA〜D にルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付き、記録ハンド数と最終更新が並ぶ" src="./img/shot-tags.png" />
+          </div>
+        </div>
+        <p class="caption">プレイヤー一覧 — タグで人となりが一目で分かる（実際の画面）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. 再生 ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid flip">
+      <div class="copy">
+        <p class="eyebrow">HISTORY · 読み返せる</p>
+        <h2>見やすい、<br />ハンドヒストリー</h2>
+        <p class="body">
+          ストリートごとに 1 手ずつ、ボードも額も 1 画面で追えます。
+          ▶ を押せば、チップが出てボードがめくれる再生にも。
         </p>
         <ul class="points">
           <li><b>1 手ずつでも、流しっぱなしでも。</b>▶ で自動再生、送り戻しで 1 手ずつ。速度も変えられます。</li>
@@ -1011,86 +1046,13 @@
   </div>
 </section>
 
-<!-- ============ 4. 共有 ============ -->
-<section class="street-sec">
-  <div class="wrap">
-    <div class="sec-grid flip">
-      <div class="copy">
-        <p class="eyebrow">SHARE · みんなに見てもらう</p>
-        <h2>そのハンド、<br />そのまま見せられる</h2>
-        <p class="body">
-          「さっきの AK どう打つ？」が、口で説明しなくても伝わります。
-          ⋯ から 1 タップで、文と画像の両方が出ます。
-        </p>
-        <ul class="points">
-          <li><b>読める形で出る。</b>ストリートごとのアクションが 1 行ずつ。LINE でも X でも Discord でも、貼ればそのまま読めます。</li>
-          <li><b>卓の画像も一緒に付く。</b>ボード・席・結果が乗った 1 枚。読まずに見せたい相手にはこちら。</li>
-          <li><b>画像で保存も。</b>共有しないハンドも、写真に残しておけます。</li>
-        </ul>
-      </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner">
-            <div class="bar">
-              <span class="title">共有</span>
-              <span class="acts"><span class="chip-btn sq">✕</span></span>
-            </div>
-            <div class="screen">
-              <!-- 実装の shareHand が組む文面そのもの -->
-              <div class="share-text mono">むさぽ渋谷 · 1/3 · BB
-<b>Hand:</b> A♥ K♦
-<b>Board:</b> Q♠ 7♥ 2♦ K♣ 9♠
-<b>PREFLOP:</b> CO raise 600,
-  BB raise 2400, CO call 2400
-<b>FLOP:</b> BB bet 1200, CO call 1200
-<b>TURN:</b> BB check, CO bet 1800,
-  BB call 1800
-<b>BB WIN</b> · Two Pair
-<b>Result:</b> +7800</div>
-
-              <div class="share-actions">
-                <span class="share-chip">💬 LINE</span>
-                <span class="share-chip">𝕏 ポスト</span>
-                <span class="share-chip">📷 保存</span>
-              </div>
-
-              <!-- 画像カード（卓の切り抜きが添付される） -->
-              <p class="dlg-label" style="margin-top:14px">🖼 添付される画像</p>
-              <div style="border:1px solid var(--s800); border-radius:14px; overflow:hidden; background:var(--s950)">
-                <div class="stage" style="aspect-ratio: 370/210">
-                  <div class="felt" style="top:8%; bottom:8%; left:4%; right:4%"></div>
-                  <div class="board" style="top:38%">
-                    <span class="card s sz-board"><b>Q</b><i>♠</i></span>
-                    <span class="card h sz-board"><b>7</b><i>♥</i></span>
-                    <span class="card d sz-board"><b>2</b><i>♦</i></span>
-                    <span class="card c sz-board"><b>K</b><i>♣</i></span>
-                    <span class="card s sz-board"><b>9</b><i>♠</i></span>
-                  </div>
-                  <div class="showdown mono" style="opacity:1; top:58%">
-                    <div>
-                      <div class="who">BB WIN</div>
-                      <div class="net">+7,800<small>(39.0bb)</small></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="caption">共有 — 文でも、画像でも</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 5. 収支・一覧 ============ -->
 <section class="street-sec">
   <div class="wrap">
     <div class="sec-grid">
       <div class="copy">
         <p class="eyebrow">CASH OUT</p>
-        <h2>収支は、<br />勝手に出る</h2>
+        <h2>収支は、<br />自動で計算</h2>
         <p class="body">
           店ごとにレートとレーキを一度入れておけば、あとは選ぶだけ。
           bb 換算まで出るので、レートの違う日をまたいでも比べられます。
@@ -1292,87 +1254,91 @@
     $('vidCap').textContent = CAP_IN;
   }
 
-  // 台本。UTG〜CO が畳み、BTN（Hero）が 2bb オープン → BB コール →
-  // フロップで Hero が 17 → ターンはチェックで回り → リバーで BB の 16 をコール。
+  // 台本。プリフロップは**スマートフォールド**（打つ席を直接タップすると、
+  // 間の席がまとめてフォールドする ―― action-flow.ts の autoActionsBetween）。
+  // BTN が 2bb オープン → BB コール → フロップ 17 → ターンはチェックで回り →
+  // リバーで BB の 16 をコール。
   var STEPS = [
-    [600,   function () { tapEl($('btnFold')); fold('utg'); setActing('utg1'); }],
-    [1050,  function () { tapEl($('btnFold')); fold('utg1'); setActing('utg2'); }],
-    [1500,  function () { tapEl($('btnFold')); fold('utg2'); setActing('lj'); }],
-    [1950,  function () { tapEl($('btnFold')); fold('lj'); setActing('hj'); }],
-    [2400,  function () { tapEl($('btnFold')); fold('hj'); setActing('co'); }],
-    [2850,  function () { tapEl($('btnFold')); fold('co'); setActing('btn'); }],
-    [3650,  function () { tapEl($('btnRaise')); showPad(OPEN_PRESETS, '0'); }],
-    [4400,  function () { tapEl($('pr1')); amt('6'); }],
-    [5050,  function () {
+    [1000,  function () {
+      // UTG の番で Hero の席をタップ → UTG〜CO が連鎖でフォールド
+      tapEl(seats.btn.querySelector('.sbox'));
+      ['utg', 'utg1', 'utg2', 'lj', 'hj', 'co'].forEach(function (k, i) {
+        timers.push(setTimeout(function () { fold(k); }, 150 + i * 110));
+      });
+      timers.push(setTimeout(function () { setActing('btn'); }, 150));
+    }],
+    [2600,  function () { tapEl($('btnRaise')); showPad(OPEN_PRESETS, '0'); }],
+    [3700,  function () { tapEl($('pr1')); amt('6'); }],
+    [4700,  function () {
       tapEl($('padOk')); hidePad();
       wag('w-btn', 'RAISE', '6'); hist('r1'); stack('btn', '347');
       setActing('sb'); btnMode('facing', '5');
     }],
-    [5650,  function () { tapEl($('btnFold')); fold('sb'); wag('w-sb', null); setActing('bb'); btnMode('facing', '3'); }],
-    [6300,  function () {
+    [5700,  function () { tapEl($('btnFold')); fold('sb'); wag('w-sb', null); setActing('bb'); btnMode('facing', '3'); }],
+    [6700,  function () {
       tapEl($('btnCall'));
       wag('w-bb', 'CALL', '6'); hist('r2'); stack('bb', '422');
       setActing(null);
       // 2 人になった瞬間、見出しが記録から立つ（suggestHandTitle）
       $('handTitle').textContent = 'BTN vs BB SRP';
     }],
-    [7100,  function () {
+    [7900,  function () {
       street('t-flop', 'c-flop', 'flop');
-      flip('bf1'); setTimeout(function () { flip('bf2'); }, 130); setTimeout(function () { flip('bf3'); }, 260);
+      flip('bf1'); setTimeout(function () { flip('bf2'); }, 150); setTimeout(function () { flip('bf3'); }, 300);
       pot('13'); btnMode('check'); setActing('bb');
     }],
-    [7950,  function () { tapEl($('btnCall')); hist('r3'); setActing('btn'); }],
-    [8650,  function () { tapEl($('btnRaise')); showPad(BET_FLOP, '0'); }],
-    [9300,  function () { tapEl($('k1')); amt('1'); }],
-    [9520,  function () { tapEl($('k7')); amt('17'); }],
-    [10100, function () {
+    [9100,  function () { tapEl($('btnCall')); hist('r3'); setActing('btn'); }],
+    [10200, function () { tapEl($('btnRaise')); showPad(BET_FLOP, '0'); }],
+    [11300, function () { tapEl($('k1')); amt('1'); }],
+    [11650, function () { tapEl($('k7')); amt('17'); }],
+    [12600, function () {
       tapEl($('padOk')); hidePad();
       wag('w-btn', 'BET', '17'); hist('r4'); stack('btn', '330');
       setActing('bb'); btnMode('facing', '17');
     }],
-    [10850, function () {
+    [13800, function () {
       tapEl($('btnCall'));
       wag('w-bb', 'CALL', '17'); hist('r5'); stack('bb', '405');
       setActing(null);
     }],
-    [11650, function () {
+    [15000, function () {
       street('t-turn', 'c-turn', 'turn');
       flip('bf4');
       pot('47'); btnMode('check'); setActing('bb');
     }],
-    [12400, function () { tapEl($('btnCall')); hist('r6'); setActing('btn'); }],
-    [13050, function () { tapEl($('btnCall')); hist('r7'); setActing(null); }],
-    [13750, function () {
+    [16200, function () { tapEl($('btnCall')); hist('r6'); setActing('btn'); }],
+    [17200, function () { tapEl($('btnCall')); hist('r7'); setActing(null); }],
+    [18400, function () {
       street('t-riv', 'c-riv', 'riv');
       flip('bf5');
       btnMode('check'); setActing('bb');
     }],
-    [14500, function () { tapEl($('btnRaise')); showPad(BET_RIVER, '0'); }],
-    [15200, function () { tapEl($('pr1')); amt('16'); }],
-    [15850, function () {
+    [19600, function () { tapEl($('btnRaise')); showPad(BET_RIVER, '0'); }],
+    [20700, function () { tapEl($('pr1')); amt('16'); }],
+    [21700, function () {
       tapEl($('padOk')); hidePad();
       wag('w-bb', 'BET', '16'); hist('r8'); stack('bb', '389');
       setActing('btn'); btnMode('facing', '16');
     }],
-    [16650, function () {
+    [22900, function () {
       tapEl($('btnCall'));
       wag('w-btn', 'CALL', '16'); hist('r9'); stack('btn', '314');
       setActing(null);
     }],
-    [17350, function () {
+    [23900, function () {
       // ショーダウン。相手の K♦Q♠ が開いて、履歴に BTN WIN が立つ
-      flip('oc1'); setTimeout(function () { flip('oc2'); }, 130);
+      flip('oc1'); setTimeout(function () { flip('oc2'); }, 150);
       hist('r10');
     }],
-    [19100, function () {
+    [26200, function () {
       $('scIn').classList.remove('on');
       $('scPl').classList.add('on');
       $('vidCap').textContent = CAP_PL;
     }],
-    [19700, function () { $('row-old').classList.add('show'); }],
-    [20250, function () { $('row-new').classList.add('show'); }],
+    [26900, function () { $('row-old').classList.add('show'); }],
+    [27600, function () { $('row-new').classList.add('show'); }],
   ];
-  var LOOP_MS = 25800;
+  var LOOP_MS = 34500;
 
   var timers = [];
   function run() {
