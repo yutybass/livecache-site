@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ホーム — LiveCache</title>
+<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。記録はすべて端末内に保存されます。">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxNDFCMkUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMjA2MTciLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cGF0aCBpZD0ic3BhZGUiIGQ9Ik01MCw2IEM1MCw2IDg4LDM2IDg4LDYwIEM4OCw3MyA3OSw4MSA2OCw4MSBDNjEsODEgNTUsNzggNTEsNzIgQzU0LDg0IDYwLDkwIDY2LDk0IEwzNCw5NCBDNDAsOTAgNDYsODQgNDksNzIgQzQ1LDc4IDM5LDgxIDMyLDgxIEMyMSw4MSAxMiw3MyAxMiw2MCBDMTIsMzYgNTAsNiA1MCw2IFoiLz4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCNiZykiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0ODYgNTUyKSBzY2FsZSgxLjEwNDUpIHRyYW5zbGF0ZSg4Ny4zIC0xOS45KSI+CiAgICAgIDxtYXNrIGlkPSJjdXQiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9Ii0yMDAwIiB5PSItMjAwMCIgd2lkdGg9IjQwMDAiIGhlaWdodD0iNDAwMCI+CiAgICAgICAgPHJlY3QgeD0iLTIwMDAiIHk9Ii0yMDAwIiB3aWR0aD0iNDAwMCIgaGVpZ2h0PSI0MDAwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICAgICAgPHJlY3QgeD0iLTE3MSIgeT0iLTIzMSIgd2lkdGg9IjM0MiIgaGVpZ2h0PSI0NjIiIHJ4PSI1NSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIwIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGcgbWFzaz0idXJsKCNjdXQpIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgMCAzMzApIj48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48L2c+PC9nPgogICAgICA8Zz48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48dXNlIGhyZWY9IiNzcGFkZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTk2IC05Nikgc2NhbGUoMS45MikiIGZpbGw9IiNGRkZGRkYiLz48L2c+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjgwMCIgY3k9IjIxNiIgcj0iNTQiIGZpbGw9IiNFRjQ0NDQiLz4KPC9zdmc+">
+<link rel="stylesheet" href="./_style.css">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxNDFCMkUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMjA2MTciLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cGF0aCBpZD0ic3BhZGUiIGQ9Ik01MCw2IEM1MCw2IDg4LDM2IDg4LDYwIEM4OCw3MyA3OSw4MSA2OCw4MSBDNjEsODEgNTUsNzggNTEsNzIgQzU0LDg0IDYwLDkwIDY2LDk0IEwzNCw5NCBDNDAsOTAgNDYsODQgNDksNzIgQzQ1LDc4IDM5LDgxIDMyLDgxIEMyMSw4MSAxMiw3MyAxMiw2MCBDMTIsMzYgNTAsNiA1MCw2IFoiLz4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCNiZykiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0ODYgNTUyKSBzY2FsZSgxLjEwNDUpIHRyYW5zbGF0ZSg4Ny4zIC0xOS45KSI+CiAgICAgIDxtYXNrIGlkPSJjdXQiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9Ii0yMDAwIiB5PSItMjAwMCIgd2lkdGg9IjQwMDAiIGhlaWdodD0iNDAwMCI+CiAgICAgICAgPHJlY3QgeD0iLTIwMDAiIHk9Ii0yMDAwIiB3aWR0aD0iNDAwMCIgaGVpZ2h0PSI0MDAwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICAgICAgPHJlY3QgeD0iLTE3MSIgeT0iLTIzMSIgd2lkdGg9IjM0MiIgaGVpZ2h0PSI0NjIiIHJ4PSI1NSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIwIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGcgbWFzaz0idXJsKCNjdXQpIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgMCAzMzApIj48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48L2c+PC9nPgogICAgICA8Zz48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48dXNlIGhyZWY9IiNzcGFkZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTk2IC05Nikgc2NhbGUoMS45MikiIGZpbGw9IiNGRkZGRkYiLz48L2c+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjgwMCIgY3k9IjIxNiIgcj0iNTQiIGZpbGw9IiNFRjQ0NDQiLz4KPC9zdmc+" alt=""><b>Live <em>Cache</em></b></a>
+    <nav>
+      <a href="./" aria-current="page">ホーム</a>
+      <a href="./support.html">サポート</a>
+      <a href="./privacy.html">プライバシー</a>
+      <a href="./terms.html">利用規約</a>
+    </nav>
+  </div>
+</header>
+<main><div class="wrap">
+<p class="eyebrow">LIVE POKER · HAND TRACKER</p>
+<h1>Live <span style="color:var(--indigo)">Cache</span></h1>
+<p class="lede">卓のスピードで打ち込んで、動画のように再生する。誰と打ったかごと。</p>
+<p class="updated">iOS 向け</p>
+
+<div class="grid">
+  <div class="card">
+    <h3>卓のスピードに追いつく</h3>
+    <p>次に打つ席が光るので、押すだけ。額はポット比から選べます。＋ を押した時点で記録は生まれているので、途中でやめても残ります。</p>
+  </div>
+  <div class="card">
+    <h3>誰と打ったかまで残る</h3>
+    <p>席に人を座らせておくと、その人のページにハンドが並びます。しかも相手の席・相手の手札・相手の収支で。</p>
+  </div>
+  <div class="card">
+    <h3>動画のように再生</h3>
+    <p>打ち込んだハンドは 1 手ずつ流し直せます。チップが出て、ボードがめくれて、決着が立ち上がる。</p>
+  </div>
+  <div class="card">
+    <h3>そのまま見せられる</h3>
+    <p>文と画像の両方で共有できます。「さっきの AK どう打つ？」が、口で説明しなくても伝わります。</p>
+  </div>
+</div>
+
+<h2>記録は、この端末から出ません</h2>
+<p>
+  対戦相手についてのメモは、人に見せるためのものではありません。だから最初から、外へ送る作りにしていません。
+  記録はすべて端末内に保存され、サーバーへ送る仕組みそのものがありません。広告も、利用状況の解析もありません。
+</p>
+<p>詳しくは<a href="./privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+
+<h2>お問い合わせ</h2>
+<p>ご質問・不具合のご連絡は<a href="./support.html">サポート</a>から。</p>
+
+</div></main>
+<footer><div class="wrap">
+  <span>LiveCache</span>
+  <span>
+    <a href="./support.html">サポート</a> ·
+    <a href="./privacy.html">プライバシーポリシー</a> ·
+    <a href="./terms.html">利用規約</a>
+  </span>
+</div></footer>
+</body>
+</html>

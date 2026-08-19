@@ -1,0 +1,79 @@
+/*
+  ストアに出す 3 枚（トップ・プライバシー・サポート）で使う 1 枚。
+
+  アプリと同じ暗い世界にする。App Store から飛んできた人が、
+  同じものの続きだと分かるように。
+
+  明暗は切り替えない（アプリが暗い画面しか持たないため）。ただし地も字も
+  必ず自分で塗る ―― 宿主の地を借りない。
+*/
+:root {
+  --page: #06090F;
+  --surface: #0E1420;
+  --line: #1D2941;
+  --fg: #EDF1F8;
+  --fg-2: #A6B2C6;
+  --fg-3: #6C7A92;
+  --indigo: #A5B4FC;
+  --gutter: clamp(20px, 5vw, 40px);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---- 上の帯 ---- */
+header.bar {
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  background: #06090FEE;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+.bar .wrap { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
+.brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
+.brand b { font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
+.brand b em { font-style: normal; color: var(--indigo); }
+nav { margin-left: auto; display: flex; gap: 18px; }
+nav a { color: var(--fg-3); text-decoration: none; font-size: 13.5px; font-weight: 600; }
+nav a:hover, nav a[aria-current="page"] { color: var(--fg); }
+
+/* ---- 本文 ---- */
+main { padding: clamp(40px, 8vw, 72px) 0 96px; }
+.eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .2em; color: var(--indigo); margin: 0 0 12px; }
+h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.25; letter-spacing: -.03em; font-weight: 800; margin: 0 0 12px; text-wrap: balance; }
+h2 { font-size: 18px; font-weight: 700; letter-spacing: -.01em; margin: 40px 0 10px; }
+h3 { font-size: 15px; font-weight: 700; margin: 26px 0 6px; }
+p { margin: 0 0 16px; color: var(--fg-2); }
+p.lede { font-size: 17px; color: var(--fg-2); margin-bottom: 8px; }
+.updated { font-size: 12.5px; color: var(--fg-3); margin: 0 0 40px; }
+ul { margin: 0 0 16px; padding-left: 1.3em; color: var(--fg-2); }
+li { margin-bottom: 7px; }
+strong { color: var(--fg); font-weight: 700; }
+a { color: var(--indigo); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; margin: 0 0 14px; }
+.card h3 { margin-top: 0; }
+.card p:last-child { margin-bottom: 0; }
+
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+footer { border-top: 1px solid var(--line); padding: 26px 0 46px; font-size: 12.5px; color: var(--fg-3); }
+footer .wrap { display: flex; gap: 14px 24px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+footer a { color: var(--fg-3); text-decoration: none; }
+footer a:hover { color: var(--fg-2); }
