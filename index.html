@@ -395,7 +395,7 @@
   .vid .wager .wl { font-size: 7px; font-weight: 800; letter-spacing: .08em; color: var(--s400); line-height: 1; }
   .vid .wager .amt { font-size: 10.5px; font-weight: 800; color: #fff; line-height: 1; margin-top: 1px; }
   .dbtn { position: absolute; width: 16px; height: 16px; border-radius: 999px; background: #fff; color: #0F172A; font-size: 9px; font-weight: 900; display: grid; place-items: center; transform: translate(-50%, -50%); }
-  .card.ghost { background: #1E293B99; }
+  .card.blank { background: #1E293B99; }
   /* 伏せ札の上に表を重ねる枠。inline のままだと行送りぶん face が伸びる */
   .slot { position: relative; display: inline-flex; }
   /* ボード札は実機の比率に合わせて一回り小さく（実機: 幅の 7.4%） */
@@ -580,11 +580,11 @@
                     <div class="felt" style="left:9%; right:9%; top:31%; bottom:2%"></div>
 
                     <div class="board" style="top:51%">
-                      <span class="slot"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf1" style="position:absolute; inset:0; opacity:0"><b>A</b><i>♠</i></span></span>
-                      <span class="slot"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf2" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♥</i></span></span>
-                      <span class="slot"><span class="card ghost sz-board"></span><span class="card c sz-board face" id="bf3" style="position:absolute; inset:0; opacity:0"><b>9</b><i>♣</i></span></span>
-                      <span class="slot"><span class="card ghost sz-board"></span><span class="card h sz-board face" id="bf4" style="position:absolute; inset:0; opacity:0"><b>5</b><i>♥</i></span></span>
-                      <span class="slot"><span class="card ghost sz-board"></span><span class="card s sz-board face" id="bf5" style="position:absolute; inset:0; opacity:0"><b>4</b><i>♠</i></span></span>
+                      <span class="slot"><span class="card blank sz-board"></span><span class="card s sz-board face" id="bf1" style="position:absolute; inset:0; opacity:0"><b>A</b><i>♠</i></span></span>
+                      <span class="slot"><span class="card blank sz-board"></span><span class="card h sz-board face" id="bf2" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♥</i></span></span>
+                      <span class="slot"><span class="card blank sz-board"></span><span class="card c sz-board face" id="bf3" style="position:absolute; inset:0; opacity:0"><b>9</b><i>♣</i></span></span>
+                      <span class="slot"><span class="card blank sz-board"></span><span class="card h sz-board face" id="bf4" style="position:absolute; inset:0; opacity:0"><b>5</b><i>♥</i></span></span>
+                      <span class="slot"><span class="card blank sz-board"></span><span class="card s sz-board face" id="bf5" style="position:absolute; inset:0; opacity:0"><b>4</b><i>♠</i></span></span>
                     </div>
                     <div class="center-info" style="top:60%">
                       <div>
@@ -595,38 +595,38 @@
 
                     <!-- 席の配置は実機と同じ（Hero が下の中央、上に UTG の列） -->
                     <div class="seat" id="s-utg" style="left:30%; top:21%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat" id="s-utg1" style="left:50%; top:21%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat" id="s-utg2" style="left:70%; top:21%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat" id="s-bb" style="left:11%; top:39%">
                       <div class="hole">
-                        <span class="slot"><span class="card ghost sz-seat"></span><span class="card d sz-seat face" id="oc1" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♦</i></span></span>
-                        <span class="slot"><span class="card ghost sz-seat"></span><span class="card s sz-seat face" id="oc2" style="position:absolute; inset:0; opacity:0"><b>Q</b><i>♠</i></span></span>
+                        <span class="slot"><span class="card blank sz-seat"></span><span class="card d sz-seat face" id="oc1" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♦</i></span></span>
+                        <span class="slot"><span class="card blank sz-seat"></span><span class="card s sz-seat face" id="oc2" style="position:absolute; inset:0; opacity:0"><b>Q</b><i>♠</i></span></span>
                       </div>
                       <div class="sbox"><span class="glow"></span><span class="pill">BB</span><span class="nm">プレイヤーA</span><span class="stk mono" id="stk-bb">428</span></div>
                     </div>
                     <div class="seat" id="s-lj" style="left:89%; top:39%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat" id="s-sb" style="left:11%; top:66%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat" id="s-hj" style="left:89%; top:66%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat" id="s-co" style="left:65%; top:85%">
-                      <div class="hole"><span class="card ghost sz-seat"></span><span class="card ghost sz-seat"></span></div>
+                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
                       <div class="sbox"><span class="glow"></span><span class="pill">CO</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
                     </div>
                     <div class="seat myseat" id="s-btn" style="left:34.5%; top:85%">
