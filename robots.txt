@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yutybass.github.io/livecache-site/sitemap.xml

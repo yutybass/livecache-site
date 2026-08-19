@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141B2E"/><stop offset="1" stop-color="#020617"/>
+    </linearGradient>
+    <path id="spade" d="M50,6 C50,6 88,36 88,60 C88,73 79,81 68,81 C61,81 55,78 51,72 C54,84 60,90 66,94 L34,94 C40,90 46,84 49,72 C45,78 39,81 32,81 C21,81 12,73 12,60 C12,36 50,6 50,6 Z"/>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g transform="translate(486 552) scale(1.1045) translate(87.3 -19.9)">
+      <mask id="cut" maskUnits="userSpaceOnUse" x="-2000" y="-2000" width="4000" height="4000">
+        <rect x="-2000" y="-2000" width="4000" height="4000" fill="#FFFFFF"/>
+        <rect x="-171" y="-231" width="342" height="462" rx="55" fill="#000000" stroke="none" stroke-width="20"/>
+      </mask>
+      <g mask="url(#cut)"><g transform="rotate(-20 0 330)"><rect x="-146" y="-206" width="292" height="412" rx="30" fill="none" stroke="#FFFFFF" stroke-width="20"/></g></g>
+      <g><rect x="-146" y="-206" width="292" height="412" rx="30" fill="none" stroke="#FFFFFF" stroke-width="20"/><use href="#spade" transform="translate(-96 -96) scale(1.92)" fill="#FFFFFF"/></g>
+  </g>
+  <circle cx="800" cy="216" r="54" fill="#EF4444"/>
+</svg>

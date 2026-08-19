@@ -3,66 +3,1051 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ホーム — LiveCache</title>
-<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。記録はすべて端末内に保存されます。">
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxNDFCMkUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMjA2MTciLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cGF0aCBpZD0ic3BhZGUiIGQ9Ik01MCw2IEM1MCw2IDg4LDM2IDg4LDYwIEM4OCw3MyA3OSw4MSA2OCw4MSBDNjEsODEgNTUsNzggNTEsNzIgQzU0LDg0IDYwLDkwIDY2LDk0IEwzNCw5NCBDNDAsOTAgNDYsODQgNDksNzIgQzQ1LDc4IDM5LDgxIDMyLDgxIEMyMSw4MSAxMiw3MyAxMiw2MCBDMTIsMzYgNTAsNiA1MCw2IFoiLz4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCNiZykiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0ODYgNTUyKSBzY2FsZSgxLjEwNDUpIHRyYW5zbGF0ZSg4Ny4zIC0xOS45KSI+CiAgICAgIDxtYXNrIGlkPSJjdXQiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9Ii0yMDAwIiB5PSItMjAwMCIgd2lkdGg9IjQwMDAiIGhlaWdodD0iNDAwMCI+CiAgICAgICAgPHJlY3QgeD0iLTIwMDAiIHk9Ii0yMDAwIiB3aWR0aD0iNDAwMCIgaGVpZ2h0PSI0MDAwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICAgICAgPHJlY3QgeD0iLTE3MSIgeT0iLTIzMSIgd2lkdGg9IjM0MiIgaGVpZ2h0PSI0NjIiIHJ4PSI1NSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIwIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGcgbWFzaz0idXJsKCNjdXQpIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgMCAzMzApIj48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48L2c+PC9nPgogICAgICA8Zz48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48dXNlIGhyZWY9IiNzcGFkZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTk2IC05Nikgc2NhbGUoMS45MikiIGZpbGw9IiNGRkZGRkYiLz48L2c+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjgwMCIgY3k9IjIxNiIgcj0iNTQiIGZpbGw9IiNFRjQ0NDQiLz4KPC9zdmc+">
-<link rel="stylesheet" href="./_style.css">
-</head>
-<body>
-<header class="bar">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDI0IiBoZWlnaHQ9IjEwMjQiIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZyIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMxNDFCMkUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwMjA2MTciLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8cGF0aCBpZD0ic3BhZGUiIGQ9Ik01MCw2IEM1MCw2IDg4LDM2IDg4LDYwIEM4OCw3MyA3OSw4MSA2OCw4MSBDNjEsODEgNTUsNzggNTEsNzIgQzU0LDg0IDYwLDkwIDY2LDk0IEwzNCw5NCBDNDAsOTAgNDYsODQgNDksNzIgQzQ1LDc4IDM5LDgxIDMyLDgxIEMyMSw4MSAxMiw3MyAxMiw2MCBDMTIsMzYgNTAsNiA1MCw2IFoiLz4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgZmlsbD0idXJsKCNiZykiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0ODYgNTUyKSBzY2FsZSgxLjEwNDUpIHRyYW5zbGF0ZSg4Ny4zIC0xOS45KSI+CiAgICAgIDxtYXNrIGlkPSJjdXQiIG1hc2tVbml0cz0idXNlclNwYWNlT25Vc2UiIHg9Ii0yMDAwIiB5PSItMjAwMCIgd2lkdGg9IjQwMDAiIGhlaWdodD0iNDAwMCI+CiAgICAgICAgPHJlY3QgeD0iLTIwMDAiIHk9Ii0yMDAwIiB3aWR0aD0iNDAwMCIgaGVpZ2h0PSI0MDAwIiBmaWxsPSIjRkZGRkZGIi8+CiAgICAgICAgPHJlY3QgeD0iLTE3MSIgeT0iLTIzMSIgd2lkdGg9IjM0MiIgaGVpZ2h0PSI0NjIiIHJ4PSI1NSIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjIwIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGcgbWFzaz0idXJsKCNjdXQpIj48ZyB0cmFuc2Zvcm09InJvdGF0ZSgtMjAgMCAzMzApIj48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48L2c+PC9nPgogICAgICA8Zz48cmVjdCB4PSItMTQ2IiB5PSItMjA2IiB3aWR0aD0iMjkyIiBoZWlnaHQ9IjQxMiIgcng9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiLz48dXNlIGhyZWY9IiNzcGFkZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTk2IC05Nikgc2NhbGUoMS45MikiIGZpbGw9IiNGRkZGRkYiLz48L2c+CiAgPC9nPgogIDxjaXJjbGUgY3g9IjgwMCIgY3k9IjIxNiIgcj0iNTQiIGZpbGw9IiNFRjQ0NDQiLz4KPC9zdmc+" alt=""><b>Live <em>Cache</em></b></a>
-    <nav>
-      <a href="./" aria-current="page">ホーム</a>
-      <a href="./support.html">サポート</a>
-      <a href="./privacy.html">プライバシー</a>
-      <a href="./terms.html">利用規約</a>
-    </nav>
-  </div>
-</header>
-<main><div class="wrap">
-<p class="eyebrow">LIVE POKER · HAND TRACKER</p>
-<h1>Live <span style="color:var(--indigo)">Cache</span></h1>
-<p class="lede">卓のスピードで打ち込んで、動画のように再生する。誰と打ったかごと。</p>
-<p class="updated">iOS 向け</p>
+<title>LiveCache — ライブポーカーのハンドと対戦相手を記録する</title>
+<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。">
+<link rel="canonical" href="https://yutybass.github.io/livecache-site/">
+<link rel="icon" href="./img/icon.svg">
+<link rel="apple-touch-icon" href="./img/icon.svg">
 
-<div class="grid">
-  <div class="card">
-    <h3>卓のスピードに追いつく</h3>
-    <p>次に打つ席が光るので、押すだけ。額はポット比から選べます。＋ を押した時点で記録は生まれているので、途中でやめても残ります。</p>
-  </div>
-  <div class="card">
-    <h3>誰と打ったかまで残る</h3>
-    <p>席に人を座らせておくと、その人のページにハンドが並びます。しかも相手の席・相手の手札・相手の収支で。</p>
-  </div>
-  <div class="card">
-    <h3>動画のように再生</h3>
-    <p>打ち込んだハンドは 1 手ずつ流し直せます。チップが出て、ボードがめくれて、決着が立ち上がる。</p>
-  </div>
-  <div class="card">
-    <h3>そのまま見せられる</h3>
-    <p>文と画像の両方で共有できます。「さっきの AK どう打つ？」が、口で説明しなくても伝わります。</p>
+<!-- リンクを貼ったときに出る 1 枚。X・LINE・Discord で効く -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LiveCache">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://yutybass.github.io/livecache-site/">
+<meta property="og:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
+<meta property="og:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。">
+<meta property="og:image" content="https://yutybass.github.io/livecache-site/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="LiveCache — Track your hands. Read the table.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
+<meta name="twitter:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。">
+<meta name="twitter:image" content="https://yutybass.github.io/livecache-site/img/og.png">
+
+<meta name="theme-color" content="#06090F">
+
+<!-- 検索側に「これはアプリだ」と伝える -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "LiveCache",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "iOS",
+  "inLanguage": "ja",
+  "url": "https://yutybass.github.io/livecache-site/",
+  "image": "https://yutybass.github.io/livecache-site/img/og.png",
+  "description": "ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+  "author": { "@type": "Person", "name": "YUTO YOSHIDA" }
+}
+</script>
+<style>
+
+  /*
+    夜の卓に寄せた 1 色。明暗の切り替えは持たない（アプリ自体が暗い画面しか
+    持たず、この頁はその続き）。ただし地も字も必ず自分で塗る。
+
+    画面の切り抜きは**実装と同じ値**で描く:
+      地 slate-950 / 面 slate-900 / 境界 slate-800 / 主操作 indigo-600
+      卓の布は既定の slate（border-slate-700/70 + bg-slate-800/40）
+      札は 4 色デッキ（♠ slate-600 ♥ red-800 ♦ sky-800 ♣ emerald-800）
+      席の配置は POSITION_PLACEMENTS の座標そのもの
+  */
+  :root {
+    --s950: #020617; --s900: #0F172A; --s850: #131C31; --s800: #1E293B;
+    --s700: #334155; --s600: #475569; --s500: #64748B; --s400: #94A3B8;
+    --s300: #CBD5E1; --s200: #E2E8F0; --s100: #F1F5F9;
+
+    --page: #06090F;
+    --line: #1D2941;
+    --line-soft: #16203288;
+
+    --fg: #EDF1F8; --fg-2: #A6B2C6; --fg-3: #6C7A92;
+
+    --indigo: #4F46E5; --indigo-500: #6366F1; --indigo-400: #818CF8; --indigo-300: #A5B4FC;
+
+    --win: #34D399; --lose: #FB7185; --orange: #FB923C; --amber: #FBBF24;
+
+    --suit-s: #475569; --suit-h: #991B1B; --suit-d: #075985; --suit-c: #065F46;
+
+    --gutter: clamp(20px, 5vw, 40px);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+      "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+    font-size: 16px; line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ---------- 見出しの型 ---------- */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 11px; font-weight: 800; letter-spacing: .22em;
+    color: var(--indigo-300); margin: 0 0 18px; white-space: nowrap;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; opacity: .55; }
+
+  h2 {
+    font-size: clamp(25px, 4.2vw, 38px); line-height: 1.28; letter-spacing: -.03em;
+    font-weight: 800; margin: 0 0 16px; text-wrap: balance;
+  }
+
+  p { margin: 0; }
+  .lede { font-size: clamp(16px, 2.1vw, 19px); color: var(--fg-2); max-width: 40ch; }
+  .body { font-size: 15.5px; color: var(--fg-2); max-width: 46ch; }
+
+  /* ---------- ヒーロー ---------- */
+  .hero { position: relative; padding: clamp(56px, 10vw, 104px) 0 clamp(56px, 9vw, 88px); overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; top: -430px; left: 50%;
+    width: 900px; height: 900px; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(99,102,241,.17) 0%, rgba(99,102,241,0) 62%);
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; }
+
+  .hero-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(44px,7vw,68px); align-items: center; }
+  @media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); } }
+
+  .wordmark { font-size: clamp(44px, 10vw, 82px); line-height: .92; letter-spacing: -.05em; font-weight: 800; }
+  .wordmark em { font-style: normal; color: var(--indigo-300); }
+  .claim { margin: 18px 0 0; font-size: clamp(15px,2.4vw,19px); color: var(--fg-2); font-weight: 500; }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; align-items: center; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--indigo); color: #fff; text-decoration: none;
+    font-size: 15px; font-weight: 700; padding: 13px 22px; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(79,70,229,.32); white-space: nowrap;
+  }
+  .ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--line); color: var(--fg-2); text-decoration: none;
+    font-size: 14px; font-weight: 600; padding: 12px 18px; border-radius: 12px; white-space: nowrap;
+  }
+  .cta:focus-visible, .ghost:focus-visible { outline: 2px solid var(--indigo-300); outline-offset: 3px; }
+  .platform { margin-top: 16px; font-size: 12.5px; color: var(--fg-3); letter-spacing: .04em; }
+
+  /* ================= 端末の枠 ================= */
+  .phone {
+    width: 100%; max-width: 372px; margin-inline: auto;
+    background: var(--s950);
+    border: 1px solid var(--s700);
+    border-radius: 28px; padding: 9px;
+    box-shadow: 0 34px 80px rgba(0,0,0,.62);
+  }
+  .phone-inner { border-radius: 20px; overflow: hidden; background: var(--s950); }
+
+  /*
+    実機のスクリーンショット。**ステータスバー（時計・電池）だけ切り落とす**。
+    加工はそれだけに留め、中身は撮ったまま出す（作ったモックだと言われないため）。
+    切り幅は元画像の比率から: 110px / 幅 869px = 12.66%（margin の % は幅基準）。
+  */
+  .shotcrop { overflow: hidden; }
+  .shot { display: block; width: 100%; margin-top: -12.66%; }
+
+  .bar { position: relative; display: flex; align-items: center; height: 44px; padding: 0 12px; border-bottom: 1px solid #1E293B8C; }
+  .bar .back { font-size: 22px; line-height: 1; color: var(--s400); padding-right: 6px; }
+  .bar .title { position: absolute; inset: 0; display: grid; place-items: center; font-size: 15px; font-weight: 600; color: #fff; pointer-events: none; }
+  .bar .title.left { place-items: center start; padding-left: 12px; }
+  .bar .acts { position: relative; margin-left: auto; display: flex; align-items: center; gap: 3px; }
+
+  .chip-btn {
+    height: 27px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+    background: #1E293BBF; color: var(--s300);
+    font-size: 11.5px; font-weight: 700; padding: 0 9px; white-space: nowrap;
+  }
+  .chip-btn.sq { width: 27px; padding: 0; }
+  .chip-btn.on { background: var(--indigo); color: #fff; }
+
+  .screen { padding: 12px; }
+
+  /* ストリートタブ（実装: 幅 50 のタブが slate-800/60 の帯、選択は indigo-600） */
+  .tabs-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+  .streets { display: inline-flex; gap: 2px; background: #1E293B99; border-radius: 9px; padding: 3px; }
+  .street-tab {
+    width: 46px; text-align: center;
+    font-size: 8.5px; font-weight: 700; letter-spacing: -.01em;
+    padding: 4px 0; border-radius: 6px; color: var(--s400); position: relative;
+  }
+  .legend { display: inline-flex; gap: 7px; font-size: 8.5px; color: var(--s500); align-items: center; }
+  .legend i { font-style: normal; display: inline-flex; align-items: center; gap: 3px; }
+  .legend i::before { content: ""; width: 8px; height: 8px; border-radius: 999px; border: 1px solid; }
+  .legend .act::before { border-color: var(--indigo-300); background: var(--indigo); }
+  .legend .in::before { border-color: var(--s500); background: var(--s600); }
+  .legend .fold::before { border-color: #33415580; background: #1E293B80; }
+
+  /* ---------- 卓 ---------- */
+  .stage { position: relative; width: 100%; aspect-ratio: 370 / 380; }
+  .felt {
+    position: absolute; left: 6%; right: 6%; top: 20.3%; bottom: 20.5%;
+    border-radius: 999px;
+    border: 2px solid #334155B3; background: #1E293B66;
+  }
+
+  .seat {
+    position: absolute; width: max-content;
+    transform: translate(-50%, -52%);
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .seat .hole { display: flex; gap: 2px; }
+  .sbox {
+    width: 62px; height: 48px; position: relative;
+    border-radius: 8px; border: 1px solid var(--s700); background: var(--s900);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    padding: 0 3px;
+  }
+  .pill {
+    font-size: 7px; font-weight: 900; letter-spacing: .02em;
+    border-radius: 4px; padding: 1px 4px; line-height: 1.4;
+    background: var(--s700); color: var(--s100); white-space: nowrap;
+  }
+  .nm { font-size: 8.5px; color: var(--s300); line-height: 1; max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .stk { font-size: 10px; font-weight: 700; color: var(--s100); line-height: 1; }
+
+  .seat.hero .pill { background: #9A3412; color: #FED7AA; }
+  .seat.folded .sbox { border-color: var(--s800); background: #0F172A66; opacity: .5; }
+  .seat.folded .pill { background: var(--s800); color: var(--s600); }
+  .seat.folded .nm, .seat.folded .stk { color: var(--s600); }
+  .seat.folded .hole { opacity: .35; }
+
+  .glow {
+    position: absolute; inset: -7px; border-radius: 12px;
+    background: radial-gradient(closest-side, rgba(99,102,241,.5), rgba(99,102,241,0));
+    opacity: 0; pointer-events: none;
+  }
+
+  .wager {
+    position: absolute; width: max-content; transform: translate(-50%,-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 2px; opacity: 0;
+  }
+  .wager .chipdot { width: 9px; height: 9px; border-radius: 999px; background: var(--indigo-400); border: 1.5px solid #C7D2FE; }
+  .wager .amt { font-size: 9.5px; font-weight: 700; color: #fff; line-height: 1; }
+
+  .board { position: absolute; left: 50%; top: 39%; transform: translate(-50%, -50%); width: max-content; display: flex; gap: 4px; }
+  .center-info { position: absolute; left: 0; right: 0; top: 53.5%; display: grid; place-items: center; text-align: center; }
+  .pot-label { font-size: 7.5px; font-weight: 800; letter-spacing: .12em; color: var(--s500); }
+  .pot-num { position: relative; height: 22px; width: 90px; }
+  .pot-num span {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-size: 19px; font-weight: 900; letter-spacing: -.02em; color: #fff; line-height: 1; opacity: 0;
+  }
+
+  .showdown { position: absolute; left: 0; right: 0; top: 47%; display: grid; place-items: center; text-align: center; opacity: 0; }
+  .showdown .who { font-size: 13px; font-weight: 900; letter-spacing: -.01em; text-transform: uppercase; color: var(--indigo-300); }
+  .showdown .handname { margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--s200); }
+  .showdown .net { margin-top: 4px; font-size: 13px; font-weight: 900; color: var(--win); }
+  .showdown .net small { font-size: 9px; font-weight: 700; color: #6EE7B7B3; margin-left: 3px; }
+
+  /* ---------- 札 ---------- */
+  .card {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    border-radius: 4px; color: #fff; line-height: 1; flex: none;
+  }
+  .card b { font-weight: 700; }
+  .card i { font-style: normal; margin-top: 1px; }
+  .card.s { background: var(--suit-s); } .card.h { background: var(--suit-h); }
+  .card.d { background: var(--suit-d); } .card.c { background: var(--suit-c); }
+  .card.back { background: #1E293B4D; border: 1px dashed var(--s600); }
+  .card.facedown { background: repeating-linear-gradient(45deg, #263349 0 3px, #1B2537 3px 6px); border: 1px solid #334155; }
+
+  .card.sz-seat { width: 20px; height: 28px; font-size: 11px; }
+  .card.sz-seat i { font-size: 8px; }
+  .card.sz-board { width: 28px; height: 39px; font-size: 16px; border-radius: 5px; }
+  .card.sz-board i { font-size: 11px; }
+  .card.sz-mini { width: 17px; height: 24px; font-size: 10px; border-radius: 3px; }
+  .card.sz-mini i { font-size: 8px; }
+  .card.sz-tiny { width: 14px; height: 20px; font-size: 9px; border-radius: 2px; }
+  .card.sz-tiny i { font-size: 7px; }
+
+  /* ---------- アクション履歴（compact） ---------- */
+  .cols { display: flex; gap: 5px; align-items: stretch; }
+  .colx { flex: 1; min-width: 0; border: 1px solid var(--s800); border-radius: 9px; background: #0F172A80; padding: 5px; }
+  .colx.dim { opacity: .38; }
+  .col-top { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+  .col-name { font-size: 7.5px; font-weight: 800; letter-spacing: .08em; color: var(--s500); }
+  .col-pot { margin-left: auto; font-size: 9px; font-weight: 800; color: var(--s400); }
+  .col-board { display: flex; gap: 2px; justify-content: center; margin-bottom: 4px; }
+
+  .act { display: flex; align-items: center; gap: 4px; font-size: 9.5px; padding: 2px 0; white-space: nowrap; }
+  .act .pos { font-size: 7.5px; font-weight: 900; border-radius: 3px; padding: 1px 4px; flex: none; background: var(--s700); color: var(--s100); }
+  .act .pos.me { background: #9A3412; color: #FED7AA; }
+  .act .t { font-weight: 800; }
+  .act .t.f { color: var(--s500); }
+  .act .t.x { color: #34D399B3; }
+  .act .t.c { color: var(--win); }
+  .act .t.b { color: var(--lose); }
+  .act .t.r { color: var(--orange); }
+  .act .n { margin-left: auto; color: var(--s300); font-weight: 700; }
+
+  .col-win {
+    flex: none; width: 58px;
+    border: 1px solid #4C4FBF66; border-radius: 9px; background: #1E1B4B66;
+    padding: 6px 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  }
+  .col-win .w { font-size: 9px; font-weight: 900; color: var(--indigo-300); white-space: nowrap; }
+  .col-win .n { font-size: 11px; font-weight: 800; color: var(--win); }
+  .col-win .bb { font-size: 7.5px; color: #6EE7B7AA; }
+
+  /* ---------- 入力ボタン・テンキー ---------- */
+  .act-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
+  .act-btn {
+    text-align: center; border-radius: 9px; padding: 10px 0;
+    font-size: 11.5px; font-weight: 800; letter-spacing: .03em;
+    background: var(--s800); white-space: nowrap;
+  }
+  .act-btn.fold { color: var(--s400); }
+  .act-btn.call { color: var(--win); }
+  .act-btn.raise { color: var(--orange); }
+
+  .pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 6px; }
+  .pad span { text-align: center; border-radius: 8px; padding: 8px 0; background: #1E293B99; color: var(--s200); font-size: 13px; font-weight: 700; }
+  .pad span.go { background: var(--indigo); color: #fff; font-size: 11px; letter-spacing: .06em; }
+
+  /* ---------- 再生の操作列 ---------- */
+  .replay-bar { margin-top: 10px; display: grid; gap: 8px; }
+  .scrub { position: relative; height: 5px; border-radius: 999px; background: #1E293B; overflow: visible; }
+  .scrub .fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: var(--indigo); width: 100%; }
+  .scrub .knob {
+    position: absolute; top: 50%; left: 100%;
+    width: 13px; height: 13px; border-radius: 999px;
+    background: #fff; transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 4px #6366F133;
+  }
+  .replay-ctl { display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .rbtn {
+    width: 34px; height: 34px; border-radius: 999px;
+    display: grid; place-items: center;
+    background: var(--s800); color: var(--s300); font-size: 13px;
+  }
+  .rbtn.play { width: 44px; height: 44px; background: var(--indigo); color: #fff; font-size: 16px; }
+  .speed { font-size: 11px; font-weight: 800; color: var(--s400); background: #1E293B99; border-radius: 999px; padding: 3px 10px; }
+
+  /* ---------- 共有 ---------- */
+  .share-text {
+    background: var(--s900); border: 1px solid var(--s800); border-radius: 14px;
+    padding: 12px 14px; font-size: 11px; line-height: 1.85; color: var(--s300);
+    white-space: pre; overflow-x: auto;
+  }
+  .share-text b { color: var(--s100); font-weight: 700; }
+  .share-actions { display: flex; gap: 7px; margin-top: 10px; }
+  .share-chip {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: var(--s800); border-radius: 10px; padding: 9px 0;
+    font-size: 11.5px; font-weight: 700; color: var(--s200); white-space: nowrap;
+  }
+
+  /* ---------- ハンド一覧の行 ---------- */
+  .hand-row { background: var(--s900); border-radius: 14px; padding: 10px 11px; }
+  .hand-row + .hand-row { margin-top: 9px; }
+  .hr-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .hr-date { font-size: 10px; color: var(--s500); white-space: nowrap; }
+  .badge { font-size: 9px; font-weight: 800; border-radius: 4px; padding: 1px 5px; white-space: nowrap; line-height: 1.6; }
+  .badge.pos { background: #1E293BB3; color: var(--s300); }
+  .badge.watch { background: #312E8166; color: var(--indigo-300); }
+  .badge.herox { background: #43140780; color: #FDBA74; }
+  .hr-acts { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .mini-btn { height: 19px; border-radius: 5px; padding: 0 6px; display: inline-flex; align-items: center; gap: 3px; background: #1E293BCC; font-size: 9px; font-weight: 800; color: var(--s400); white-space: nowrap; }
+  .mini-btn.del { color: var(--lose); }
+  .star { font-size: 12px; color: var(--s600); }
+  .star.on { color: var(--amber); }
+
+  .hr-body { display: flex; align-items: flex-start; gap: 4px; }
+  .hr-col { display: grid; gap: 4px; }
+  .hr-col.netcol { width: 74px; flex: none; }
+  .hr-col.board { margin-left: 10px; }
+  .hr-h { font-size: 8px; font-weight: 800; letter-spacing: .12em; color: var(--s500); white-space: nowrap; }
+  .hr-h.right { text-align: right; }
+  .hr-cards { display: flex; gap: 2px; flex-wrap: nowrap; }
+  .hr-net { text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 3px; white-space: nowrap; }
+  .hr-net .v { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+  .hr-net .v.up { color: var(--win); }
+  .hr-net .v.down { color: var(--lose); }
+  .hr-foot { display: flex; align-items: center; gap: 5px; margin-top: 9px; padding-top: 8px; border-top: 1px solid #1E293B99; font-size: 10px; color: var(--s500); min-width: 0; }
+  .hr-foot .sep { color: var(--s700); }
+  .hr-foot .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .hr-foot .pot { margin-left: auto; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .hr-foot .pot b { font-size: 11px; color: var(--indigo-300); }
+  .hr-net .u { font-size: 9.5px; color: var(--s500); font-weight: 700; }
+
+  /* ---------- プレイヤー詳細 ---------- */
+  .pd-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .avatar { width: 46px; height: 46px; border-radius: 999px; background: var(--s800); display: grid; place-items: center; font-size: 22px; flex: none; }
+  .pd-name { font-size: 20px; font-weight: 900; letter-spacing: -.02em; }
+  .sec-label { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 7px; }
+  .sec-label .l { font-size: 11px; font-weight: 700; color: var(--s400); }
+  .sec-label .go2 { font-size: 10px; font-weight: 800; color: var(--indigo-300); white-space: nowrap; }
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tag { font-size: 10px; font-weight: 700; border-radius: 999px; padding: 1px 8px; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .tag::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; flex: none; }
+  .tag.rose { background: #4C122580; color: #FDA4AF; }
+  .tag.amber { background: #45230780; color: #FCD34D; }
+  .tag.sky { background: #0C4A6E80; color: #7DD3FC; }
+  .memo-box { background: var(--s900); border-radius: 12px; padding: 10px 12px; font-size: 11.5px; line-height: 1.6; color: var(--s300); }
+  .frame { background: #0F172A80; border-radius: 14px; padding: 7px; }
+
+  /* ---------- 選ぶ札 ---------- */
+  .picks { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .pick { border: 1px solid var(--s800); background: var(--s900); border-radius: 11px; padding: 9px 10px; min-width: 0; }
+  .pick.on { border-color: #818CF866; background: #6366F133; }
+  .pick-name { font-size: 13.5px; font-weight: 600; color: var(--s200); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pick.on .pick-name { color: #C7D2FE; }
+  .pick-hint { font-size: 10.5px; color: var(--s500); margin-top: 2px; line-height: 1.45; }
+  .pick.on .pick-hint { color: #A5B4FCB3; }
+  .dlg-label { font-size: 11px; font-weight: 700; color: var(--s400); margin: 12px 0 6px; }
+  .dlg-label:first-child { margin-top: 0; }
+
+  /* ---------- 節 ---------- */
+  section.street-sec { padding: clamp(68px, 10vw, 116px) 0; border-top: 1px solid var(--line-soft); }
+  .sec-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(38px,6vw,60px); align-items: center; }
+  @media (min-width: 960px) {
+    .sec-grid { grid-template-columns: minmax(0,.95fr) minmax(0,1fr); }
+    .sec-grid.flip .copy { order: 2; }
+  }
+
+  .points { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+  .points li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--fg-2); line-height: 1.65; }
+  .points li::before {
+    content: ""; position: absolute; left: 4px; top: 10px;
+    width: 7px; height: 7px; border-radius: 2px; background: var(--indigo-400); transform: rotate(45deg);
+  }
+  .points b { color: var(--fg); font-weight: 700; }
+
+  .caption { margin-top: 14px; text-align: center; font-size: 11.5px; color: var(--fg-3); letter-spacing: .02em; }
+
+  /* ---------- 守り・締め ---------- */
+  .vault {
+    padding: clamp(64px,10vw,100px) 0; border-top: 1px solid var(--line-soft);
+    background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,.09), rgba(99,102,241,0) 58%);
+  }
+  .vault-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-top: 32px; }
+  .vault-card { background: #0B111B; border: 1px solid var(--line); border-radius: 14px; padding: 17px; }
+  .vault-card .k { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+  .vault-card .v { font-size: 12.5px; color: var(--fg-3); line-height: 1.6; }
+
+  .close { padding: clamp(76px,12vw,128px) 0; text-align: center; border-top: 1px solid var(--line-soft); }
+  .close .lede { margin-inline: auto; }
+  .close .cta-row { justify-content: center; }
+  .close .eyebrow { justify-content: center; }
+
+  footer { border-top: 1px solid var(--line-soft); padding: 28px 0 42px; font-size: 12.5px; color: var(--fg-3); }
+  .foot-grid { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; }
+
+  /* ==========================================================
+     再生アニメーション（16 秒ループ）。ヒーローの端末で 1 ハンドが流れ続ける。
+     `prefers-reduced-motion` では止め、決着まで進んだ姿を出す。
+     ========================================================== */
+  @media (prefers-reduced-motion: no-preference) {
+    .anim .step { animation: var(--kf) 16s linear infinite; }
+
+    @keyframes in06 { 0%,5.9% {opacity:0; transform:translateY(3px)} 6.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in16 { 0%,15.9% {opacity:0; transform:translateY(3px)} 16.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in22 { 0%,21.9% {opacity:0; transform:translateY(3px)} 22.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in38 { 0%,37.9% {opacity:0; transform:translateY(3px)} 38.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in44 { 0%,43.9% {opacity:0; transform:translateY(3px)} 44.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in58 { 0%,57.9% {opacity:0; transform:translateY(3px)} 58.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in64 { 0%,63.9% {opacity:0; transform:translateY(3px)} 64.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes in70 { 0%,69.9% {opacity:0; transform:translateY(3px)} 70.6%,97% {opacity:1; transform:none} 100% {opacity:0} }
+
+    @keyframes flip30 { 0%,29.9% {opacity:0; transform:scaleX(.2)} 31.2%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes flip31 { 0%,30.7% {opacity:0; transform:scaleX(.2)} 32%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes flip32 { 0%,31.5% {opacity:0; transform:scaleX(.2)} 32.8%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes flip52 { 0%,51.9% {opacity:0; transform:scaleX(.2)} 53.2%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes flip78 { 0%,77.9% {opacity:0; transform:scaleX(.2)} 79.2%,97% {opacity:1; transform:none} 100% {opacity:0} }
+    @keyframes back30 { 0%,29.9% {opacity:1} 30.9%,100% {opacity:0} }
+    @keyframes back52 { 0%,51.9% {opacity:1} 52.9%,100% {opacity:0} }
+    @keyframes back78 { 0%,77.9% {opacity:1} 78.9%,100% {opacity:0} }
+
+    @keyframes w06-30 { 0%,5.9% {opacity:0; transform:translate(-50%,-40%)} 6.8%,29% {opacity:1; transform:translate(-50%,-50%)} 30%,100% {opacity:0} }
+    @keyframes w16-30 { 0%,15.9% {opacity:0; transform:translate(-50%,-40%)} 16.8%,29% {opacity:1; transform:translate(-50%,-50%)} 30%,100% {opacity:0} }
+    @keyframes w22-30 { 0%,21.9% {opacity:0; transform:translate(-50%,-40%)} 22.8%,29% {opacity:1; transform:translate(-50%,-50%)} 30%,100% {opacity:0} }
+    @keyframes w38-52 { 0%,37.9% {opacity:0; transform:translate(-50%,-40%)} 38.8%,51% {opacity:1; transform:translate(-50%,-50%)} 52%,100% {opacity:0} }
+    @keyframes w44-52 { 0%,43.9% {opacity:0; transform:translate(-50%,-40%)} 44.8%,51% {opacity:1; transform:translate(-50%,-50%)} 52%,100% {opacity:0} }
+    @keyframes w64-78 { 0%,63.9% {opacity:0; transform:translate(-50%,-40%)} 64.8%,77% {opacity:1; transform:translate(-50%,-50%)} 78%,100% {opacity:0} }
+    @keyframes w70-78 { 0%,69.9% {opacity:0; transform:translate(-50%,-40%)} 70.8%,77% {opacity:1; transform:translate(-50%,-50%)} 78%,100% {opacity:0} }
+
+    @keyframes glowCO {
+      0%,3% {opacity:0} 4%,14% {opacity:1} 16%,20% {opacity:0}
+      21%,28% {opacity:1} 30%,42% {opacity:0} 43%,50% {opacity:1}
+      52%,62% {opacity:0} 63%,68% {opacity:1} 70%,100% {opacity:0}
+    }
+    @keyframes glowBB {
+      0%,14% {opacity:0} 16%,20% {opacity:1} 21%,35% {opacity:0}
+      36%,42% {opacity:1} 43%,55% {opacity:0} 56%,62% {opacity:1}
+      63%,68% {opacity:0} 69%,76% {opacity:1} 78%,100% {opacity:0}
+    }
+    @keyframes boxCO {
+      0%,3% {border-color:var(--s700); background:var(--s900)}
+      4%,14% {border-color:var(--indigo-400); background:#1E1B4B}
+      16%,20% {border-color:var(--s700); background:var(--s900)}
+      21%,28% {border-color:var(--indigo-400); background:#1E1B4B}
+      30%,42% {border-color:var(--s700); background:var(--s900)}
+      43%,50% {border-color:var(--indigo-400); background:#1E1B4B}
+      52%,62% {border-color:var(--s700); background:var(--s900)}
+      63%,68% {border-color:var(--indigo-400); background:#1E1B4B}
+      70%,100% {border-color:var(--s700); background:var(--s900)}
+    }
+    @keyframes boxBB {
+      0%,14% {border-color:var(--s700); background:var(--s900)}
+      16%,20% {border-color:var(--indigo-400); background:#1E1B4B}
+      21%,35% {border-color:var(--s700); background:var(--s900)}
+      36%,42% {border-color:var(--indigo-400); background:#1E1B4B}
+      43%,55% {border-color:var(--s700); background:var(--s900)}
+      56%,62% {border-color:var(--indigo-400); background:#1E1B4B}
+      63%,68% {border-color:var(--s700); background:var(--s900)}
+      69%,76% {border-color:var(--indigo-400); background:#1E1B4B}
+      86%,97% {border-color:var(--indigo-300); background:#312E81}
+      100% {border-color:var(--s700); background:var(--s900)}
+    }
+
+    @keyframes fold04 { 0%,3.9% {opacity:1} 5%,100% {opacity:.5} }
+    @keyframes fold12 { 0%,11.9% {opacity:1} 13%,100% {opacity:.5} }
+
+    @keyframes pot0 { 0%,5% {opacity:1} 6%,100% {opacity:0} }
+    @keyframes pot1 { 0%,5% {opacity:0} 6%,29% {opacity:1} 30%,100% {opacity:0} }
+    @keyframes pot2 { 0%,29% {opacity:0} 30%,51% {opacity:1} 52%,100% {opacity:0} }
+    @keyframes pot3 { 0%,51% {opacity:0} 52%,84% {opacity:1} 85%,100% {opacity:0} }
+    @keyframes potwrap { 0%,84% {opacity:1} 86%,97% {opacity:0} 100% {opacity:0} }
+
+    @keyframes showdown { 0%,85% {opacity:0; transform:scale(.9)} 87.5%,97% {opacity:1; transform:scale(1)} 100% {opacity:0} }
+
+    @keyframes tabPRE   { 0%,29% {background:var(--indigo); color:#fff; font-weight:700} 30%,100% {background:transparent; color:var(--s400)} }
+    @keyframes tabFLOP  { 0%,29% {background:transparent; color:var(--s400)} 30%,51% {background:var(--indigo); color:#fff} 52%,100% {background:transparent; color:var(--s400)} }
+    @keyframes tabTURN  { 0%,51% {background:transparent; color:var(--s400)} 52%,77% {background:var(--indigo); color:#fff} 78%,100% {background:transparent; color:var(--s400)} }
+    @keyframes tabRIVER { 0%,77% {background:transparent; color:var(--s400)} 78%,97% {background:var(--indigo); color:#fff} 100% {background:transparent; color:var(--s400)} }
+
+    @keyframes col30 { 0%,29% {opacity:.38} 30%,100% {opacity:1} }
+    @keyframes col52 { 0%,51% {opacity:.38} 52%,100% {opacity:1} }
+    @keyframes colwin { 0%,85% {opacity:.25} 87%,100% {opacity:1} }
+
+    /* 再生バー: つまみと塗りが 1 ハンドぶん進む */
+    @keyframes scrubFill { 0% {width:0} 97% {width:100%} 100% {width:100%} }
+    @keyframes scrubKnob { 0% {left:0} 97% {left:100%} 100% {left:100%} }
+  }
+
+  /* 基本状態 = 最終フレーム（動きが無い環境でもこの姿で読める） */
+  .anim .st-log, .anim .st-flip { opacity: 1; }
+  .anim .wager, .anim .glow, .anim .st-back, .anim .pot-wrap { opacity: 0; }
+  .anim .showdown { opacity: 1; transform: none; }
+  .anim .seat.bb .sbox { border-color: var(--indigo-300); background: #312E81; }
+  .anim .tab-RIVER { background: var(--indigo); color: #fff; }
+  .anim .colx, .anim .col-win { opacity: 1; }
+
+  /* ---- web 用に足したもの ---- */
+  .site-foot { border-top:1px solid var(--line-soft); padding:28px 0 46px; font-size:12.5px; color:var(--fg-3); }
+  .site-foot .foot-links { display:flex; gap:20px; flex-wrap:wrap; }
+  .site-foot a { color:var(--fg-3); text-decoration:none; border-bottom:1px solid transparent; }
+  .site-foot a:hover { color:var(--fg-2); border-bottom-color:var(--line); }
+</style>
+
+
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">LIVE POKER · HAND TRACKER</p>
+        <p class="wordmark">Live <em>Cache</em></p>
+        <p class="claim">Track your hands. Read the table.</p>
+        <p class="lede" style="margin-top:22px">
+          卓のスピードで打ち込んで、<br />
+          動画のように再生する。誰と打ったかごと。
+        </p>
+        <div class="cta-row">
+          <a class="cta" href="#speed">何ができるか見る <span aria-hidden="true">↓</span></a>
+          <a class="ghost" href="#vault">記録はどこに残る？</a>
+        </div>
+        <p class="platform">iOS / Android — 近日公開</p>
+      </div>
+
+      <!-- ============ 動く実機: ハンド詳細（再生） ============ -->
+      <div>
+        <div class="phone anim">
+          <div class="phone-inner">
+            <div class="bar">
+              <span class="back" aria-hidden="true">‹</span>
+              <span class="title">BB vs CO SRP</span>
+              <span class="acts">
+                <span class="chip-btn on">✎ 編集</span>
+                <span class="chip-btn sq">⋯</span>
+              </span>
+            </div>
+
+            <div class="screen">
+              <div class="tabs-row">
+                <div class="streets">
+                  <span class="street-tab step" style="--kf:tabPRE">PREFLOP</span>
+                  <span class="street-tab step" style="--kf:tabFLOP">FLOP</span>
+                  <span class="street-tab step" style="--kf:tabTURN">TURN</span>
+                  <span class="street-tab step tab-RIVER" style="--kf:tabRIVER">RIVER</span>
+                </div>
+                <span class="legend"><i class="act">Act</i><i class="in">In</i><i class="fold">Fold</i></span>
+              </div>
+
+              <div class="stage" role="img"
+                aria-label="再生中の 9 人卓。BB と CO の一騎打ちが 1 手ずつ進み、最後に BB が Two Pair で 12,600 のポットを取る">
+                <div class="felt"></div>
+
+                <div class="board">
+                  <span style="position:relative">
+                    <span class="card back sz-board step st-back" style="--kf:back30; position:absolute; inset:0"></span>
+                    <span class="card s sz-board step st-flip" style="--kf:flip30"><b>Q</b><i>♠</i></span>
+                  </span>
+                  <span style="position:relative">
+                    <span class="card back sz-board step st-back" style="--kf:back30; position:absolute; inset:0"></span>
+                    <span class="card h sz-board step st-flip" style="--kf:flip31"><b>7</b><i>♥</i></span>
+                  </span>
+                  <span style="position:relative">
+                    <span class="card back sz-board step st-back" style="--kf:back30; position:absolute; inset:0"></span>
+                    <span class="card d sz-board step st-flip" style="--kf:flip32"><b>2</b><i>♦</i></span>
+                  </span>
+                  <span style="position:relative">
+                    <span class="card back sz-board step st-back" style="--kf:back52; position:absolute; inset:0"></span>
+                    <span class="card c sz-board step st-flip" style="--kf:flip52"><b>K</b><i>♣</i></span>
+                  </span>
+                  <span style="position:relative">
+                    <span class="card back sz-board step st-back" style="--kf:back78; position:absolute; inset:0"></span>
+                    <span class="card s sz-board step st-flip" style="--kf:flip78"><b>9</b><i>♠</i></span>
+                  </span>
+                </div>
+
+                <div class="center-info pot-wrap step" style="--kf:potwrap">
+                  <div>
+                    <div class="pot-label">POT SIZE</div>
+                    <div class="pot-num mono">
+                      <span class="step" style="--kf:pot0">300</span>
+                      <span class="step" style="--kf:pot1">1,200</span>
+                      <span class="step" style="--kf:pot2">7,200</span>
+                      <span class="step" style="--kf:pot3">12,600</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="showdown step mono" style="--kf:showdown">
+                  <div>
+                    <div class="who">BB WIN</div>
+                    <div class="handname">Two Pair</div>
+                    <div class="net">+7,800<small>(39.0bb)</small></div>
+                  </div>
+                </div>
+
+                <div class="seat" style="left:33.5%; top:19%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:boxCO">
+                    <span class="glow step" style="--kf:glowCO"></span>
+                    <span class="pill">CO</span><span class="nm">白帽子</span><span class="stk mono">28,400</span>
+                  </div>
+                </div>
+                <div class="seat folded" style="left:66.5%; top:19%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold12"><span class="pill">BTN</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:92%; top:31%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold12"><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat hero bb" style="left:92%; top:60%">
+                  <div class="hole">
+                    <span class="card h sz-seat"><b>A</b><i>♥</i></span>
+                    <span class="card d sz-seat"><b>K</b><i>♦</i></span>
+                  </div>
+                  <div class="sbox step" style="--kf:boxBB">
+                    <span class="glow step" style="--kf:glowBB"></span>
+                    <span class="pill">BB</span><span class="nm">YOU</span><span class="stk mono">31,200</span>
+                  </div>
+                </div>
+                <div class="seat folded" style="left:70.6%; top:84%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold04"><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:50%; top:84%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold04"><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:29.4%; top:84%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold04"><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:8%; top:60%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold04"><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:8%; top:31%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox step" style="--kf:fold04"><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+
+                <div class="wager step" style="--kf:w06-30; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">600</span></div>
+                <div class="wager step" style="--kf:w16-30; left:80%; top:56%"><span class="chipdot"></span><span class="amt mono">2,400</span></div>
+                <div class="wager step" style="--kf:w22-30; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">2,400</span></div>
+                <div class="wager step" style="--kf:w38-52; left:80%; top:56%"><span class="chipdot"></span><span class="amt mono">1,200</span></div>
+                <div class="wager step" style="--kf:w44-52; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">1,200</span></div>
+                <div class="wager step" style="--kf:w64-78; left:37%; top:33%"><span class="chipdot"></span><span class="amt mono">1,800</span></div>
+                <div class="wager step" style="--kf:w70-78; left:80%; top:56%"><span class="chipdot"></span><span class="amt mono">1,800</span></div>
+              </div>
+
+              <!-- 再生バー。つまみがハンドと一緒に進む -->
+              <div class="replay-bar">
+                <div class="scrub">
+                  <span class="fill step" style="--kf:scrubFill"></span>
+                  <span class="knob step" style="--kf:scrubKnob"></span>
+                </div>
+                <div class="replay-ctl">
+                  <span class="rbtn" aria-hidden="true">⏮</span>
+                  <span class="rbtn" aria-hidden="true">◂</span>
+                  <span class="rbtn play" aria-hidden="true">❚❚</span>
+                  <span class="rbtn" aria-hidden="true">▸</span>
+                  <span class="speed mono">×1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="caption">ハンド詳細 — 再生が 1 手ずつ進む</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<h2>記録は、この端末から出ません</h2>
-<p>
-  対戦相手についてのメモは、人に見せるためのものではありません。だから最初から、外へ送る作りにしていません。
-  記録はすべて端末内に保存され、サーバーへ送る仕組みそのものがありません。広告も、利用状況の解析もありません。
-</p>
-<p>詳しくは<a href="./privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+<!-- ============ 1. 入力速度 ============ -->
+<section class="street-sec" id="speed">
+  <div class="wrap">
+    <div class="sec-grid">
+      <div class="copy">
+        <p class="eyebrow">SPEED · 圧倒的な入力速度</p>
+        <h2>卓のスピードに、<br />入力が追いつく</h2>
+        <p class="body">
+          手番はアプリが知っています。光った席のボタンを押すだけ。
+          考えるのはハンドのことだけでいい。
+        </p>
+        <ul class="points">
+          <li><b>1 手 = 1 タップ。</b>次に打つ席が自動で光り、順番を選ぶ操作がそもそもありません。プリフロップの UTG から降着まで、指は下の 3 つのボタンから動かない。</li>
+          <li><b>額は打たない。</b>1/2・2/3・POT から選べば桁を叩かずに済みます。細かい額だけテンキー。</li>
+          <li><b>起動から 2 秒で打ち始められる。</b>＋ を押した瞬間に記録が生まれるので、卓に呼ばれて中断しても書きかけが残ります。必須の欄はゼロ。</li>
+        </ul>
+      </div>
 
-<h2>お問い合わせ</h2>
-<p>ご質問・不具合のご連絡は<a href="./support.html">サポート</a>から。</p>
+      <div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="bar">
+              <span class="back" aria-hidden="true">‹</span>
+              <span class="title">ハンド</span>
+              <span class="acts">
+                <span class="chip-btn on">▶ 再生</span>
+                <span class="chip-btn sq">⋯</span>
+              </span>
+            </div>
+            <div class="screen">
+              <div class="tabs-row">
+                <div class="streets">
+                  <span class="street-tab" style="background:var(--indigo); color:#fff; font-weight:700">PREFLOP</span>
+                  <span class="street-tab" style="opacity:.5">FLOP</span>
+                  <span class="street-tab" style="opacity:.5">TURN</span>
+                  <span class="street-tab" style="opacity:.5">RIVER</span>
+                </div>
+                <span class="legend"><i class="act">Act</i><i class="in">In</i><i class="fold">Fold</i></span>
+              </div>
 
-</div></main>
-<footer><div class="wrap">
-  <span>LiveCache</span>
-  <span>
-    <a href="./support.html">サポート</a> ·
-    <a href="./privacy.html">プライバシーポリシー</a> ·
-    <a href="./terms.html">利用規約</a>
-  </span>
-</div></footer>
+              <div class="stage" style="aspect-ratio: 370/330" role="img" aria-label="打ち込み中の 9 人卓。BB の番で、下にアクションボタンが並ぶ">
+                <div class="felt" style="top:17%; bottom:18%"></div>
+
+                <div class="board" style="top:36%">
+                  <span class="card back sz-board"></span>
+                  <span class="card back sz-board"></span>
+                  <span class="card back sz-board"></span>
+                  <span class="card back sz-board"></span>
+                  <span class="card back sz-board"></span>
+                </div>
+                <div class="center-info" style="top:50%">
+                  <div>
+                    <div class="pot-label">POT SIZE</div>
+                    <div style="font-size:19px; font-weight:900; color:#fff; line-height:1.2" class="mono">1,200</div>
+                  </div>
+                </div>
+
+                <div class="seat" style="left:33.5%; top:16%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">CO</span><span class="nm">白帽子</span><span class="stk mono">28,400</span></div>
+                </div>
+                <div class="seat folded" style="left:66.5%; top:16%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">BTN</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:92%; top:28%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat hero" style="left:92%; top:58%">
+                  <div class="hole">
+                    <span class="card h sz-seat"><b>A</b><i>♥</i></span>
+                    <span class="card d sz-seat"><b>K</b><i>♦</i></span>
+                  </div>
+                  <div class="sbox" style="border-color:var(--indigo-400); background:#1E1B4B">
+                    <span class="glow" style="opacity:1"></span>
+                    <span class="pill" style="background:#F97316; color:#fff">BB</span><span class="nm">YOU</span><span class="stk mono">31,200</span>
+                  </div>
+                </div>
+                <div class="seat folded" style="left:70.6%; top:86%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:50%; top:86%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:29.4%; top:86%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:8%; top:58%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+                <div class="seat folded" style="left:8%; top:28%">
+                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
+                  <div class="sbox"><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
+                </div>
+
+                <div class="wager" style="opacity:1; left:37%; top:29%"><span class="chipdot"></span><span class="amt mono">600</span></div>
+              </div>
+
+              <div class="act-buttons">
+                <span class="act-btn fold">Fold</span>
+                <span class="act-btn call">Call<br /><span class="mono" style="font-size:10px">600</span></span>
+                <span class="act-btn raise">Raise</span>
+              </div>
+              <div class="pad">
+                <span class="mono">1/2</span>
+                <span class="mono">2/3</span>
+                <span class="mono">POT</span>
+                <span class="go">確定</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="caption">ハンド入力 — 光った席を、押すだけ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. プレイヤー × ハンドの紐付け ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid flip">
+      <div class="copy">
+        <p class="eyebrow">LINK · 人とハンドがつながる</p>
+        <h2>「誰と打ったか」まで、<br />記録になる</h2>
+        <p class="body">
+          ハンドの席に人を座らせておくと、その人のページに
+          そのハンドが並びます。しかも<b style="color:var(--fg)">その人の視点</b>で。
+        </p>
+        <ul class="points">
+          <li><b>相手の席・相手の手札・相手の収支で並ぶ。</b>「白帽子の人が CO で 3-bet に沈んだハンド」が、そのままの形で読み返せます。</li>
+          <li><b>名前を知らなくても紐付く。</b>「白帽子の人」で登録して、本名を聞いたら書き換えるだけ。タグとメモもその人に付きます。</li>
+          <li><b>ハンド → 人、人 → ハンド。</b>どちらからでも辿れるので、「この人と前どう打ったっけ」が卓で 2 タップ。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner shotcrop">
+            <img class="shot" loading="lazy" decoding="async" alt="プレイヤー詳細の実際の画面。プレイヤーA にタグが 3 つ付き、その人のハンドが 2 件、−117.7bb と −2.0bb の収支つきで並ぶ" src="./img/shot-player.png" />
+          </div>
+        </div>
+        <p class="caption">プレイヤー詳細 — タグ・メモと、この人のハンド（実際の画面）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. 再生 ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid">
+      <div class="copy">
+        <p class="eyebrow">REPLAY · 動画のように</p>
+        <h2>記録が、<br />動画になる</h2>
+        <p class="body">
+          打ち込んだハンドは、そのまま再生できます。チップが出て、
+          ボードがめくれて、決着が立ち上がる。上の実機で流れているのがそれです。
+        </p>
+        <ul class="points">
+          <li><b>1 手ずつでも、流しっぱなしでも。</b>▶ で自動再生、送り戻しで 1 手ずつ。速度も変えられます。</li>
+          <li><b>プリフロップの降りは飛ばす。</b>見たいのは戦った手。9 人卓の頭の F の列で待たされません。</li>
+          <li><b>そこから直せる。</b>再生中に「ここが違う」と思ったら、その手を長押しして打ち直し。後ろの記録は消えません。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner shotcrop">
+            <img class="shot" loading="lazy" decoding="async" alt="再生の実際の画面。9 人卓の中央に BB WIN・Full House・+354 (118.0bb)、下に再生バーとストリートごとのアクション履歴" src="./img/shot-replay.png" />
+          </div>
+        </div>
+        <p class="caption">再生画面 — Full House で +118.0bb。下に 1 手ずつの履歴（実際の画面）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. 共有 ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid flip">
+      <div class="copy">
+        <p class="eyebrow">SHARE · みんなに見てもらう</p>
+        <h2>そのハンド、<br />そのまま見せられる</h2>
+        <p class="body">
+          「さっきの AK どう打つ？」が、口で説明しなくても伝わります。
+          ⋯ から 1 タップで、文と画像の両方が出ます。
+        </p>
+        <ul class="points">
+          <li><b>読める形で出る。</b>ストリートごとのアクションが 1 行ずつ。LINE でも X でも Discord でも、貼ればそのまま読めます。</li>
+          <li><b>卓の画像も一緒に付く。</b>ボード・席・結果が乗った 1 枚。読まずに見せたい相手にはこちら。</li>
+          <li><b>画像で保存も。</b>共有しないハンドも、写真に残しておけます。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner">
+            <div class="bar">
+              <span class="title">共有</span>
+              <span class="acts"><span class="chip-btn sq">✕</span></span>
+            </div>
+            <div class="screen">
+              <!-- 実装の shareHand が組む文面そのもの -->
+              <div class="share-text mono">むさぽ渋谷 · 1/3 · BB
+<b>Hand:</b> A♥ K♦
+<b>Board:</b> Q♠ 7♥ 2♦ K♣ 9♠
+<b>PREFLOP:</b> CO raise 600,
+  BB raise 2400, CO call 2400
+<b>FLOP:</b> BB bet 1200, CO call 1200
+<b>TURN:</b> BB check, CO bet 1800,
+  BB call 1800
+<b>BB WIN</b> · Two Pair
+<b>Result:</b> +7800</div>
+
+              <div class="share-actions">
+                <span class="share-chip">💬 LINE</span>
+                <span class="share-chip">𝕏 ポスト</span>
+                <span class="share-chip">📷 保存</span>
+              </div>
+
+              <!-- 画像カード（卓の切り抜きが添付される） -->
+              <p class="dlg-label" style="margin-top:14px">🖼 添付される画像</p>
+              <div style="border:1px solid var(--s800); border-radius:14px; overflow:hidden; background:var(--s950)">
+                <div class="stage" style="aspect-ratio: 370/210">
+                  <div class="felt" style="top:8%; bottom:8%; left:4%; right:4%"></div>
+                  <div class="board" style="top:38%">
+                    <span class="card s sz-board"><b>Q</b><i>♠</i></span>
+                    <span class="card h sz-board"><b>7</b><i>♥</i></span>
+                    <span class="card d sz-board"><b>2</b><i>♦</i></span>
+                    <span class="card c sz-board"><b>K</b><i>♣</i></span>
+                    <span class="card s sz-board"><b>9</b><i>♠</i></span>
+                  </div>
+                  <div class="showdown mono" style="opacity:1; top:58%">
+                    <div>
+                      <div class="who">BB WIN</div>
+                      <div class="net">+7,800<small>(39.0bb)</small></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="caption">共有 — 文でも、画像でも</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. 収支・一覧 ============ -->
+<section class="street-sec">
+  <div class="wrap">
+    <div class="sec-grid">
+      <div class="copy">
+        <p class="eyebrow">CASH OUT</p>
+        <h2>収支は、<br />勝手に出る</h2>
+        <p class="body">
+          店ごとにレートとレーキを一度入れておけば、あとは選ぶだけ。
+          bb 換算まで出るので、レートの違う日をまたいでも比べられます。
+        </p>
+        <ul class="points">
+          <li><b>レーキの癖まで計算に入る。</b>1BB 単位の切り上げ、キャップ、ノーフロップノードロップ。大会は参加費に含まれるので卓では引きません。</li>
+          <li><b>ボードは 5 枚ぶんの枠を常に置く。</b>伏せ札の数で、どこまで進んだハンドかが分かります。</li>
+          <li><b>自分がいなかった卓も残せる。</b>「観戦」の行では、左端が収支ではなく POT になります。</li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="phone">
+          <div class="phone-inner shotcrop">
+            <img class="shot" loading="lazy" decoding="async" alt="ハンド一覧の実際の画面。検索と絞り込みの札の下に、収支 −2.0bb / +118.0bb / +2.3bb の 3 行が並ぶ" src="./img/shot-hands.png" />
+          </div>
+        </div>
+        <p class="caption">ハンド一覧 — 「自分のハンド」「SRP」で絞り込み中（実際の画面）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 守り ============ -->
+<section class="vault" id="vault">
+  <div class="wrap">
+    <p class="eyebrow">YOUR NOTES, YOUR PHONE</p>
+    <h2 style="max-width:20ch">記録は、この端末から出ません</h2>
+    <p class="body">
+      対戦相手についてのメモは、人に見せるためのものではありません。
+      だから最初から、外へ送る作りにしていません。共有するのは、あなたが選んだハンドだけ。
+    </p>
+    <div class="vault-grid">
+      <div class="vault-card"><div class="k">端末の中だけ</div><div class="v">記録はすべて端末内のデータベースに保存されます。</div></div>
+      <div class="vault-card"><div class="k">通信しない</div><div class="v">サーバーへ送る仕組みそのものがありません。圏外の店でも同じように使えます。</div></div>
+      <div class="vault-card"><div class="k">広告なし</div><div class="v">卓の上で広告が出ることはありません。</div></div>
+      <div class="vault-card"><div class="k">解析なし</div><div class="v">利用状況を集める仕組みを組み込んでいません。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 締め ============ -->
+<section class="close">
+  <div class="wrap">
+    <p class="eyebrow">SHOWDOWN</p>
+    <h2 style="max-width:22ch; margin-inline:auto">今夜のハンドを、<br />今夜のうちに</h2>
+    <p class="lede" style="margin-top:14px">思い出せるうちに残す。それだけで、次の卓が変わります。</p>
+    <div class="cta-row"><a class="cta" href="#speed">もう一度見る</a></div>
+    <p class="platform">iOS / Android — 近日公開</p>
+  </div>
+</section>
+
+
+<footer class="site-foot">
+  <div class="wrap foot-grid" style="border-top:0; padding-top:0">
+    <span>LiveCache</span>
+    <span class="foot-links">
+      <a href="./support.html">サポート</a>
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+    </span>
+  </div>
+</footer>
 </body>
 </html>
