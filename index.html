@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LiveCache — ライブポーカーのハンドと対戦相手を記録する</title>
-<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。">
+<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。">
 <link rel="canonical" href="https://yutybass.github.io/livecache-site/">
 <link rel="icon" href="./img/icon.svg">
 <link rel="apple-touch-icon" href="./img/icon.svg">
@@ -15,14 +15,14 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://yutybass.github.io/livecache-site/">
 <meta property="og:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
-<meta property="og:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。">
+<meta property="og:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。">
 <meta property="og:image" content="https://yutybass.github.io/livecache-site/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="LiveCache — Track your hands. Read the table.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
-<meta name="twitter:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。">
+<meta name="twitter:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。">
 <meta name="twitter:image" content="https://yutybass.github.io/livecache-site/img/og.png">
 
 <meta name="theme-color" content="#06090F">
@@ -38,7 +38,7 @@
   "inLanguage": "ja",
   "url": "https://yutybass.github.io/livecache-site/",
   "image": "https://yutybass.github.io/livecache-site/img/og.png",
-  "description": "ライブポーカーのハンドと対戦相手を記録する iOS アプリ。1 手 1 タップで打ち込んで、動画のように再生。誰と打ったかまで記録に残ります。記録はすべて端末内に保存されます。",
+  "description": "ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に 1 手 1 タップで打ち込んで、見やすいハンドヒストリーに。プレイヤーごとのハンド履歴やタグも残せます。記録はすべて端末内に保存されます。",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
   "author": { "@type": "Person", "name": "YUTO YOSHIDA" }
 }
@@ -123,6 +123,7 @@
   .hero-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(44px,7vw,68px); align-items: center; }
   @media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); } }
 
+  .appicon { width: clamp(46px, 9vw, 72px); height: clamp(46px, 9vw, 72px); border-radius: 22%; flex: none; box-shadow: 0 10px 26px rgba(0,0,0,.5); }
   .wordmark { font-size: clamp(44px, 10vw, 82px); line-height: .92; letter-spacing: -.05em; font-weight: 800; }
   .wordmark em { font-style: normal; color: var(--indigo-300); }
   .claim { margin: 18px 0 0; font-size: clamp(15px,2.4vw,19px); color: var(--fg-2); font-weight: 500; }
@@ -309,9 +310,16 @@
        テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
        手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
      ========================================================== */
-  .vid { position: relative; height: 652px; background: var(--s950); }
+  .vid { position: relative; height: 712px; background: var(--s950); }
+  /* iPhone らしい枠。ステータスバー・アイランド・ホームバーまで描く */
+  .device { border-radius: 44px; padding: 10px; border-color: #3D4961; box-shadow: 0 34px 80px rgba(0,0,0,.62), inset 0 0 3px rgba(255,255,255,.06); }
+  .device .phone-inner { border-radius: 34px; }
+  .statusrow { position: relative; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 2px 22px 0; }
+  .st-time { font-size: 12.5px; font-weight: 700; color: #fff; letter-spacing: .02em; }
+  .st-island { position: absolute; left: 50%; top: 6px; transform: translateX(-50%); width: 84px; height: 22px; border-radius: 999px; background: #000; }
+  .homebar { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); width: 108px; height: 4px; border-radius: 999px; background: #fff; opacity: .32; z-index: 7; pointer-events: none; }
   /* プレイヤー詳細はタブの中の画面なので、下のナビが見えている（実機どおり） */
-  .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 12px; }
+  .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 22px; }
   .bnav span { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; color: var(--s500); }
   .bnav .ic { font-size: 15px; line-height: 1; }
   .bnav span.onb { color: var(--indigo-300); }
@@ -525,6 +533,11 @@
   footer { border-top: 1px solid var(--line-soft); padding: 28px 0 42px; font-size: 12.5px; color: var(--fg-3); }
   .foot-grid { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; }
 
+  /* 実機 2 枚並べ（タグの節） */
+  .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; max-width: 520px; margin-inline: auto; align-items: start; }
+  .duo .phone { max-width: none; padding: 6px; border-radius: 22px; }
+  .duo .phone-inner { border-radius: 16px; }
+
   /* ---- web 用に足したもの ---- */
   .site-foot { border-top:1px solid var(--line-soft); padding:28px 0 46px; font-size:12.5px; color:var(--fg-3); }
   .site-foot .foot-links { display:flex; gap:20px; flex-wrap:wrap; }
@@ -538,11 +551,14 @@
     <div class="hero-grid">
       <div>
         <p class="eyebrow">LIVE POKER · HAND TRACKER</p>
-        <p class="wordmark">Live <em>Cache</em></p>
+        <div style="display:flex; align-items:center; gap:clamp(12px,2.4vw,20px)">
+          <img class="appicon" src="./img/icon.svg" alt="LiveCache のアプリアイコン" width="76" height="76">
+          <p class="wordmark">Live <em>Cache</em></p>
+        </div>
         <p class="claim">Track your hands. Read the table.</p>
         <p class="lede" style="margin-top:22px">
           ハンドとハンドの合間に打ち込める速さ。<br />
-          誰と打ったかごと、残る。
+          プレイヤーごとに、ハンド履歴が残る。
         </p>
         <div class="cta-row">
           <a class="cta" href="#speed">何ができるか見る <span aria-hidden="true">↓</span></a>
@@ -553,13 +569,22 @@
 
       <!-- ============ 動く実機: 入力 → プレイヤー詳細（JS の台本で動く） ============ -->
       <div>
-        <div class="phone">
+        <div class="phone device">
           <div class="phone-inner">
             <div class="vid" id="vid" role="img"
               aria-label="実機の再現。9 人卓で BTN vs BB のハンドが 1 手 1 タップで記録され、打ち終わると相手プレイヤー『プレイヤーA』のページに、いま打ったハンド（−13.0bb）が並ぶ">
 
               <!-- 場面 1: ハンド入力。手番の席が光り、下のボタンを押すだけ -->
               <div class="scene on" id="scIn">
+                <div class="statusrow" aria-hidden="true">
+                  <span class="st-time mono">21:47</span>
+                  <span class="st-island"></span>
+                  <svg width="52" height="12" viewBox="0 0 52 12" fill="#fff">
+                    <rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/>
+                    <path d="M27.5 4.4 A 7 7 0 0 1 37.5 4.4 L 35.6 6.2 A 4.4 4.4 0 0 0 29.4 6.2 Z"/><circle cx="32.5" cy="9.2" r="1.7"/>
+                    <rect x="41" y="2.5" width="9" height="7" rx="2" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="42.3" y="3.8" width="5.6" height="4.4" rx="1"/><rect x="50.7" y="4.6" width="1.3" height="2.8" rx="0.65" fill-opacity=".5"/>
+                  </svg>
+                </div>
                 <div class="bar">
                   <span class="back" aria-hidden="true">‹</span>
                   <span class="title" id="handTitle">ハンド</span>
@@ -717,6 +742,15 @@
 
               <!-- 場面 2: プレイヤー詳細。いま打ったハンドが「プレイヤーA」のページに並ぶ -->
               <div class="scene" id="scPl">
+                <div class="statusrow" aria-hidden="true">
+                  <span class="st-time mono">21:47</span>
+                  <span class="st-island"></span>
+                  <svg width="52" height="12" viewBox="0 0 52 12" fill="#fff">
+                    <rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/>
+                    <path d="M27.5 4.4 A 7 7 0 0 1 37.5 4.4 L 35.6 6.2 A 4.4 4.4 0 0 0 29.4 6.2 Z"/><circle cx="32.5" cy="9.2" r="1.7"/>
+                    <rect x="41" y="2.5" width="9" height="7" rx="2" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="42.3" y="3.8" width="5.6" height="4.4" rx="1"/><rect x="50.7" y="4.6" width="1.3" height="2.8" rx="0.65" fill-opacity=".5"/>
+                  </svg>
+                </div>
                 <div class="bar">
                   <span class="back" aria-hidden="true">‹</span>
                   <span class="title">プレイヤー</span>
@@ -724,7 +758,7 @@
                 </div>
                 <div class="screen">
                   <div class="pd-head">
-                    <div class="avatar">🎩</div>
+                    <div class="avatar"><svg width="24" height="24" viewBox="0 0 24 24" fill="#94A3B8" aria-hidden="true"><path d="M19.11,11.92C19.13,11.71 19.14,11.5 19.14,11.29C19.14,7.86 17.71,4.14 16.28,4.14C14.85,4.14 13.42,5.57 12,5.57C10.57,5.57 9.14,4.14 7.71,4.14C6.28,4.14 4.86,7.79 4.86,11.29C4.86,11.5 4.86,11.71 4.88,11.92C7.22,12.45 9.6,12.72 12,12.71C14.45,12.71 16.83,12.44 19.11,11.92M3.45,18.18C9,19.85 14.96,19.86 20.54,18.18C20.96,18.04 21.33,17.77 21.59,17.41C21.85,17.05 22,16.61 22,16.17C22,15.72 21.86,15.29 21.61,14.92C21.35,14.56 21,14.29 20.56,14.14C17.86,15 15,15.45 12,15.45C9,15.45 6.13,15 3.43,14.14C3,14.29 2.65,14.57 2.39,14.93C2.14,15.29 2,15.72 2,16.17C2,17.11 2.61,17.9 3.45,18.18V18.18Z"/></svg></div>
                     <div class="pd-name">プレイヤーA</div>
                   </div>
                   <div class="sec-label"><span class="l">タグ</span></div>
@@ -811,6 +845,7 @@
                 </div>
               </div>
 
+              <div class="homebar" aria-hidden="true"></div>
               <div class="tapdot" id="tap"></div>
             </div>
           </div>
@@ -842,115 +877,10 @@
       <div>
         <div class="phone">
           <div class="phone-inner">
-            <div class="bar">
-              <span class="back" aria-hidden="true">‹</span>
-              <span class="title">ハンド</span>
-              <span class="acts">
-                <span class="chip-btn on">▶ 再生</span>
-                <span class="chip-btn sq">⋯</span>
-              </span>
-            </div>
-            <div class="screen">
-              <div class="tabs-row">
-                <div class="streets">
-                  <span class="street-tab" style="background:var(--indigo); color:#fff; font-weight:700">PREFLOP</span>
-                  <span class="street-tab" style="opacity:.5">FLOP</span>
-                  <span class="street-tab" style="opacity:.5">TURN</span>
-                  <span class="street-tab" style="opacity:.5">RIVER</span>
-                </div>
-                <span class="legend"><i class="act">Act</i><i class="in">In</i><i class="fold">Fold</i></span>
-              </div>
-
-              <div class="stage" style="aspect-ratio: 370/330" role="img" aria-label="打ち込み中の 9 人卓。BB の番で、下にアクションボタンが並ぶ">
-                <div class="felt" style="top:17%; bottom:18%"></div>
-
-                <div class="board" style="top:36%">
-                  <span class="card back sz-board"></span>
-                  <span class="card back sz-board"></span>
-                  <span class="card back sz-board"></span>
-                  <span class="card back sz-board"></span>
-                  <span class="card back sz-board"></span>
-                </div>
-                <div class="center-info" style="top:50%">
-                  <div>
-                    <div class="pot-label">POT SIZE</div>
-                    <div style="font-size:19px; font-weight:900; color:#fff; line-height:1.2" class="mono">1,200</div>
-                  </div>
-                </div>
-
-                <div class="seat" style="left:33.5%; top:16%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">CO</span><span class="nm">白帽子</span><span class="stk mono">28,400</span></div>
-                </div>
-                <div class="seat folded" style="left:66.5%; top:16%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">BTN</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:92%; top:28%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat myseat" style="left:92%; top:58%">
-                  <div class="hole">
-                    <span class="card h sz-seat"><b>A</b><i>♥</i></span>
-                    <span class="card d sz-seat"><b>K</b><i>♦</i></span>
-                  </div>
-                  <div class="sbox" style="border-color:var(--indigo-400); background:#1E1B4B">
-                    <span class="glow" style="opacity:1"></span>
-                    <span class="pill" style="background:#F97316; color:#fff">BB</span><span class="nm">YOU</span><span class="stk mono">31,200</span>
-                  </div>
-                </div>
-                <div class="seat folded" style="left:70.6%; top:86%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:50%; top:86%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:29.4%; top:86%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:8%; top:58%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-                <div class="seat folded" style="left:8%; top:28%">
-                  <div class="hole"><span class="card facedown sz-seat"></span><span class="card facedown sz-seat"></span></div>
-                  <div class="sbox"><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                </div>
-
-                <div class="wager" style="opacity:1; left:37%; top:29%"><span class="chipdot"></span><span class="amt mono">600</span></div>
-              </div>
-
-              <!-- Raise を押した直後。実装の AmountPad と同じ構成（テンキー + プリセット） -->
-              <div style="margin-top:10px">
-                <div class="amt-bar">
-                  <span class="lb">AMOUNT</span>
-                  <span class="amt-mid"><span class="stepbtn">−</span><span class="amt-val mono">2,400</span><span class="stepbtn">＋</span></span>
-                  <span class="undo">↺</span>
-                </div>
-                <div class="padgrid">
-                  <div class="keys">
-                    <span class="key">1</span><span class="key">2</span><span class="key">3</span>
-                    <span class="key">4</span><span class="key">5</span><span class="key">6</span>
-                    <span class="key">7</span><span class="key">8</span><span class="key">9</span>
-                    <span class="key zero">0</span><span class="key">⌫</span>
-                  </div>
-                  <div class="presets">
-                    <span class="preset"><span class="p1">2x</span><span class="p2 mono">（ 1,200 ）</span></span>
-                    <span class="preset"><span class="p1">2.5x</span><span class="p2 mono">（ 1,500 ）</span></span>
-                    <span class="preset"><span class="p1">3x</span><span class="p2 mono">（ 1,800 ）</span></span>
-                    <span class="preset"><span class="p1">5x</span><span class="p2 mono">（ 3,000 ）</span></span>
-                  </div>
-                </div>
-                <div class="pad-foot"><span class="pcancel">キャンセル</span><span class="pok">確定</span></div>
-              </div>
-            </div>
+            <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="ハンド入力の実際の画面。ターンで Hero の番、額の欄に 16、テンキーの右にポットの 33%・50%・75%・125% のプリセットが並ぶ" src="./img/shot-input.png" />
           </div>
         </div>
-        <p class="caption">ベット額 — プリセットで 1 タップ。細かい額だけテンキー</p>
+        <p class="caption">ハンド入力 — 額はプリセットかテンキーで（実際の画面）</p>
       </div>
     </div>
   </div>
@@ -962,13 +892,13 @@
     <div class="sec-grid flip">
       <div class="copy">
         <p class="eyebrow">LINK · 人とハンドがつながる</p>
-        <h2>「誰と打ったか」まで、<br />記録になる</h2>
+        <h2>プレイヤーのハンド履歴が、<br />一覧でわかる</h2>
         <p class="body">
           ハンドの席に人を座らせておくと、その人のページに
           そのハンドが並びます。しかも<b style="color:var(--fg)">その人の視点</b>で。
         </p>
         <ul class="points">
-          <li><b>相手の席・相手の手札・相手の収支で並ぶ。</b>「白帽子の人が CO で 3-bet に沈んだハンド」が、そのままの形で読み返せます。</li>
+          <li><b>相手の席・相手の手札・相手の収支で並ぶ。</b>「プレイヤーA が BB の K♦Q♠ で −13bb」が、その人の視点のまま読み返せます。</li>
           <li><b>名前を知らなくても紐付く。</b>「白帽子の人」で登録して、本名を聞いたら書き換えるだけ。タグとメモもその人に付きます。</li>
           <li><b>ハンド → 人、人 → ハンド。</b>どちらからでも辿れるので、「この人と前どう打ったっけ」が卓で 2 タップ。</li>
         </ul>
@@ -998,19 +928,26 @@
           貼っておけば、一覧を開いた瞬間に「どんな相手か」が戻ってきます。
         </p>
         <ul class="points">
-          <li><b>色は自分の物差しで。</b>レッドはプレイスタイル、ブルーは腕前、グリーンは癖 ―― グループごと自由に作って、名前も色もあとから変えられます。</li>
+          <li><b>色は自分の物差しで。</b>レッドはプレイスタイル、ブルーは腕前、グリーンは癖 ―― グループごと自由に作れます。</li>
+          <li><b>あとから直せる。</b>タグ管理で名前も色も編集でき、何人に付いているかも一覧で見える。付け替えても記録は消えません。</li>
           <li><b>タグから人へ辿れる。</b>「タイトアグレ」を押せば、そのタグが付いた 3 人が並ぶ。逆引きの絞り込みも 2 タップ。</li>
-          <li><b>ハンドにも効いてくる。</b>タグを付けた人が座っているハンドは、その人のページからその人の視点で読み返せます。</li>
         </ul>
       </div>
 
       <div>
-        <div class="phone">
-          <div class="phone-inner">
-            <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="プレイヤー一覧の実際の画面。プレイヤーA〜D にルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付き、記録ハンド数と最終更新が並ぶ" src="./img/shot-tags.png" />
+        <div class="duo">
+          <div class="phone">
+            <div class="phone-inner">
+              <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="プレイヤー一覧の実際の画面。プレイヤーA〜D にルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付く" src="./img/shot-tags.png" />
+            </div>
+          </div>
+          <div class="phone">
+            <div class="phone-inner">
+              <img class="shot" style="margin-top:0" loading="lazy" decoding="async" alt="タグ管理の実際の画面。レッド・ブルー・グリーンのグループにタグが並び、それぞれに人数と編集・削除のボタンが付く" src="./img/shot-tagmanage.png" />
+            </div>
           </div>
         </div>
-        <p class="caption">プレイヤー一覧 — タグで人となりが一目で分かる（実際の画面）</p>
+        <p class="caption">プレイヤー一覧とタグ管理 — 貼るのも、作って直すのも（実際の画面）</p>
       </div>
     </div>
   </div>
@@ -1025,22 +962,22 @@
         <h2>見やすい、<br />ハンドヒストリー</h2>
         <p class="body">
           ストリートごとに 1 手ずつ、ボードも額も 1 画面で追えます。
-          ▶ を押せば、チップが出てボードがめくれる再生にも。
+          帰り道に読み返して、次の卓に持っていく。
         </p>
         <ul class="points">
-          <li><b>1 手ずつでも、流しっぱなしでも。</b>▶ で自動再生、送り戻しで 1 手ずつ。速度も変えられます。</li>
-          <li><b>プリフロップの降りは飛ばす。</b>見たいのは戦った手。9 人卓の頭の F の列で待たされません。</li>
-          <li><b>そこから直せる。</b>再生中に「ここが違う」と思ったら、その手を長押しして打ち直し。後ろの記録は消えません。</li>
+          <li><b>ストリートごとに 4 列。</b>誰が・どのアクションを・いくらで、が 1 画面で追えます。めくれた札も列の頭に。</li>
+          <li><b>降りた席はそっと畳まれる。</b>戦った人のやり取りだけが濃く残るので、9 人卓でも読み返しが速い。</li>
+          <li><b>あとから直せる。</b>「ここが違う」と思ったら、その手をタップして打ち直し。後ろの記録は消えません。</li>
         </ul>
       </div>
 
       <div>
         <div class="phone">
           <div class="phone-inner shotcrop">
-            <img class="shot" loading="lazy" decoding="async" alt="再生の実際の画面。9 人卓の中央に BB WIN・Full House・+354 (118.0bb)、下に再生バーとストリートごとのアクション履歴" src="./img/shot-replay.png" />
+            <img class="shot" loading="lazy" decoding="async" alt="ハンド詳細の実際の画面。9 人卓の中央に BB WIN・Full House・+354 (118.0bb)、下にストリートごとのアクション履歴" src="./img/shot-replay.png" />
           </div>
         </div>
-        <p class="caption">再生画面 — Full House で +118.0bb。下に 1 手ずつの履歴（実際の画面）</p>
+        <p class="caption">ハンド詳細 — Full House で +118.0bb。下に 1 手ずつの履歴（実際の画面）</p>
       </div>
     </div>
   </div>
@@ -1059,7 +996,7 @@
         </p>
         <ul class="points">
           <li><b>レーキの癖まで計算に入る。</b>1BB 単位の切り上げ、キャップ、ノーフロップノードロップ。大会は参加費に含まれるので卓では引きません。</li>
-          <li><b>ボードは 5 枚ぶんの枠を常に置く。</b>伏せ札の数で、どこまで進んだハンドかが分かります。</li>
+          <li><b>タイトルは自動で付く。</b>「BTN vs BB SRP」のような呼び名が記録から立つので、あとから探すのも速い。</li>
           <li><b>自分がいなかった卓も残せる。</b>「観戦」の行では、左端が収支ではなく POT になります。</li>
         </ul>
       </div>
