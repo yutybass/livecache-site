@@ -310,7 +310,7 @@
        テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
        手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
      ========================================================== */
-  .vid { position: relative; height: 664px; background: var(--s950); }
+  .vid { position: relative; height: 640px; background: var(--s950); }
   /* 卓の上の空きを刈る。座標はそのまま、負のマージンで上 22px をクロップ */
   .stagecrop { overflow: hidden; }
   .stagecrop .stage { margin-top: -22px; }
@@ -322,7 +322,7 @@
   .st-island { position: absolute; left: 50%; top: 6px; transform: translateX(-50%); width: 84px; height: 22px; border-radius: 999px; background: #000; }
   .homebar { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); width: 108px; height: 4px; border-radius: 999px; background: #fff; opacity: .32; z-index: 7; pointer-events: none; }
   /* プレイヤー詳細はタブの中の画面なので、下のナビが見えている（実機どおり） */
-  .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 22px; }
+  .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 12px; }
   .bnav span { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; color: var(--s500); }
   .bnav .ic { font-size: 15px; line-height: 1; display: grid; place-items: center; height: 17px; }
   .bnav .ic svg { display: block; }
@@ -868,7 +868,6 @@
                 </div>
               </div>
 
-              <div class="homebar" aria-hidden="true"></div>
               <div class="tapdot" id="tap"></div>
             </div>
           </div>
