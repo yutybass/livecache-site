@@ -310,7 +310,7 @@
        テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
        手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
      ========================================================== */
-  .vid { position: relative; height: 708px; background: var(--s950); }
+  .vid { position: relative; height: 664px; background: var(--s950); }
   /* 卓の上の空きを刈る。座標はそのまま、負のマージンで上 22px をクロップ */
   .stagecrop { overflow: hidden; }
   .stagecrop .stage { margin-top: -22px; }
@@ -614,15 +614,7 @@
                     <rect x="41" y="2.5" width="9" height="7" rx="2" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="42.3" y="3.8" width="5.6" height="4.4" rx="1"/><rect x="50.7" y="4.6" width="1.3" height="2.8" rx="0.65" fill-opacity=".5"/>
                   </svg>
                 </div>
-                <div class="bar">
-                  <span class="back" aria-hidden="true">‹</span>
-                  <span class="title" id="handTitle">ハンド</span>
-                  <span class="acts">
-                    <span class="chip-btn on">◉ 閲覧</span>
-                    <span class="chip-btn sq">⋯</span>
-                  </span>
-                </div>
-                <div class="screen">
+                                <div class="screen">
                   <div class="tabs-row">
                     <div class="streets">
                       <span class="street-tab sel" id="t-pre">PREFLOP</span><span class="tsep"></span><span class="street-tab off" id="t-flop">FLOP</span><span class="tsep"></span><span class="street-tab off" id="t-turn">TURN</span><span class="tsep"></span><span class="street-tab off" id="t-riv">RIVER</span>
@@ -1191,7 +1183,6 @@
   function reset() {
     $('scIn').classList.add('on');
     $('scPl').classList.remove('on');
-    $('handTitle').textContent = 'ハンド';
     Object.keys(seats).forEach(function (k) { seats[k].classList.remove('folded'); });
     setActing('utg');
     stack('btn', '353');
@@ -1243,8 +1234,6 @@
       tapEl($('btnCall'));
       wag('w-bb', 'CALL', '6'); hist('r2'); stack('bb', '422');
       setActing(null);
-      // 2 人になった瞬間、見出しが記録から立つ（suggestHandTitle）
-      $('handTitle').textContent = 'BTN vs BB SRP';
     }],
     [7900,  function () {
       street('t-flop', 'c-flop', 'flop');
