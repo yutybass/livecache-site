@@ -310,16 +310,16 @@
        テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
        手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
      ========================================================== */
-  .vid { position: relative; height: 640px; background: var(--s950); }
+  .vid { position: relative; height: 604px; background: var(--s950); }
   /* 卓の上の空きを刈る。座標はそのまま、負のマージンで上 22px をクロップ */
   .stagecrop { overflow: hidden; }
-  .stagecrop .stage { margin-top: -22px; }
+  .stagecrop .stage { margin-top: -22px; margin-bottom: -8px; }
   /* iPhone らしい枠。ステータスバー・アイランド・ホームバーまで描く */
   .device { border-radius: 44px; padding: 10px; border-color: #3D4961; box-shadow: 0 34px 80px rgba(0,0,0,.62), inset 0 0 3px rgba(255,255,255,.06); }
   .device .phone-inner { border-radius: 34px; }
-  .statusrow { position: relative; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 2px 22px 0; }
+  .statusrow { position: relative; height: 26px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
   .st-time { font-size: 12.5px; font-weight: 700; color: #fff; letter-spacing: .02em; }
-  .st-island { position: absolute; left: 50%; top: 6px; transform: translateX(-50%); width: 84px; height: 22px; border-radius: 999px; background: #000; }
+  .st-island { position: absolute; left: 50%; top: 3px; transform: translateX(-50%); width: 84px; height: 22px; border-radius: 999px; background: #000; }
   .homebar { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); width: 108px; height: 4px; border-radius: 999px; background: #fff; opacity: .32; z-index: 7; pointer-events: none; }
   /* プレイヤー詳細はタブの中の画面なので、下のナビが見えている（実機どおり） */
   .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 12px; }
@@ -353,18 +353,18 @@
   .pressed { transform: scale(.94); filter: brightness(.8); }
 
   /* ---- AmountPad（実装の構成そのまま） ---- */
-  .amt-bar { display: flex; align-items: center; border: 1px solid var(--s800); background: var(--s950); border-radius: 7px; padding: 8px; margin-bottom: 8px; }
+  .amt-bar { display: flex; align-items: center; border: 1px solid var(--s800); background: var(--s950); border-radius: 7px; padding: 6px 8px; margin-bottom: 6px; }
   .amt-bar .lb { width: 52px; font-size: 11px; font-weight: 700; color: var(--s500); }
   .amt-mid { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; }
   .stepbtn { width: 24px; height: 24px; border-radius: 999px; background: var(--s800); color: var(--s400); display: grid; place-items: center; font-size: 12px; flex: none; }
   .amt-val { min-width: 90px; text-align: center; font-size: 27px; font-weight: 900; letter-spacing: -.03em; color: #fff; line-height: 1.1; }
   .amt-bar .undo { width: 52px; text-align: right; color: var(--s500); font-size: 13px; }
-  .padgrid { display: flex; gap: 6px; margin-bottom: 8px; }
+  .padgrid { display: flex; gap: 6px; margin-bottom: 6px; }
   .keys { flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .key { height: 33px; border-radius: 7px; background: rgba(51,65,85,.5); color: var(--s300); font-size: 18px; font-weight: 700; display: grid; place-items: center; transition: transform .12s, filter .12s; }
+  .key { height: 30px; border-radius: 7px; background: rgba(51,65,85,.5); color: var(--s300); font-size: 18px; font-weight: 700; display: grid; place-items: center; transition: transform .12s, filter .12s; }
   .key.zero { grid-column: span 2; }
   .presets { flex: 1; display: grid; gap: 6px; }
-  .preset { height: 33px; border-radius: 7px; background: rgba(99,102,241,.15); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform .12s, filter .12s; }
+  .preset { height: 30px; border-radius: 7px; background: rgba(99,102,241,.15); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform .12s, filter .12s; }
   .preset .p1 { font-size: 11px; font-weight: 700; color: var(--indigo-300); line-height: 1; }
   .preset .p2 { font-size: 8.5px; font-weight: 700; color: var(--s400); line-height: 1; margin-top: 3px; }
   .pad-foot { display: flex; gap: 6px; }
