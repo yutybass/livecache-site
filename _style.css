@@ -15,6 +15,14 @@
   --fg-2: #A6B2C6;
   --fg-3: #6C7A92;
   --indigo: #A5B4FC;
+  /*
+    名乗りの「Cache」だけに使う藍。**アプリの中と同じ値**（indigo-400）。
+
+    下層の頁だけ `--indigo`（#A5B4FC）で塗っていたので、トップと見比べると
+    同じ字が別の色をしていた。読み物の見出しや links に使う藍とは役割が
+    違うので、名乗り専用に 1 つ持たせる。
+  */
+  --indigo-mark: #818CF8;
   --gutter: clamp(20px, 5vw, 40px);
 }
 
@@ -48,7 +56,7 @@ header.bar {
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
 .brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
 .brand b { font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
-.brand b em { font-style: normal; color: var(--indigo); }
+.brand b em { font-style: normal; color: var(--indigo-mark); }
 nav { margin-left: auto; display: flex; gap: 18px; }
 nav a { color: var(--fg-3); text-decoration: none; font-size: 13.5px; font-weight: 600; }
 nav a:hover, nav a[aria-current="page"] { color: var(--fg); }
