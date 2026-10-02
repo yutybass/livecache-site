@@ -189,6 +189,14 @@
   .feature-ic svg { width: 21px; height: 21px; }
   .feature h3 { font-size: 17px; }
   .feature p { margin-top: 6px; font-size: 14px; color: var(--fg-2); line-height: 1.7; }
+  /* スマホの幅（1 列）では、アイコンを左に置いて横に並べ、カードを低くする */
+  @media (max-width: 619px) {
+    .features { gap: 10px; }
+    .feature { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 14px; align-items: center; padding: 16px 18px; border-radius: 16px; }
+    .feature-ic { grid-row: 1 / span 2; margin-bottom: 0; }
+    .feature h3 { font-size: 16px; line-height: 1.4; }
+    .feature p { margin-top: 2px; font-size: 13.5px; line-height: 1.6; }
+  }
   .pro-tag { display: inline-block; margin-left: 4px; padding: 0 6px; border-radius: 5px; font-size: 10px; font-weight: 800; color: var(--amber); background: rgba(251,191,36,.14); vertical-align: 1px; }
 
   /* 目玉の機能：ボードを読む */
