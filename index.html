@@ -150,7 +150,13 @@
 
   /* 操作の動画と X */
   .demo { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(48px, 10vw, 64px); margin-top: clamp(64px, 14vw, 104px); text-align: left; align-items: start; }
-  @media (min-width: 860px) { .demo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; } }
+  /* 広い画面：スマホの絵を大きくし、X の枠をスマホと同じ高さにする（枠の中で送る） */
+  @media (min-width: 860px) {
+    .demo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
+    .demo > .phone { width: 340px; }
+    .demo .x-card { display: flex; flex-direction: column; min-height: 0; }
+    .demo .x-feed { flex: 1 1 0; max-height: none; min-height: 0; }
+  }
   .phone { width: min(100%, 290px); margin: 0 auto; border-radius: 38px; padding: 9px; background: #0A0F1B; border: 1px solid #253048; box-shadow: 0 30px 80px -24px rgba(0,0,0,.85), 0 0 100px -30px rgba(99,102,241,.55); }
   .phone video { width: 100%; height: auto; border-radius: 30px; background: #020617; }
   .x-card { border: 1px solid var(--line); border-radius: 24px; background: rgba(13,19,36,.78); overflow: hidden; }
