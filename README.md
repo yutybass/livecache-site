@@ -7,7 +7,9 @@ index.html     トップ
 support.html   サポート     ← App Store の「サポート URL」
 privacy.html   プライバシー  ← App Store の「プライバシーポリシー URL」
 terms.html     利用規約
-_style.css     3 枚で使う 1 枚
+_style.css     下層の 3 枚で使う 1 枚（トップは index.html の中に持つ）
+img/           アイコン・画面写真・App Store の札
+video/         トップの動画（Web 用に縮めたもの。元の録画は手元のダウンロードに）
 .nojekyll      GitHub Pages に Jekyll を通させない印
 ```
 
@@ -52,3 +54,11 @@ App Store Connect に入れる URL:
 アプリのリポジトリ（`livecache`）にも同じものを写していた時期があるが、
 2 つあると片方だけ直して**公開されていないのに直したつもり**になる。
 写しは消したので、直すときは必ずここで直して push する。
+
+## トップの中身を足すとき
+
+- **X の投稿**：`index.html` の「X の投稿を書き写したもの」の上に `<article class="post">` を足す（新しいものを上に）
+- **アップデート履歴**：`#updates` のいちばん上に `<details class="update">` を足し、前の版の「最新」と `open` を外す。
+  文はアプリの `assets/store/store-copy.md` の What's New をそのまま使う
+- **ご要望の欄**：送り先はアプリの「不具合の報告・要望」と同じ Formspree（`https://formspree.io/f/mjybzokk`）。
+  無料枠は月 50 件まで（アプリとサイトの合計）
