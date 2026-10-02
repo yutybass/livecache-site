@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>サポート — LiveCache</title>
 <meta name="description" content="LiveCache のお問い合わせ先とよくある質問。">
 <link rel="icon" href="./img/icon.svg">
@@ -19,18 +19,24 @@
 <link rel="stylesheet" href="./_style.css">
 </head>
 <body>
-<header class="bar">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="./img/icon.svg" alt=""><b>Live <em>Cache</em></b></a>
-    <nav>
-      <a href="./">ホーム</a>
-      <a href="./support.html" aria-current="page">サポート</a>
-      <a href="./privacy.html">プライバシー</a>
-      <a href="./terms.html">利用規約</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.4 0 1.79.75 3.01.72 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.53 1.26-2.6-.03-.01-2.42-.93-2.45-3.71zM14.08 5.85c.64-.77 1.07-1.85.95-2.92-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.82 1.03.08 2.07-.52 2.71-1.28z"/></symbol>
+</svg>
+<div class="glow" aria-hidden="true"><span class="beam b1"></span><span class="beam b2"></span><span class="beam b3"></span></div>
+<!-- 上の帯・光の筋・足は、トップ（index.html）と同じ作り -->
+<header class="sitebar">
+  <div class="wrap sitebar-in">
+    <a class="sb-brand" href="./"><img src="./img/icon.svg" alt=""><span>Live <em>Cache</em></span></a>
+    <nav class="sb-nav" aria-label="サイトの中">
+      <a href="./#features">機能</a>
+      <a href="./#plans">料金</a>
+      <a href="./#updates">アップデート</a>
+      <a class="keep" href="./#request">ご要望</a>
     </nav>
+    <a class="sb-get" href="https://apps.apple.com/jp/app/id6804119041" target="_blank" rel="noopener"><svg class="apple" aria-hidden="true"><use href="#i-apple"/></svg>App Store</a>
   </div>
 </header>
-<main><div class="wrap">
+<main class="doc"><div class="wrap">
 <p class="eyebrow">SUPPORT</p>
 <h1>サポート</h1>
 <p class="lede">お困りのことがあれば、下の宛先までご連絡ください。</p>
@@ -75,17 +81,20 @@
 
 <h2>ご要望</h2>
 <p>
-  「こういう記録の残し方がしたい」というご意見も歓迎です。上のメールまでお寄せください。
+  「こういう記録の残し方がしたい」というご意見も歓迎です。<a href="./#request">トップのご要望の欄</a>か、上のメールまでお気軽にどうぞ。
 </p>
 
 </div></main>
-<footer><div class="wrap">
-  <span>LiveCache</span>
-  <span>
-    <a href="./support.html">サポート</a> ·
-    <a href="./privacy.html">プライバシーポリシー</a> ·
-    <a href="./terms.html">利用規約</a>
-  </span>
-</div></footer>
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <span>© 2026 LiveCache</span>
+    <span class="foot-links">
+      <a href="./support.html" aria-current="page">サポート</a>
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="./terms.html">利用規約</a>
+      <a href="https://x.com/LiveCache_poker" target="_blank" rel="noopener">X ↗</a>
+    </span>
+  </div>
+</footer>
 </body>
 </html>
