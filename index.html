@@ -150,6 +150,8 @@
   .hero h1 em { font-style: normal; color: var(--indigo-300); }
   .hero .store-row { margin-top: 36px; }
   .facts { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 22px 0 0; padding: 0; font-size: 13px; color: var(--fg-2); }
+  .facts li { display: inline-flex; align-items: center; gap: 6px; }
+  .facts li::before { content: "✓"; color: var(--win); font-weight: 800; }
 
   /* 操作の動画と X */
   .demo { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(48px, 10vw, 64px); margin-top: clamp(64px, 14vw, 104px); text-align: left; align-items: start; }
