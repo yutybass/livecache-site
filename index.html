@@ -2,9 +2,9 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LiveCache — ライブポーカーのハンドと対戦相手を記録する</title>
-<meta name="description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に、打ち終わる。プレイヤーごとに、履歴が追える。記録はすべて端末内に保存されます。">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LiveCache — ライブポーカーのハンド記録アプリ</title>
+<meta name="description" content="ライブポーカーのハンドと対戦相手を、iPhone で 1 手 1 タップで記録するアプリ。写真やカメラからボードを読み取り、リプレイを動画で保存できます。">
 <link rel="canonical" href="https://yutybass.github.io/livecache-site/">
 <link rel="icon" href="./img/icon.svg">
 <link rel="apple-touch-icon" href="./img/icon.svg">
@@ -14,15 +14,16 @@
 <meta property="og:site_name" content="LiveCache">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://yutybass.github.io/livecache-site/">
-<meta property="og:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
-<meta property="og:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に、打ち終わる。プレイヤーごとに、履歴が追える。記録はすべて端末内に保存されます。">
+<meta property="og:title" content="LiveCache — ライブポーカーのハンド記録アプリ">
+<meta property="og:description" content="ハンドの合間に、打ち終わる。ライブポーカーのハンドと対戦相手を記録する iPhone アプリ。">
 <meta property="og:image" content="https://yutybass.github.io/livecache-site/img/og.png?v=7">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="LiveCache — Track your hands. Exploit the table.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="LiveCache — ライブポーカーのハンドと対戦相手を記録する">
-<meta name="twitter:description" content="ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に、打ち終わる。プレイヤーごとに、履歴が追える。記録はすべて端末内に保存されます。">
+<meta name="twitter:site" content="@LiveCache_poker">
+<meta name="twitter:title" content="LiveCache — ライブポーカーのハンド記録アプリ">
+<meta name="twitter:description" content="ハンドの合間に、打ち終わる。ライブポーカーのハンドと対戦相手を記録する iPhone アプリ。">
 <meta name="twitter:image" content="https://yutybass.github.io/livecache-site/img/og.png?v=7">
 
 <meta name="theme-color" content="#06090F">
@@ -34,1295 +35,594 @@
   "@type": "SoftwareApplication",
   "name": "LiveCache",
   "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "iOS",
+  "operatingSystem": "iOS 15.1 以降",
+  "softwareVersion": "1.5.0",
   "inLanguage": "ja",
   "url": "https://yutybass.github.io/livecache-site/",
+  "downloadUrl": "https://apps.apple.com/jp/app/id6804119041",
   "image": "https://yutybass.github.io/livecache-site/img/og.png?v=7",
-  "description": "ライブポーカーのハンドと対戦相手を記録する iOS アプリ。ハンドの合間に、打ち終わる。プレイヤーごとに、履歴が追える。記録はすべて端末内に保存されます。",
+  "description": "ライブポーカーのハンドと対戦相手を、iPhone で 1 手 1 タップで記録するアプリ。",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
-  "author": { "@type": "Person", "name": "YUTO YOSHIDA" }
+  "author": { "@type": "Person", "name": "YUTO YOSHIDA" },
+  "sameAs": ["https://x.com/LiveCache_poker"]
 }
 </script>
 <style>
-
   /*
-    夜の卓に寄せた 1 色。明暗の切り替えは持たない（アプリ自体が暗い画面しか
-    持たず、この頁はその続き）。ただし地も字も必ず自分で塗る。
+    2026-10-02 に組み直した。PDF MARIN（pdf-marin.github.io）の並びを参考にした：
+    上に版の札と入手、操作の動画と X、機能、目玉の機能、動画、料金、アップデート履歴、ご要望。
 
-    画面の切り抜きは**実装と同じ値**で描く:
-      地 slate-950 / 面 slate-900 / 境界 slate-800 / 主操作 indigo-600
-      卓の布は既定の slate（border-slate-700/70 + bg-slate-800/40）
-      札は 4 色デッキ（♠ slate-600 ♥ red-800 ♦ sky-800 ♣ emerald-800）
-      席の配置は POSITION_PLACEMENTS の座標そのもの
+    **字は少なく、余白は広く。** 見出しとひと言だけにして、細かいことは動画と画面に任せる。
+    **スマホで開く人がいちばん多い**（X のリンクから来る）ので、縦 1 列を基準に組む。
+
+    色はアプリと同じ（地 slate-950 ・ 主の操作 indigo-600 ・ 勝ちの緑）。後ろの光の筋は、
+    機能紹介の動画の地と同じもの（斜めの藍の光）をゆっくり動かしている。
   */
   :root {
-    --s950: #020617; --s900: #0F172A; --s850: #131C31; --s800: #1E293B;
-    --s700: #334155; --s600: #475569; --s500: #64748B; --s400: #94A3B8;
-    --s300: #CBD5E1; --s200: #E2E8F0; --s100: #F1F5F9;
-
     --page: #06090F;
-    --line: #1D2941;
-    --line-soft: #16203288;
-
+    --surface: #0D1324;
+    --line: #1B2640;
+    --line-soft: #151E3166;
     --fg: #EDF1F8; --fg-2: #A6B2C6; --fg-3: #6C7A92;
-
-    --indigo: #4F46E5; --indigo-500: #6366F1; --indigo-400: #818CF8; --indigo-300: #A5B4FC;
-
-    --win: #34D399; --lose: #FB7185; --orange: #FB923C; --amber: #FBBF24;
-
-    --suit-s: #475569; --suit-h: #991B1B; --suit-d: #075985; --suit-c: #065F46;
-
-    --gutter: clamp(20px, 5vw, 40px);
+    --indigo: #4F46E5; --indigo-400: #818CF8; --indigo-300: #A5B4FC;
+    --win: #34D399; --amber: #FBBF24;
+    --gutter: clamp(20px, 6vw, 48px);
+    --radius: 20px;
   }
-
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     background: var(--page);
     color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
-      "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
-    font-size: 16px; line-height: 1.8;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-
+  img, video { max-width: 100%; display: block; }
+  a { color: var(--indigo-300); }
   .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 var(--gutter); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :focus-visible { outline: 2px solid var(--indigo-400); outline-offset: 3px; border-radius: 6px; }
+  .apple { width: 1em; height: 1em; flex: none; }
 
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--gutter); }
+  /* ---------- 後ろの光の筋（ページ全体に 1 枚、固定） ----------
+    機能紹介の動画の地（livecache/assets/store/video/make_explainer_video_save.py の GROUND）と同じ：
+    左上から藍の光、縦長の帯 3 本（紫・薄紫・藍）を 35 度傾けて 38px ぼかす。
+    帯の位置と幅は、動画の横 1600 に対する割合で置く（400・750・1110 ／ 幅 330・150・430）。 */
+  .glow { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+    background: radial-gradient(ellipse 1100px 800px at 30% -10%, rgba(99,102,241,.22), rgba(99,102,241,0) 62%),
+                linear-gradient(135deg, #0B1122 0%, #020617 55%); }
+  .beam { position: absolute; top: -60vh; height: 220vh; filter: blur(38px); transform: rotate(35deg); }
+  .b1 { left: 25%; width: 20.6%; background: linear-gradient(transparent, rgba(124,92,255,.50), transparent); }
+  .b2 { left: 47%; width: 9.4%; background: linear-gradient(transparent, rgba(192,132,252,.40), transparent); }
+  .b3 { left: 69%; width: 27%; background: linear-gradient(transparent, rgba(99,102,241,.32), transparent); }
+  /* スマホの幅では帯が細くなりすぎるので、最低の幅を持たせる */
+  @media (max-width: 620px) { .b1 { width: 34%; left: 12%; } .b2 { width: 16%; left: 48%; } .b3 { width: 40%; left: 66%; } }
+
+  /* ---------- 上の帯 ---------- */
+  .sitebar {
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(6, 9, 15, .72);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line-soft);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .sitebar-in { display: flex; align-items: center; gap: clamp(16px, 4vw, 28px); height: 60px; }
+  .sb-brand { display: inline-flex; align-items: center; gap: 9px; color: var(--fg); text-decoration: none; font-weight: 800; letter-spacing: -.02em; font-size: 17px; margin-right: auto; }
+  .sb-brand img { width: 26px; height: 26px; }
+  .sb-brand em { font-style: normal; color: #818CF8; } /* 名乗りの色はどの頁も同じ（_style.css の --indigo-mark） */
+  /* スマホの幅では「ご要望」だけ残す */
+  .sb-nav { display: flex; gap: 26px; font-size: 13.5px; }
+  .sb-nav a:not(.keep) { display: none; }
+  .sb-nav a { color: var(--fg-2); text-decoration: none; }
+  .sb-nav a:hover { color: var(--fg); }
+  .sb-get { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 9px; background: var(--fg); color: #05070C; text-decoration: none; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+  .sb-get .apple { width: 13px; height: 13px; margin-top: -2px; }
+  @media (min-width: 760px) { .sb-nav a:not(.keep) { display: inline; } }
 
   /* ---------- 見出しの型 ---------- */
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-size: 11px; font-weight: 800; letter-spacing: .22em;
-    color: var(--indigo-300); margin: 0 0 18px; white-space: nowrap;
-  }
-  .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; opacity: .55; }
-
-  h2 {
-    font-size: clamp(25px, 4.2vw, 38px); line-height: 1.28; letter-spacing: -.03em;
-    font-weight: 800; margin: 0 0 16px; text-wrap: balance;
-  }
-
+  .eyebrow { margin: 0 0 16px; font-size: 11px; font-weight: 800; letter-spacing: .22em; color: var(--indigo-300); }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  /* 見出しは 1 行で（「、」で改行しない）。15 字までなら、スマホの幅でも収まる大きさ */
+  h2 { font-size: clamp(16px, 5.6vw, 38px); line-height: 1.35; letter-spacing: -.03em; font-weight: 800; white-space: nowrap; }
   p { margin: 0; }
-  .lede { font-size: clamp(16px, 2.1vw, 19px); color: var(--fg-2); max-width: 40ch; }
-  .body { font-size: 15.5px; color: var(--fg-2); max-width: 46ch; }
+  .lede { margin-top: 16px; font-size: clamp(15px, 4vw, 17px); color: var(--fg-2); }
+  section { scroll-margin-top: 76px; }
+  .sec { padding: clamp(88px, 18vw, 160px) 0 0; }
+  .sec-head { margin-bottom: clamp(36px, 8vw, 56px); }
+  .center { text-align: center; }
+
+  /* ---------- 入手のボタン ---------- */
+  .store-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+  .store-badge img { height: 44px; width: auto; }
 
   /* ---------- ヒーロー ---------- */
-  .hero { position: relative; padding: clamp(18px, 3vw, 36px) 0 clamp(48px, 7vw, 72px); overflow: hidden; }
-  .hero::before {
-    content: ""; position: absolute; top: -430px; left: 50%;
-    width: 900px; height: 900px; transform: translateX(-50%);
-    background: radial-gradient(circle, rgba(99,102,241,.17) 0%, rgba(99,102,241,0) 62%);
-    pointer-events: none;
+  .hero { padding: clamp(56px, 14vw, 120px) 0 0; text-align: center; }
+  .ver { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--fg-2); font-size: 12.5px; text-decoration: none; background: rgba(13,19,36,.6); }
+  .ver b { color: var(--fg); }
+  .ver i { width: 7px; height: 7px; border-radius: 999px; background: var(--win); box-shadow: 0 0 0 4px rgba(52,211,153,.15); }
+  /* 1 行で。スマホの幅（390）でも収まる大きさ */
+  .hero h1 { margin-top: 28px; font-size: clamp(18px, 6.2vw, 50px); line-height: 1.3; letter-spacing: -.04em; font-weight: 800; white-space: nowrap; }
+  .hero h1 em { font-style: normal; color: var(--indigo-300); }
+  .hero .store-row { margin-top: 36px; }
+  .facts { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 22px 0 0; padding: 0; font-size: 13px; color: var(--fg-2); }
+  .facts li { display: inline-flex; align-items: center; gap: 6px; }
+  .facts li::before { content: "✓"; color: var(--win); font-weight: 800; }
+
+  /* 操作の動画と X */
+  .demo { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(48px, 10vw, 64px); margin-top: clamp(64px, 14vw, 104px); text-align: left; align-items: start; }
+  /* 広い画面：スマホの絵を大きくし、X の枠をスマホと同じ高さにする（枠の中で送る） */
+  @media (min-width: 860px) {
+    .demo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
+    .demo > .phone { width: 340px; }
+    .demo .x-card { display: flex; flex-direction: column; min-height: 0; }
+    .demo .x-feed { flex: 1 1 0; max-height: none; min-height: 0; }
   }
-  .hero .wrap { position: relative; }
+  .phone { width: min(100%, 290px); margin: 0 auto; border-radius: 38px; padding: 9px; background: #0A0F1B; border: 1px solid #253048; box-shadow: 0 30px 80px -24px rgba(0,0,0,.85), 0 0 100px -30px rgba(99,102,241,.55); }
+  .phone video { width: 100%; height: auto; border-radius: 30px; background: #020617; }
+  .x-card { border: 1px solid var(--line); border-radius: 24px; background: rgba(13,19,36,.78); overflow: hidden; }
+  .x-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+  .x-head img, .post-head img { width: 40px; height: 40px; border-radius: 10px; flex: none; }
+  .x-head div, .post-head div { display: grid; line-height: 1.35; font-size: 15px; }
+  .x-head small, .post-head small { color: var(--fg-3); font-size: 12.5px; }
+  .x-head a { margin-left: auto; font-size: 13.5px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+  /* 投稿は枠の中で送る（ページを長くしない）。高さは操作の動画とだいたい揃える */
+  .x-feed { max-height: min(560px, 72vh); overflow-y: auto; overscroll-behavior: contain; }
+  .post { padding: 18px; border-bottom: 1px solid var(--line-soft); }
+  .post:last-child { border-bottom: 0; }
+  .post-head { display: flex; align-items: center; gap: 12px; }
+  .post-head time { margin-left: auto; align-self: flex-start; font-size: 12px; color: var(--fg-3); }
+  .post p { margin-top: 12px; font-size: 14.5px; line-height: 1.75; white-space: pre-line; }
+  .post video, .post-media { width: 100%; margin-top: 14px; border-radius: 14px; border: 1px solid var(--line); background: #0B1020; }
+  .post video { aspect-ratio: 4 / 3; }
+  .post-media { max-height: 360px; object-fit: cover; object-position: top; }
+  .post > a { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 700; text-decoration: none; }
 
-  .hero-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(44px,7vw,68px); align-items: center; }
-  @media (min-width: 960px) { .hero-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.05fr); } }
-
-  .appicon { width: clamp(48px, 8.5vw, 74px); height: clamp(48px, 8.5vw, 74px); border-radius: 22%; flex: none; box-shadow: 0 10px 26px rgba(0,0,0,.5); }
-  .wordmark { font-size: clamp(34px, 6.5vw, 62px); line-height: .95; letter-spacing: -.04em; font-weight: 800; white-space: nowrap; }
-  .wordmark em { font-style: normal; color: var(--indigo-300); }
-  .claim { margin: 18px 0 0; font-size: clamp(15px,2.4vw,19px); color: var(--fg-2); font-weight: 500; }
-
-  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; align-items: center; }
-  .cta {
-    display: inline-flex; align-items: center; gap: 9px;
-    background: var(--indigo); color: #fff; text-decoration: none;
-    font-size: 15px; font-weight: 700; padding: 13px 22px; border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(79,70,229,.32); white-space: nowrap;
+  /* ---------- 機能 ---------- */
+  .features { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  @media (min-width: 620px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 980px) { .features { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .feature { padding: 26px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(13,19,36,.7); }
+  .feature-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: rgba(99,102,241,.14); color: var(--indigo-300); margin-bottom: 18px; }
+  .feature-ic svg { width: 21px; height: 21px; }
+  .feature h3 { font-size: 17px; }
+  .feature p { margin-top: 6px; font-size: 14px; color: var(--fg-2); line-height: 1.7; }
+  /* スマホの幅（1 列）では、アイコンを左に置いて横に並べ、カードを低くする */
+  @media (max-width: 619px) {
+    .features { gap: 10px; }
+    .feature { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 14px; align-items: center; padding: 16px 18px; border-radius: 16px; }
+    .feature-ic { grid-row: 1 / span 2; margin-bottom: 0; }
+    .feature h3 { font-size: 16px; line-height: 1.4; }
+    .feature p { margin-top: 2px; font-size: 13.5px; line-height: 1.6; }
   }
-  .ghost {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--line); color: var(--fg-2); text-decoration: none;
-    font-size: 14px; font-weight: 600; padding: 12px 18px; border-radius: 12px; white-space: nowrap;
-  }
-  .cta:focus-visible, .ghost:focus-visible { outline: 2px solid var(--indigo-300); outline-offset: 3px; }
-  .platform { margin-top: 16px; font-size: 12.5px; color: var(--fg-3); letter-spacing: .04em; }
+  .pro-tag { display: inline-block; margin-left: 4px; padding: 0 6px; border-radius: 5px; font-size: 10px; font-weight: 800; color: var(--amber); background: rgba(251,191,36,.14); vertical-align: 1px; }
 
-  /* ================= 端末の枠 ================= */
-  .phone {
-    width: 100%; max-width: 372px; margin-inline: auto;
-    background: var(--s950);
-    border: 1px solid var(--s700);
-    border-radius: 28px; padding: 9px;
-    box-shadow: 0 34px 80px rgba(0,0,0,.62);
-  }
-  .phone-inner { border-radius: 20px; overflow: hidden; background: var(--s950); }
+  /* 目玉の機能：ボードを読む */
+  .checks { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; font-size: 14.5px; color: var(--fg-2); }
+  .checks li { display: flex; gap: 10px; }
+  .checks li::before { content: "✓"; color: var(--win); font-weight: 800; }
+  /* 横に並べたとき、見出しは列の幅に収まる大きさに */
+  @media (min-width: 860px) { .spot h2 { font-size: clamp(24px, 2.6vw, 34px); } }
+  .spot { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(48px, 10vw, 64px); align-items: center; }
+  @media (min-width: 860px) { .spot { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 
-  /*
-    実機のスクリーンショット。**ステータスバー（時計・電池）だけ切り落とす**。
-    加工はそれだけに留め、中身は撮ったまま出す（作ったモックだと言われないため）。
-    切り幅は元画像の比率から: 110px / 幅 869px = 12.66%（margin の % は幅基準）。
-  */
-  .shotcrop { overflow: hidden; }
-  .shot { display: block; width: 100%; margin-top: -12.66%; }
+  /* 画面写真：スマホは 2 列、広い画面は 4 列（横には送らない） */
+  .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: clamp(48px, 10vw, 72px); }
+  @media (min-width: 760px) { .shots { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; } }
+  .shots img { width: 100%; height: auto; aspect-ratio: 744 / 1613; object-fit: cover; object-position: top; border-radius: 22px; border: 1px solid var(--line); }
 
-  .bar { position: relative; display: flex; align-items: center; height: 44px; padding: 0 12px; border-bottom: 1px solid #1E293B8C; }
-  .bar .back { font-size: 22px; line-height: 1; color: var(--s400); padding-right: 6px; }
-  .bar .title { position: absolute; inset: 0; display: grid; place-items: center; font-size: 15px; font-weight: 600; color: #fff; pointer-events: none; }
-  .bar .title.left { place-items: center start; padding-left: 12px; }
-  .bar .acts { position: relative; margin-left: auto; display: flex; align-items: center; gap: 3px; }
+  /* ---------- 料金 ---------- */
+  .plans { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; max-width: 760px; margin: 0 auto; }
+  @media (min-width: 680px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .plan { padding: 28px 26px; border: 1px solid var(--line); border-radius: 24px; background: rgba(13,19,36,.7); text-align: left; }
+  .plan.is-pro { border-color: rgba(99,102,241,.55); background: linear-gradient(180deg, rgba(79,70,229,.16), rgba(13,19,36,.85) 65%); }
+  .plan-name { font-size: 13px; font-weight: 800; color: var(--fg-2); }
+  .plan-price { margin-top: 6px; font-size: 32px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+  .plan-price small { font-size: 14px; font-weight: 600; color: var(--fg-2); }
+  .plan-sub { font-size: 13px; color: var(--fg-3); min-height: 1.8em; } /* 左右で下の行の高さをそろえる */
+  .plan ul { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 10px; font-size: 14.5px; }
+  .plan li { display: flex; gap: 10px; }
+  .plan li::before { content: "✓"; color: var(--win); font-weight: 800; }
 
-  .chip-btn {
-    height: 27px; border-radius: 8px;
-    display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-    background: #1E293BBF; color: var(--s300);
-    font-size: 11.5px; font-weight: 700; padding: 0 9px; white-space: nowrap;
-  }
-  .chip-btn.sq { width: 27px; padding: 0; }
-  .chip-btn.on { background: var(--indigo); color: #fff; }
-
-  .screen { padding: 12px; }
-
-  /* ストリートタブ（実装: 幅 50 のタブが slate-800/60 の帯、選択は indigo-600） */
-  .tabs-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
-  .streets { display: inline-flex; gap: 2px; background: #1E293B99; border-radius: 8px; padding: 2px; }
-  .street-tab {
-    width: 46px; text-align: center;
-    font-size: 8.5px; font-weight: 700; letter-spacing: -.01em;
-    padding: 2.5px 0; border-radius: 6px; color: var(--s400); position: relative;
-  }
-  .legend { display: inline-flex; gap: 7px; font-size: 8.5px; color: var(--s500); align-items: center; }
-  .legend i { font-style: normal; display: inline-flex; align-items: center; gap: 3px; }
-  .legend i::before { content: ""; width: 8px; height: 8px; border-radius: 999px; border: 1px solid; }
-  .legend .act::before { border-color: var(--indigo-300); background: var(--indigo); }
-  .legend .in::before { border-color: var(--s500); background: var(--s600); }
-  .legend .fold::before { border-color: #33415580; background: #1E293B80; }
-
-  /* ---------- 卓 ---------- */
-  .stage { position: relative; width: 100%; aspect-ratio: 370 / 380; }
-  .felt {
-    position: absolute; left: 6%; right: 6%; top: 20.3%; bottom: 20.5%;
-    border-radius: 999px;
-    border: 2px solid #334155B3; background: #1E293B66;
-  }
-
-  .seat {
-    position: absolute; width: max-content;
-    transform: translate(-50%, -52%);
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-  }
-  .seat .hole { display: flex; gap: 2px; }
-  .sbox {
-    width: 62px; height: 48px; position: relative;
-    border-radius: 8px; border: 1px solid var(--s700); background: var(--s900);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-    padding: 0 3px;
-  }
-  .pill {
-    font-size: 7px; font-weight: 900; letter-spacing: .02em;
-    border-radius: 4px; padding: 1px 4px; line-height: 1.4;
-    background: var(--s700); color: var(--s100); white-space: nowrap;
-  }
-  .nm { font-size: 8.5px; color: var(--s300); line-height: 1; max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .stk { font-size: 10px; font-weight: 700; color: var(--s100); line-height: 1; }
-
-  .seat.myseat .pill { background: #9A3412; color: #FED7AA; }
-  .seat.folded .sbox { border-color: var(--s800); background: #0F172A66; opacity: .5; }
-  .seat.folded .pill { background: var(--s800); color: var(--s600); }
-  .seat.folded .nm, .seat.folded .stk { color: var(--s600); }
-  .seat.folded .hole { opacity: .35; }
-
-  .glow {
-    position: absolute; inset: -7px; border-radius: 12px;
-    background: radial-gradient(closest-side, rgba(99,102,241,.5), rgba(99,102,241,0));
-    opacity: 0; pointer-events: none;
+  /* スマホの幅（1 列）では、料金のカードも低くする（2 列にすると字が折り返すので、1 列のまま詰める） */
+  @media (max-width: 679px) {
+    .plans { gap: 10px; }
+    .plan { padding: 18px 20px; border-radius: 18px; }
+    .plan-price { margin-top: 2px; font-size: 26px; }
+    .plan-sub { min-height: 0; }
+    .plan ul { margin-top: 12px; gap: 4px; font-size: 13.5px; line-height: 1.6; }
+    .plan li { gap: 6px; }
   }
 
-  .wager {
-    position: absolute; width: max-content; transform: translate(-50%,-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 2px; opacity: 0;
+  /* ---------- アップデート履歴 ---------- */
+  .updates { display: grid; gap: 10px; max-width: 760px; margin: 0 auto; }
+  .update { border: 1px solid var(--line); border-radius: 16px; background: rgba(13,19,36,.7); }
+  .update summary { list-style: none; display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; }
+  .update summary::-webkit-details-marker { display: none; }
+  .u-ver { font-weight: 800; font-size: 15px; min-width: 52px; }
+  .u-title { flex: 1; min-width: 0; font-size: 14px; color: var(--fg-2); }
+  .u-date { font-size: 12px; color: var(--fg-3); white-space: nowrap; }
+  .u-new { margin-left: 6px; color: var(--win); font-size: 11px; font-weight: 800; }
+  .update ul { margin: 0; padding: 0 18px 18px 2.4em; font-size: 14px; color: var(--fg-2); display: grid; gap: 4px; }
+  @media (max-width: 520px) { .u-date { display: none; } }
+
+  /* ---------- ご要望 ---------- */
+  .form { display: grid; gap: 14px; max-width: 640px; margin: 0 auto; text-align: left; }
+  .form-row { display: grid; gap: 14px; }
+  @media (min-width: 620px) { .form-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .field { display: grid; gap: 6px; font-size: 13px; color: var(--fg-2); font-weight: 600; }
+  .field input, .field select, .field textarea {
+    width: 100%; font: inherit; font-size: 16px; /* 16 未満だと iPhone が勝手に拡大する */
+    color: var(--fg); background: rgba(10,15,28,.85); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-weight: 400;
   }
-  .wager .chipdot { width: 9px; height: 9px; border-radius: 999px; background: var(--indigo-400); border: 1.5px solid #C7D2FE; }
-  .wager .amt { font-size: 9.5px; font-weight: 700; color: #fff; line-height: 1; }
+  .field textarea { min-height: 150px; resize: vertical; line-height: 1.7; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--indigo-400); box-shadow: 0 0 0 3px rgba(99,102,241,.2); }
+  .form-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--fg-3); }
+  .send { height: 48px; padding: 0 26px; border: 0; border-radius: 12px; background: var(--indigo); color: #fff; font: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .send:disabled { opacity: .5; cursor: default; }
+  .form-status { font-size: 14px; min-height: 1.8em; }
+  .form-status.ok { color: var(--win); }
+  .form-status.err { color: #FB7185; }
+  .hp { position: absolute; left: -9999px; }
 
-  .board { position: absolute; left: 50%; top: 39%; transform: translate(-50%, -50%); width: max-content; display: flex; gap: 4px; }
-  .center-info { position: absolute; left: 0; right: 0; top: 53.5%; display: grid; place-items: center; text-align: center; }
-  .pot-label { font-size: 7.5px; font-weight: 800; letter-spacing: .12em; color: var(--s500); }
+  /* ---------- おわり ---------- */
+  .close { padding-bottom: clamp(88px, 18vw, 160px); }
+  .close .store-row { margin-top: 32px; }
+  .site-foot { border-top: 1px solid var(--line-soft); padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--fg-3); }
+  .foot-grid { display: flex; flex-wrap: wrap; gap: 14px 24px; justify-content: space-between; align-items: center; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  .foot-links a { color: var(--fg-2); text-decoration: none; }
 
-  .showdown { position: absolute; left: 0; right: 0; top: 47%; display: grid; place-items: center; text-align: center; opacity: 0; }
-  .showdown .who { font-size: 13px; font-weight: 900; letter-spacing: -.01em; text-transform: uppercase; color: var(--indigo-300); }
-  .showdown .handname { margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--s200); }
-  .showdown .net { margin-top: 4px; font-size: 13px; font-weight: 900; color: var(--win); }
-  .showdown .net small { font-size: 9px; font-weight: 700; color: #6EE7B7B3; margin-left: 3px; }
-
-  /* ---------- 札 ---------- */
-  .card {
-    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-    border-radius: 4px; color: #fff; line-height: 1; flex: none;
-  }
-  .card b { font-weight: 700; }
-  .card i { font-style: normal; margin-top: 1px; }
-  .card.s { background: var(--suit-s); } .card.h { background: var(--suit-h); }
-  .card.d { background: var(--suit-d); } .card.c { background: var(--suit-c); }
-  .card.back { background: #1E293B4D; border: 1px dashed var(--s600); }
-  .card.facedown { background: repeating-linear-gradient(45deg, #263349 0 3px, #1B2537 3px 6px); border: 1px solid #334155; }
-
-  .card.sz-seat { width: 20px; height: 28px; font-size: 11px; }
-  .card.sz-seat i { font-size: 8px; }
-  .card.sz-board { width: 28px; height: 39px; font-size: 16px; border-radius: 5px; }
-  .card.sz-board i { font-size: 11px; }
-  .card.sz-mini { width: 17px; height: 24px; font-size: 10px; border-radius: 3px; }
-  .card.sz-mini i { font-size: 8px; }
-  .card.sz-tiny { width: 14px; height: 20px; font-size: 9px; border-radius: 2px; }
-  .card.sz-tiny i { font-size: 7px; }
-
-  /* ---------- アクション履歴（compact） ---------- */
-  .cols { display: flex; gap: 5px; align-items: stretch; }
-  .colx { flex: 1; min-width: 0; border: 1px solid var(--s800); border-radius: 9px; background: #0F172A80; padding: 5px; }
-  .colx.dim { opacity: .38; }
-  .col-top { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
-  .col-name { font-size: 7.5px; font-weight: 800; letter-spacing: .08em; color: var(--s500); }
-  .col-pot { margin-left: auto; font-size: 9px; font-weight: 800; color: var(--s400); }
-  .col-board { display: flex; gap: 2px; justify-content: center; margin-bottom: 4px; }
-
-  .act { display: flex; align-items: center; gap: 4px; font-size: 9.5px; padding: 2px 0; white-space: nowrap; }
-  .act .pos { font-size: 7.5px; font-weight: 900; border-radius: 3px; padding: 1px 4px; flex: none; background: var(--s700); color: var(--s100); }
-  .act .pos.me { background: #9A3412; color: #FED7AA; }
-  .act .t { font-weight: 800; }
-  .act .t.f { color: var(--s500); }
-  .act .t.x { color: #34D399B3; }
-  .act .t.c { color: var(--win); }
-  .act .t.b { color: var(--lose); }
-  .act .t.r { color: var(--orange); }
-  .act .n { margin-left: auto; color: var(--s300); font-weight: 700; }
-
-  .col-win {
-    flex: none; width: 58px;
-    border: 1px solid #4C4FBF66; border-radius: 9px; background: #1E1B4B66;
-    padding: 6px 3px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  }
-  .col-win .w { font-size: 9px; font-weight: 900; color: var(--indigo-300); white-space: nowrap; }
-  .col-win .n { font-size: 11px; font-weight: 800; color: var(--win); }
-  .col-win .bb { font-size: 7.5px; color: #6EE7B7AA; }
-
-  /* ==========================================================
-     動く実機。入力（1 手 1 タップ）→ プレイヤー詳細（紐付け）の 2 場面。
-     寸法・配色は**実装の値そのまま**:
-       アクションボタン … 高さ 42 / 角丸 7（rounded-lg）/ 13px 黒太字の大文字
-         ALLin=indigo-600、Bet/Raise=rose-500/15+red-400、
-         Check/Call=emerald-500/15+emerald-400、Fold=slate-700/50+slate-400
-         並びは出す額が大きい順（ALLin → Raise → Call → Fold）
-       テンキー … キー高 33 / 隙間 6、プリセットは indigo-500/15
-       手番の光 … 750ms 片道の明滅（pulse.ts と同じ拍）
-     ========================================================== */
-  .vid { position: relative; height: 604px; background: var(--s950); }
-  /* 卓の上の空きを刈る。座標はそのまま、負のマージンで上 22px をクロップ */
-  .stagecrop { overflow: hidden; }
-  .stagecrop .stage { margin-top: -22px; margin-bottom: -8px; }
-  /* iPhone らしい枠。ステータスバー・アイランド・ホームバーまで描く */
-  .device { border-radius: 44px; padding: 10px; border-color: #3D4961; box-shadow: 0 34px 80px rgba(0,0,0,.62), inset 0 0 3px rgba(255,255,255,.06); }
-  .device .phone-inner { border-radius: 34px; }
-  .statusrow { position: relative; height: 26px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
-  .st-time { font-size: 12.5px; font-weight: 700; color: #fff; letter-spacing: .02em; }
-  .st-island { position: absolute; left: 50%; top: 3px; transform: translateX(-50%); width: 84px; height: 22px; border-radius: 999px; background: #000; }
-  .homebar { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); width: 108px; height: 4px; border-radius: 999px; background: #fff; opacity: .32; z-index: 7; pointer-events: none; }
-  /* プレイヤー詳細はタブの中の画面なので、下のナビが見えている（実機どおり） */
-  .bnav { position: absolute; left: 0; right: 0; bottom: 0; display: flex; border-top: 1px solid #1E293B8C; background: var(--s950); padding: 8px 0 12px; }
-  .bnav span { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; color: var(--s500); }
-  .bnav .ic { font-size: 15px; line-height: 1; display: grid; place-items: center; height: 17px; }
-  .bnav .ic svg { display: block; }
-  .undo-row svg { display: inline-block; vertical-align: -1px; }
-  .bnav span.onb { color: var(--indigo-300); }
-  .bnav .fab {
-    width: 34px; height: 34px; border-radius: 999px; margin-top: -18px;
-    background: var(--indigo); color: #fff; display: grid; place-items: center;
-    font-size: 18px; font-weight: 700; box-shadow: 0 6px 14px rgba(79,70,229,.45);
-  }
-  .scene { position: absolute; inset: 0; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
-  .scene.on { opacity: 1; }
-
-  .abtn-row { display: flex; gap: 7px; }
-  .abtn {
-    flex: 1; height: 42px; border-radius: 7px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .01em;
-    line-height: 1.15;
-    transition: transform .12s, filter .12s; white-space: nowrap;
-  }
-  /* 額は実装どおり 2px 下・行送り 16px（本文の 1.8 を継ぐと間が空く） */
-  .abtn small { font-size: 13px; font-weight: 700; margin-top: 2px; line-height: 1; }
-  .abtn.allin { background: var(--indigo); color: #fff; }
-  .abtn.br { background: rgba(244,63,94,.15); color: #F87171; }
-  .abtn.cc { background: rgba(16,185,129,.15); color: #34D399; }
-  .abtn.fd { background: rgba(51,65,85,.5); color: var(--s400); }
-
-  /* 押した瞬間の沈み（実装は 0.96 倍 + 少し暗く） */
-  .pressed { transform: scale(.94); filter: brightness(.8); }
-
-  /* ---- AmountPad（実装の構成そのまま） ---- */
-  .amt-bar { display: flex; align-items: center; border: 1px solid var(--s800); background: var(--s950); border-radius: 7px; padding: 6px 8px; margin-bottom: 6px; }
-  .amt-bar .lb { width: 52px; font-size: 11px; font-weight: 700; color: var(--s500); }
-  .amt-mid { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; }
-  .stepbtn { width: 24px; height: 24px; border-radius: 999px; background: var(--s800); color: var(--s400); display: grid; place-items: center; font-size: 12px; flex: none; }
-  .amt-val { min-width: 90px; text-align: center; font-size: 27px; font-weight: 900; letter-spacing: -.03em; color: #fff; line-height: 1.1; }
-  .amt-bar .undo { width: 52px; text-align: right; color: var(--s500); font-size: 13px; }
-  .padgrid { display: flex; gap: 6px; margin-bottom: 6px; }
-  .keys { flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .key { height: 30px; border-radius: 7px; background: rgba(51,65,85,.5); color: var(--s300); font-size: 18px; font-weight: 700; display: grid; place-items: center; transition: transform .12s, filter .12s; }
-  .key.zero { grid-column: span 2; }
-  .presets { flex: 1; display: grid; gap: 6px; }
-  .preset { height: 30px; border-radius: 7px; background: rgba(99,102,241,.15); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform .12s, filter .12s; }
-  .preset .p1 { font-size: 11px; font-weight: 700; color: var(--indigo-300); line-height: 1; }
-  .preset .p2 { font-size: 8.5px; font-weight: 700; color: var(--s400); line-height: 1; margin-top: 3px; }
-  .pad-foot { display: flex; gap: 6px; }
-  .pad-foot .pcancel { flex: 1; height: 42px; border-radius: 7px; background: rgba(51,65,85,.5); color: var(--s400); font-size: 13px; font-weight: 900; display: grid; place-items: center; }
-  .pad-foot .pok { flex: 1; height: 42px; border-radius: 7px; background: var(--indigo); color: #fff; font-size: 13px; font-weight: 900; display: grid; place-items: center; transition: transform .12s, filter .12s; }
-
-  /* ---- タップの指跡 ---- */
-  .tapdot {
-    position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px;
-    border-radius: 999px; background: rgba(255,255,255,.3);
-    box-shadow: 0 0 0 2px rgba(255,255,255,.4);
-    opacity: 0; pointer-events: none; z-index: 6;
-  }
-  .tapdot.go { animation: tapgo .38s ease-out; }
-  @keyframes tapgo { 0% {opacity:0; transform:scale(.4)} 25% {opacity:1; transform:scale(1)} 100% {opacity:0; transform:scale(1.55)} }
-
-  /* ---- 手番の席 ---- */
-  .seat.acting .sbox { border-color: var(--indigo-400); background: #1E1B4B; }
-  .seat.acting .glow { animation: seatpulse 1.5s ease-in-out infinite; }
-  @keyframes seatpulse { 0%, 100% {opacity:.35} 50% {opacity:1} }
-
-  .vid .wager { transition: opacity .2s; }
-  .flipin { animation: flipin .3s ease-out both; }
-  @keyframes flipin { from {opacity:0; transform:scaleX(.2)} to {opacity:1; transform:none} }
-  .potpop { display: inline-block; animation: potpop .35s ease-out; }
-  @keyframes potpop { 0% {transform:scale(1)} 40% {transform:scale(1.16)} 100% {transform:scale(1)} }
-
-  .street-tab.sel { background: var(--indigo); color: #fff; font-weight: 700; }
-  .street-tab.off { font-weight: 400; color: var(--s500); }
-
-  /* ---- プレイヤー詳細に行が届く ---- */
-  .rowin { opacity: 0; transform: translateY(-8px); transition: opacity .5s, transform .5s; }
-  .rowin.show { opacity: 1; transform: none; }
-  .rownew.show { animation: newglow 2s ease-out .15s both; }
-  @keyframes newglow { 0% {box-shadow: 0 0 0 1.5px var(--indigo-400)} 100% {box-shadow: 0 0 0 1.5px transparent} }
-
-  /* 実機の細部: タブの区切り線・情報アイコン・チップの束・ディーラーボタン */
-  .tsep { width: 1px; height: 10px; background: #47556966; margin: 0 1px; align-self: center; }
-  .info-i { width: 16px; height: 16px; border-radius: 999px; border: 1.5px solid var(--s600); color: var(--s500); font-size: 9px; font-weight: 700; font-style: italic; display: grid; place-items: center; }
-  .chipstack { width: 13px; height: 8px; border-radius: 999px; background: linear-gradient(#E2E8F0, #94A3B8); box-shadow: 0 2px 0 #475569, 0 4px 0 #334155; margin-bottom: 5px; }
-  .vid .wager .wl { font-size: 7px; font-weight: 800; letter-spacing: .08em; color: var(--s400); line-height: 1; }
-  .vid .wager .amt { font-size: 10.5px; font-weight: 800; color: #fff; line-height: 1; margin-top: 1px; }
-  .dbtn { position: absolute; width: 16px; height: 16px; border-radius: 999px; background: #fff; color: #0F172A; font-size: 9px; font-weight: 900; display: grid; place-items: center; transform: translate(-50%, -50%); }
-  .card.blank { background: #1E293B99; }
-  /* 伏せ札の上に表を重ねる枠。inline のままだと行送りぶん face が伸びる */
-  .slot { position: relative; display: inline-flex; }
-  /* ボード札は実機の比率に合わせて一回り小さく（実機: 幅の 7.4%） */
-  .vid .card.sz-board { width: 24px; height: 34px; font-size: 14px; border-radius: 4px; }
-  .vid .card.sz-board i { font-size: 10px; }
-  .undo-row { display: flex; gap: 6px; margin-top: 8px; }
-  .undo-row span { flex: 1; height: 32px; border-radius: 7px; background: #1E293B99; color: var(--s400); font-size: 10.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; }
-  .hrow { opacity: 0; transition: opacity .25s; }
-  .hrow.on { opacity: 1; }
-  .t.w { color: var(--indigo-300); }
-  .tag.green { background: #064E3B80; color: #6EE7B7; }
-  .hr-div { width: 1px; align-self: stretch; background: #33415580; margin: 2px 6px 0; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .seat.acting .glow { animation: none; opacity: .8; }
-    .scene, .rowin { transition: none; }
-    .rownew.show { animation: none; }
-  }
-
-  /* ---------- 共有 ---------- */
-  .share-text {
-    background: var(--s900); border: 1px solid var(--s800); border-radius: 14px;
-    padding: 12px 14px; font-size: 11px; line-height: 1.85; color: var(--s300);
-    white-space: pre; overflow-x: auto;
-  }
-  .share-text b { color: var(--s100); font-weight: 700; }
-  .share-actions { display: flex; gap: 7px; margin-top: 10px; }
-  .share-chip {
-    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
-    background: var(--s800); border-radius: 10px; padding: 9px 0;
-    font-size: 11.5px; font-weight: 700; color: var(--s200); white-space: nowrap;
-  }
-
-  /* ---------- ハンド一覧の行 ---------- */
-  .hand-row { background: var(--s900); border-radius: 14px; padding: 10px 11px; }
-  .hand-row + .hand-row { margin-top: 9px; }
-  .hr-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-  .hr-date { font-size: 10px; color: var(--s500); white-space: nowrap; }
-  .badge { font-size: 9px; font-weight: 800; border-radius: 4px; padding: 1px 5px; white-space: nowrap; line-height: 1.6; }
-  .badge.pos { background: #1E293BB3; color: var(--s300); }
-  .badge.watch { background: #312E8166; color: var(--indigo-300); }
-  .badge.herox { background: #43140780; color: #FDBA74; }
-  .hr-acts { margin-left: auto; display: flex; align-items: center; gap: 4px; }
-  .mini-btn { height: 19px; border-radius: 5px; padding: 0 6px; display: inline-flex; align-items: center; gap: 3px; background: #1E293BCC; font-size: 9px; font-weight: 800; color: var(--s400); white-space: nowrap; }
-  .mini-btn.del { color: var(--lose); }
-  .star { font-size: 12px; color: var(--s600); }
-  .star.on { color: var(--amber); }
-
-  .hr-body { display: flex; align-items: flex-start; gap: 4px; }
-  .hr-col { display: grid; gap: 4px; }
-  .hr-col.netcol { width: 74px; flex: none; }
-  .hr-col.bcol { margin-left: 10px; }
-  .hr-h { font-size: 8px; font-weight: 800; letter-spacing: .12em; color: var(--s500); white-space: nowrap; }
-  .hr-h.right { text-align: right; }
-  .hr-cards { display: flex; gap: 2px; flex-wrap: nowrap; }
-  .hr-net { text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 3px; white-space: nowrap; }
-  .hr-net .v { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
-  .hr-net .v.up { color: var(--win); }
-  .hr-net .v.down { color: var(--lose); }
-  .hr-foot { display: flex; align-items: center; gap: 5px; margin-top: 9px; padding-top: 8px; border-top: 1px solid #1E293B99; font-size: 10px; color: var(--s500); min-width: 0; }
-  .hr-foot .sep { color: var(--s700); }
-  .hr-foot .who { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-  .hr-foot .pot { margin-left: auto; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .hr-foot .pot b { font-size: 11px; color: var(--indigo-300); }
-  .hr-net .u { font-size: 9.5px; color: var(--s500); font-weight: 700; }
-
-  /* ---------- プレイヤー詳細 ---------- */
-  .pd-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .avatar { width: 46px; height: 46px; border-radius: 999px; background: var(--s800); display: grid; place-items: center; font-size: 22px; flex: none; }
-  .pd-name { font-size: 20px; font-weight: 900; letter-spacing: -.02em; }
-  .sec-label { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 7px; }
-  .sec-label .l { font-size: 11px; font-weight: 700; color: var(--s400); }
-  .sec-label .go2 { font-size: 10px; font-weight: 800; color: var(--indigo-300); white-space: nowrap; }
-  .tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .tag { font-size: 10px; font-weight: 700; border-radius: 999px; padding: 1px 8px; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-  .tag::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; flex: none; }
-  .tag.rose { background: #4C122580; color: #FDA4AF; }
-  .tag.amber { background: #45230780; color: #FCD34D; }
-  .tag.sky { background: #0C4A6E80; color: #7DD3FC; }
-  .memo-box { background: var(--s900); border-radius: 12px; padding: 10px 12px; font-size: 11.5px; line-height: 1.6; color: var(--s300); }
-  .frame { background: #0F172A80; border-radius: 14px; padding: 7px; }
-
-  /* ---------- 選ぶ札 ---------- */
-  .picks { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-  .pick { border: 1px solid var(--s800); background: var(--s900); border-radius: 11px; padding: 9px 10px; min-width: 0; }
-  .pick.on { border-color: #818CF866; background: #6366F133; }
-  .pick-name { font-size: 13.5px; font-weight: 600; color: var(--s200); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pick.on .pick-name { color: #C7D2FE; }
-  .pick-hint { font-size: 10.5px; color: var(--s500); margin-top: 2px; line-height: 1.45; }
-  .pick.on .pick-hint { color: #A5B4FCB3; }
-  .dlg-label { font-size: 11px; font-weight: 700; color: var(--s400); margin: 12px 0 6px; }
-  .dlg-label:first-child { margin-top: 0; }
-
-  /* ---------- 節 ---------- */
-  section.street-sec { padding: clamp(68px, 10vw, 116px) 0; border-top: 1px solid var(--line-soft); }
-  .sec-grid { display: grid; grid-template-columns: minmax(0,1fr); gap: clamp(38px,6vw,60px); align-items: center; }
-  @media (min-width: 960px) {
-    .sec-grid { grid-template-columns: minmax(0,.95fr) minmax(0,1fr); }
-    .sec-grid.flip .copy { order: 2; }
-  }
-
-  .points { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
-  .points li { position: relative; padding-left: 22px; font-size: 14.5px; color: var(--fg-2); line-height: 1.65; }
-  .points li::before {
-    content: ""; position: absolute; left: 4px; top: 10px;
-    width: 7px; height: 7px; border-radius: 2px; background: var(--indigo-400); transform: rotate(45deg);
-  }
-  .points b { color: var(--fg); font-weight: 700; }
-
-  .caption { margin-top: 14px; text-align: center; font-size: 11.5px; color: var(--fg-3); letter-spacing: .02em; }
-
-  /* ---------- 守り・締め ---------- */
-  .vault {
-    padding: clamp(64px,10vw,100px) 0; border-top: 1px solid var(--line-soft);
-    background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,.09), rgba(99,102,241,0) 58%);
-  }
-  .vault-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-top: 32px; }
-  .vault-card { background: #0B111B; border: 1px solid var(--line); border-radius: 14px; padding: 17px; }
-  .vault-card .k { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
-  .vault-card .v { font-size: 12.5px; color: var(--fg-3); line-height: 1.6; }
-
-  .close { padding: clamp(76px,12vw,128px) 0; text-align: center; border-top: 1px solid var(--line-soft); }
-  .close .lede { margin-inline: auto; }
-  .close .cta-row { justify-content: center; }
-  .close .eyebrow { justify-content: center; }
-
-  footer { border-top: 1px solid var(--line-soft); padding: 28px 0 42px; font-size: 12.5px; color: var(--fg-3); }
-  .foot-grid { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; justify-content: space-between; }
-
-  /* ---- 上部ナビ。サポートなどの下層ページ（_style.css の header.bar）と同じ見た目 ---- */
-  .sitebar {
-    border-bottom: 1px solid var(--line);
-    padding: 18px 0;
-    position: sticky; top: 0; z-index: 10;
-    background: #06090FEE;
-    backdrop-filter: blur(10px);
-  }
-  .sitebar-in { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-  .sb-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
-  .sb-brand img { width: 30px; height: 30px; border-radius: 8px; display: block; }
-  .sb-brand b { font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
-  .sb-brand b em { font-style: normal; color: var(--indigo-400); }
-  .sb-nav { margin-left: auto; display: flex; gap: 18px; }
-  .sb-nav a { color: var(--fg-3); text-decoration: none; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
-  .sb-nav a:hover, .sb-nav a[aria-current="page"] { color: var(--fg); }
-  .sb-nav a:focus-visible { outline: 2px solid var(--indigo-300); outline-offset: 3px; }
-
-  /* ---- web 用に足したもの ---- */
-  .site-foot { border-top:1px solid var(--line-soft); padding:28px 0 46px; font-size:12.5px; color:var(--fg-3); }
-  .site-foot .foot-links { display:flex; gap:20px; flex-wrap:wrap; }
-  .site-foot a { color:var(--fg-3); text-decoration:none; border-bottom:1px solid transparent; }
-  .site-foot a:hover { color:var(--fg-2); border-bottom-color:var(--line); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
+</head>
+<body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-apple" viewBox="0 0 24 24"><path fill="currentColor" d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.15-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.59-.75 2.99-.75 1.4 0 1.79.75 3.01.72 1.24-.02 2.03-1.13 2.79-2.25.88-1.29 1.24-2.53 1.26-2.6-.03-.01-2.42-.93-2.45-3.71zM14.08 5.85c.64-.77 1.07-1.85.95-2.92-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.82 1.03.08 2.07-.52 2.71-1.28z"/></symbol>
+  <symbol id="i-tap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M12 10.5v-1a1.5 1.5 0 0 1 3 0v1.5"/><path d="M15 11a1.5 1.5 0 0 1 3 0v3.5a6 6 0 0 1-6 6h-.6a5 5 0 0 1-3.9-1.9L5 16a1.6 1.6 0 0 1 2.4-2.1L9 15.5"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><rect x="8" y="8" width="3.5" height="8" rx="1"/><rect x="12.5" y="8" width="3.5" height="8" rx="1"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 14.4c1.8.8 3 2.7 3 5.6"/></symbol>
+</svg>
+
+<div class="glow" aria-hidden="true"><span class="beam b1"></span><span class="beam b2"></span><span class="beam b3"></span></div>
+
+<a class="sr-only" href="#main">本文へ移動</a>
 
 <header class="sitebar">
   <div class="wrap sitebar-in">
-    <a class="sb-brand" href="./"><img src="./img/icon.svg" alt=""><b>Live <em>Cache</em></b></a>
-    <nav class="sb-nav">
-      <a href="./" aria-current="page">ホーム</a>
-      <a href="./support.html">サポート</a>
-      <a href="./privacy.html">プライバシー</a>
-      <a href="./terms.html">利用規約</a>
+    <a class="sb-brand" href="./"><img src="./img/icon.svg" alt=""><span>Live <em>Cache</em></span></a>
+    <nav class="sb-nav" aria-label="ページの中">
+      <a href="#features">機能</a>
+      <a href="#plans">料金</a>
+      <a href="#updates">アップデート</a>
+      <a class="keep" href="#request">ご要望</a>
     </nav>
+    <a class="sb-get" href="https://apps.apple.com/jp/app/id6804119041" target="_blank" rel="noopener"><svg class="apple" aria-hidden="true"><use href="#i-apple"/></svg>App Store</a>
   </div>
 </header>
 
-<div class="hero">
+<main id="main">
+
+<!-- ================= ヒーロー ================= -->
+<section class="hero">
   <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow">LIVE POKER · HAND TRACKER</p>
-        <div style="display:flex; align-items:center; gap:clamp(12px,2.4vw,20px)">
-          <img class="appicon" src="./img/icon-hero.svg" alt="LiveCache のアプリアイコン" width="76" height="76">
-          <p class="wordmark">Live <em>Cache</em></p>
-        </div>
-        <p class="claim">Track your hands. Exploit the table.</p>
-        <p class="lede" style="margin-top:22px">
-          ハンドの合間に、打ち終わる。<br />
-          プレイヤーごとに、履歴が追える。
-        </p>
-        <div class="cta-row">
-          <a class="cta" href="#speed">何ができるか見る <span aria-hidden="true">↓</span></a>
-        </div>
-        <p class="platform">iOS / Android — 近日公開</p>
+    <a class="ver" href="#updates"><i aria-hidden="true"></i><b>v1.5.0</b> 公開しました</a>
+    <h1>ハンドの合間に、<em>打ち終わる。</em></h1>
+    <p class="lede">ライブポーカーのハンド記録アプリ</p>
+    <div class="store-row">
+      <a class="store-badge" href="https://apps.apple.com/jp/app/id6804119041" target="_blank" rel="noopener"><img src="./img/app-store-badge-ja.png" alt="App Store からダウンロード" width="149" height="44"></a>
+    </div>
+    <ul class="facts">
+      <li>無料で始められる</li>
+      <li>会員登録なし</li>
+      <li>広告なし</li>
+    </ul>
+
+    <div class="demo">
+      <div class="phone">
+        <video src="./video/demo-record.mp4" poster="./video/demo-record.jpg" autoplay muted loop playsinline preload="metadata" aria-label="ハンドを記録している実際の画面"></video>
       </div>
 
-      <!-- ============ 動く実機: 入力 → プレイヤー詳細（JS の台本で動く） ============ -->
-      <div>
-        <div class="phone device">
-          <div class="phone-inner">
-            <div class="vid" id="vid" role="img"
-              aria-label="実機の再現。9 人卓で BTN vs BB のハンドが 1 手 1 タップで記録され、打ち終わると相手プレイヤー『プレイヤーA』のページに、いま打ったハンド（−13.0bb）が並ぶ">
-
-              <!-- 場面 1: ハンド入力。手番の席が光り、下のボタンを押すだけ -->
-              <div class="scene on" id="scIn">
-                <div class="statusrow" aria-hidden="true">
-                  <span class="st-time mono">21:47</span>
-                  <span class="st-island"></span>
-                  <svg width="52" height="12" viewBox="0 0 52 12" fill="#fff">
-                    <rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/>
-                    <path d="M27.5 4.4 A 7 7 0 0 1 37.5 4.4 L 35.6 6.2 A 4.4 4.4 0 0 0 29.4 6.2 Z"/><circle cx="32.5" cy="9.2" r="1.7"/>
-                    <rect x="41" y="2.5" width="9" height="7" rx="2" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="42.3" y="3.8" width="5.6" height="4.4" rx="1"/><rect x="50.7" y="4.6" width="1.3" height="2.8" rx="0.65" fill-opacity=".5"/>
-                  </svg>
-                </div>
-                                <div class="screen">
-                  <div class="tabs-row">
-                    <div class="streets">
-                      <span class="street-tab sel" id="t-pre">PREFLOP</span><span class="tsep"></span><span class="street-tab off" id="t-flop">FLOP</span><span class="tsep"></span><span class="street-tab off" id="t-turn">TURN</span><span class="tsep"></span><span class="street-tab off" id="t-riv">RIVER</span>
-                    </div>
-                    <span class="info-i" aria-hidden="true">i</span>
-                  </div>
-
-                  <div class="stagecrop"><div class="stage" style="aspect-ratio: 370/360">
-                    <div class="felt" style="left:9%; right:9%; top:31%; bottom:2%"></div>
-
-                    <div class="board" style="top:51%">
-                      <span class="slot"><span class="card blank sz-board"></span><span class="card s sz-board face" id="bf1" style="position:absolute; inset:0; opacity:0"><b>A</b><i>♠</i></span></span>
-                      <span class="slot"><span class="card blank sz-board"></span><span class="card h sz-board face" id="bf2" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♥</i></span></span>
-                      <span class="slot"><span class="card blank sz-board"></span><span class="card c sz-board face" id="bf3" style="position:absolute; inset:0; opacity:0"><b>9</b><i>♣</i></span></span>
-                      <span class="slot"><span class="card blank sz-board"></span><span class="card h sz-board face" id="bf4" style="position:absolute; inset:0; opacity:0"><b>5</b><i>♥</i></span></span>
-                      <span class="slot"><span class="card blank sz-board"></span><span class="card s sz-board face" id="bf5" style="position:absolute; inset:0; opacity:0"><b>4</b><i>♠</i></span></span>
-                    </div>
-                    <div class="center-info" style="top:60%">
-                      <div>
-                        <div class="pot-label">POT SIZE</div>
-                        <div class="mono" style="font-size:19px; font-weight:900; color:#fff; line-height:1.2"><span id="pot">4</span></div>
-                      </div>
-                    </div>
-
-                    <!-- 席の配置は実機と同じ（Hero が下の中央、上に UTG の列） -->
-                    <div class="seat" id="s-utg" style="left:30%; top:21%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">UTG</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat" id="s-utg1" style="left:50%; top:21%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">UTG+1</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat" id="s-utg2" style="left:70%; top:21%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">UTG+2</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat" id="s-bb" style="left:11%; top:39%">
-                      <div class="hole">
-                        <span class="slot"><span class="card blank sz-seat"></span><span class="card d sz-seat face" id="oc1" style="position:absolute; inset:0; opacity:0"><b>K</b><i>♦</i></span></span>
-                        <span class="slot"><span class="card blank sz-seat"></span><span class="card s sz-seat face" id="oc2" style="position:absolute; inset:0; opacity:0"><b>Q</b><i>♠</i></span></span>
-                      </div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">BB</span><span class="nm">プレイヤーA</span><span class="stk mono" id="stk-bb">428</span></div>
-                    </div>
-                    <div class="seat" id="s-lj" style="left:89%; top:39%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">LJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat" id="s-sb" style="left:11%; top:66%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">SB</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat" id="s-hj" style="left:89%; top:66%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">HJ</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat" id="s-co" style="left:65%; top:85%">
-                      <div class="hole"><span class="card blank sz-seat"></span><span class="card blank sz-seat"></span></div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">CO</span><span class="nm">unknown</span><span class="stk mono">—</span></div>
-                    </div>
-                    <div class="seat myseat" id="s-btn" style="left:34.5%; top:85%">
-                      <div class="hole">
-                        <span class="card h sz-seat"><b>A</b><i>♥</i></span>
-                        <span class="card h sz-seat"><b>8</b><i>♥</i></span>
-                      </div>
-                      <div class="sbox"><span class="glow"></span><span class="pill">BTN</span><span class="nm">Hero</span><span class="stk mono" id="stk-btn">353</span></div>
-                    </div>
-
-                    <div class="dbtn" style="left:49.5%; top:90%" aria-hidden="true">D</div>
-
-                    <div class="wager" id="w-bb" style="left:24.5%; top:45%"><span class="chipstack"></span><span class="wl">BB</span><span class="amt mono">3</span></div>
-                    <div class="wager" id="w-sb" style="left:24.5%; top:61%"><span class="chipstack"></span><span class="wl">SB</span><span class="amt mono">1</span></div>
-                    <div class="wager" id="w-btn" style="left:50%; top:78%"><span class="chipstack"></span><span class="wl">RAISE</span><span class="amt mono">6</span></div>
-                  </div>
-
-                  </div>
-
-                  <!-- 実装と同じ並び: 出す額が大きい順（ALLin → Raise → Call → Fold） -->
-                  <div style="margin-top:8px">
-                    <div class="abtn-row" id="btnRow">
-                      <span class="abtn allin">ALLin</span>
-                      <span class="abtn br" id="btnRaise">Raise</span>
-                      <span class="abtn cc" id="btnCall"><span id="callLabel">Call</span><small class="mono" id="callAmt">3</small></span>
-                      <span class="abtn fd" id="btnFold">Fold</span>
-                    </div>
-                    <div id="pad" style="display:none">
-                      <div class="amt-bar">
-                        <span class="lb">AMOUNT</span>
-                        <span class="amt-mid"><span class="stepbtn">−</span><span class="amt-val mono" id="amtVal">0</span><span class="stepbtn">＋</span></span>
-                        <span class="undo">↺</span>
-                      </div>
-                      <div class="padgrid">
-                        <div class="keys">
-                          <span class="key" id="k1">1</span><span class="key">2</span><span class="key">3</span>
-                          <span class="key">4</span><span class="key">5</span><span class="key">6</span>
-                          <span class="key" id="k7">7</span><span class="key">8</span><span class="key">9</span>
-                          <span class="key zero">0</span><span class="key">⌫</span>
-                        </div>
-                        <div class="presets">
-                          <span class="preset" id="pr1"><span class="p1"></span><span class="p2 mono"></span></span>
-                          <span class="preset" id="pr2"><span class="p1"></span><span class="p2 mono"></span></span>
-                          <span class="preset" id="pr3"><span class="p1"></span><span class="p2 mono"></span></span>
-                          <span class="preset" id="pr4"><span class="p1"></span><span class="p2 mono"></span></span>
-                        </div>
-                      </div>
-                      <div class="pad-foot"><span class="pcancel">キャンセル</span><span class="pok" id="padOk">確定</span></div>
-                    </div>
-                  </div>
-
-                  <div class="undo-row" aria-hidden="true">
-                    <span><svg width="12" height="12" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M448 440a16 16 0 01-12.61-6.15c-22.86-29.27-44.07-51.86-73.32-67C335 352.88 301 345.59 256 344.23V424a16 16 0 01-27 11.57l-176-168a16 16 0 010-23.14l176-168A16 16 0 01256 88v80.36c74.14 3.41 129.38 30.91 164.35 81.87C449.32 292.44 464 350.9 464 424a16 16 0 01-16 16z"/></svg> 戻る</span><span><svg width="12" height="12" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M296 64h-80a7.91 7.91 0 00-8 8v24h96V72a7.91 7.91 0 00-8-8z" fill="none"/><path d="M432 96h-96V72a40 40 0 00-40-40h-80a40 40 0 00-40 40v24H80a16 16 0 000 32h17l19 304.92c1.42 26.85 22 47.08 48 47.08h184c26.13 0 46.3-19.78 48-47l19-305h17a16 16 0 000-32zM192.57 416H192a16 16 0 01-16-15.43l-8-224a16 16 0 1132-1.14l8 224A16 16 0 01192.57 416zM272 400a16 16 0 01-32 0V176a16 16 0 0132 0zm32-304h-96V72a7.91 7.91 0 018-8h80a7.91 7.91 0 018 8zm32 304.57A16 16 0 01320 416h-.58A16 16 0 01304 399.43l8-224a16 16 0 1132 1.14z"/></svg> すべて消す</span><span><svg width="12" height="12" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M58.79 439.13A16 16 0 0148 424c0-73.1 14.68-131.56 43.65-173.77 35-51 90.21-78.46 164.35-81.87V88a16 16 0 0127.05-11.57l176 168a16 16 0 010 23.14l-176 168A16 16 0 01256 424v-79.77c-45 1.36-79 8.65-106.07 22.64-29.25 15.12-50.46 37.71-73.32 67a16 16 0 01-17.82 5.28z"/></svg> 進む</span>
-                  </div>
-
-                  <!-- ストリートごとのアクション履歴。打った手から順に積まれる -->
-                  <div class="cols" style="margin-top:8px">
-                    <div class="colx" id="c-pre">
-                      <div class="col-top"><span class="col-name">PREFLOP</span><span class="col-pot mono">4</span></div>
-                      <div class="act hrow" id="r1"><span class="pos me">BTN</span><span class="t r">R</span><span class="n mono">6</span></div>
-                      <div class="act hrow" id="r2"><span class="pos">BB</span><span class="t c">C</span><span class="n mono">6</span></div>
-                    </div>
-                    <div class="colx dim" id="c-flop">
-                      <div class="col-top"><span class="col-name">FLOP</span><span class="col-pot mono hrow" id="cp-flop">13</span></div>
-                      <div class="col-board hrow" id="cb-flop">
-                        <span class="card s sz-tiny"><b>A</b><i>♠</i></span>
-                        <span class="card h sz-tiny"><b>K</b><i>♥</i></span>
-                        <span class="card c sz-tiny"><b>9</b><i>♣</i></span>
-                      </div>
-                      <div class="act hrow" id="r3"><span class="pos">BB</span><span class="t x">X</span></div>
-                      <div class="act hrow" id="r4"><span class="pos me">BTN</span><span class="t b">B</span><span class="n mono">17</span></div>
-                      <div class="act hrow" id="r5"><span class="pos">BB</span><span class="t c">C</span><span class="n mono">17</span></div>
-                    </div>
-                    <div class="colx dim" id="c-turn">
-                      <div class="col-top"><span class="col-name">TURN</span><span class="col-pot mono hrow" id="cp-turn">47</span></div>
-                      <div class="col-board hrow" id="cb-turn"><span class="card h sz-tiny"><b>5</b><i>♥</i></span></div>
-                      <div class="act hrow" id="r6"><span class="pos">BB</span><span class="t x">X</span></div>
-                      <div class="act hrow" id="r7"><span class="pos me">BTN</span><span class="t x">X</span></div>
-                    </div>
-                    <div class="colx dim" id="c-riv">
-                      <div class="col-top"><span class="col-name">RIVER</span><span class="col-pot mono hrow" id="cp-riv">47</span></div>
-                      <div class="col-board hrow" id="cb-riv"><span class="card s sz-tiny"><b>4</b><i>♠</i></span></div>
-                      <div class="act hrow" id="r8"><span class="pos">BB</span><span class="t b">B</span><span class="n mono">16</span></div>
-                      <div class="act hrow" id="r9"><span class="pos me">BTN</span><span class="t c">C</span><span class="n mono">16</span></div>
-                      <div class="act hrow" id="r10"><span class="pos me">BTN</span><span class="t w">WIN</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 場面 2: プレイヤー詳細。いま打ったハンドが「プレイヤーA」のページに並ぶ -->
-              <div class="scene" id="scPl">
-                <div class="statusrow" aria-hidden="true">
-                  <span class="st-time mono">21:47</span>
-                  <span class="st-island"></span>
-                  <svg width="52" height="12" viewBox="0 0 52 12" fill="#fff">
-                    <rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/>
-                    <path d="M27.5 4.4 A 7 7 0 0 1 37.5 4.4 L 35.6 6.2 A 4.4 4.4 0 0 0 29.4 6.2 Z"/><circle cx="32.5" cy="9.2" r="1.7"/>
-                    <rect x="41" y="2.5" width="9" height="7" rx="2" fill="none" stroke="#fff" stroke-opacity=".5"/><rect x="42.3" y="3.8" width="5.6" height="4.4" rx="1"/><rect x="50.7" y="4.6" width="1.3" height="2.8" rx="0.65" fill-opacity=".5"/>
-                  </svg>
-                </div>
-                <div class="bar">
-                  <span class="back" aria-hidden="true">‹</span>
-                  <span class="title">プレイヤー</span>
-                  <span class="acts"><span class="chip-btn on">✎ 編集</span></span>
-                </div>
-                <div class="screen">
-                  <div class="pd-head">
-                    <div class="avatar"><svg width="24" height="24" viewBox="0 0 24 24" fill="#94A3B8" aria-hidden="true"><path d="M19.11,11.92C19.13,11.71 19.14,11.5 19.14,11.29C19.14,7.86 17.71,4.14 16.28,4.14C14.85,4.14 13.42,5.57 12,5.57C10.57,5.57 9.14,4.14 7.71,4.14C6.28,4.14 4.86,7.79 4.86,11.29C4.86,11.5 4.86,11.71 4.88,11.92C7.22,12.45 9.6,12.72 12,12.71C14.45,12.71 16.83,12.44 19.11,11.92M3.45,18.18C9,19.85 14.96,19.86 20.54,18.18C20.96,18.04 21.33,17.77 21.59,17.41C21.85,17.05 22,16.61 22,16.17C22,15.72 21.86,15.29 21.61,14.92C21.35,14.56 21,14.29 20.56,14.14C17.86,15 15,15.45 12,15.45C9,15.45 6.13,15 3.43,14.14C3,14.29 2.65,14.57 2.39,14.93C2.14,15.29 2,15.72 2,16.17C2,17.11 2.61,17.9 3.45,18.18V18.18Z"/></svg></div>
-                    <div class="pd-name">プレイヤーA</div>
-                  </div>
-                  <div class="sec-label"><span class="l">タグ</span></div>
-                  <div class="tags">
-                    <span class="tag rose">ルースアグレ</span>
-                    <span class="tag green">タフコール</span>
-                    <span class="tag sky">good reg</span>
-                  </div>
-
-                  <div class="sec-label" style="margin-top:16px"><span class="l">このプレイヤーの直近 3 ハンド</span><span class="go2">ハンド一覧へ ›</span></div>
-                  <div class="frame">
-                    <div class="hand-row rowin rownew" id="row-new">
-                      <div class="hr-head">
-                        <span class="hr-date">🕒 2026/8/19 | 21:47</span>
-                        <span class="badge pos">BB</span>
-                        <span class="hr-acts"><span class="mini-btn">✎ 編集</span><span class="mini-btn del">🗑 削除</span></span>
-                      </div>
-                      <div class="hr-body">
-                        <div class="hr-col netcol">
-                          <div class="hr-h">収支</div>
-                          <div class="hr-net" style="justify-content:flex-start"><span class="v down mono">−13.0</span><span class="u">bb</span></div>
-                        </div>
-                        <div class="hr-div"></div>
-                        <div class="hr-col">
-                          <div class="hr-h">HAND</div>
-                          <div class="hr-cards">
-                            <span class="card d sz-mini"><b>K</b><i>♦</i></span>
-                            <span class="card s sz-mini"><b>Q</b><i>♠</i></span>
-                          </div>
-                        </div>
-                        <div class="hr-col bcol">
-                          <div class="hr-h">BOARD</div>
-                          <div class="hr-cards">
-                            <span class="card s sz-mini"><b>A</b><i>♠</i></span>
-                            <span class="card h sz-mini"><b>K</b><i>♥</i></span>
-                            <span class="card c sz-mini"><b>9</b><i>♣</i></span>
-                            <span class="card h sz-mini"><b>5</b><i>♥</i></span>
-                            <span class="card s sz-mini"><b>4</b><i>♠</i></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="hr-foot"><span class="who">1-3<span class="sep"> · </span>SRP<span class="sep"> · </span>HERO BTN</span><span class="pot">POT <b class="mono">63</b></span></div>
-                    </div>
-                    <div class="hand-row rowin" id="row-old">
-                      <div class="hr-head">
-                        <span class="hr-date">🕒 2026/8/17 | 21:36</span>
-                        <span class="badge pos">UTG</span>
-                        <span class="hr-acts"><span class="mini-btn">✎ 編集</span><span class="mini-btn del">🗑 削除</span></span>
-                      </div>
-                      <div class="hr-body">
-                        <div class="hr-col netcol">
-                          <div class="hr-h">収支</div>
-                          <div class="hr-net" style="justify-content:flex-start"><span class="v mono" style="color:var(--s300)">0.0</span><span class="u">bb</span></div>
-                        </div>
-                        <div class="hr-div"></div>
-                        <div class="hr-col">
-                          <div class="hr-h">HAND</div>
-                          <div class="hr-cards">
-                            <span class="card h sz-mini"><b>A</b><i>♥</i></span>
-                            <span class="card d sz-mini"><b>A</b><i>♦</i></span>
-                          </div>
-                        </div>
-                        <div class="hr-col bcol">
-                          <div class="hr-h">BOARD</div>
-                          <div class="hr-cards">
-                            <span class="card d sz-mini"><b>T</b><i>♦</i></span>
-                            <span class="card c sz-mini"><b>T</b><i>♣</i></span>
-                            <span class="card s sz-mini"><b>8</b><i>♠</i></span>
-                            <span class="card d sz-mini"><b>6</b><i>♦</i></span>
-                            <span class="card c sz-mini"><b>2</b><i>♣</i></span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="hr-foot"><span class="who">1-3<span class="sep"> · </span>Limped<span class="sep"> · </span>HERO BTN</span><span class="pot">POT <b class="mono">4</b></span></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="bnav">
-                  <span><span class="ic"><svg width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M80 212v236a16 16 0 0016 16h96V328a24 24 0 0124-24h80a24 24 0 0124 24v136h96a16 16 0 0016-16V212" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M480 256L266.89 52c-5-5.28-16.69-5.34-21.78 0L32 256M400 179V64h-48v69" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg></span>ホーム</span>
-                  <span><span class="ic"><svg width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M160 144h288M160 256h288M160 368h288"/><circle cx="80" cy="144" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="80" cy="256" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="80" cy="368" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg></span>ハンド</span>
-                  <span><span class="ic fab" aria-hidden="true">＋</span>ハンド記録</span>
-                  <span class="onb"><span class="ic"><svg width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M336 256c-20.56 0-40.44-9.18-56-25.84-15.13-16.25-24.37-37.92-26-61-1.74-24.62 5.77-47.26 21.14-63.76S312 80 336 80c23.83 0 45.38 9.06 60.7 25.52 15.47 16.62 23 39.22 21.26 63.63-1.67 23.11-10.9 44.77-26 61C376.44 246.82 356.57 256 336 256zm66-88zM467.83 432H204.18a27.71 27.71 0 01-22-10.67 30.22 30.22 0 01-5.26-25.79c8.42-33.81 29.28-61.85 60.32-81.08C264.79 297.4 299.86 288 336 288c36.85 0 71 9 98.71 26.05 31.11 19.13 52 47.33 60.38 81.55a30.27 30.27 0 01-5.32 25.78A27.68 27.68 0 01467.83 432zM147 260c-35.19 0-66.13-32.72-69-72.93-1.42-20.6 5-39.65 18-53.62 12.86-13.83 31-21.45 51-21.45s38 7.66 50.93 21.57c13.1 14.08 19.5 33.09 18 53.52-2.87 40.2-33.8 72.91-68.93 72.91zM212.66 291.45c-17.59-8.6-40.42-12.9-65.65-12.9-29.46 0-58.07 7.68-80.57 21.62-25.51 15.83-42.67 38.88-49.6 66.71a27.39 27.39 0 004.79 23.36A25.32 25.32 0 0041.72 400h111a8 8 0 007.87-6.57c.11-.63.25-1.26.41-1.88 8.48-34.06 28.35-62.84 57.71-83.82a8 8 0 00-.63-13.39c-1.57-.92-3.37-1.89-5.42-2.89z"/></svg></span>プレイヤー</span>
-                  <span><span class="ic"><svg width="16" height="16" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg></span>設定</span>
-                </div>
-              </div>
-
-              <div class="tapdot" id="tap"></div>
-            </div>
-          </div>
+      <div class="x-card">
+        <div class="x-head">
+          <img src="./img/icon.svg" alt="">
+          <div><b>LiveCache</b><small>@LiveCache_poker</small></div>
+          <a href="https://x.com/LiveCache_poker" target="_blank" rel="noopener">X で開く ↗</a>
         </div>
-        <p class="caption" id="vidCap">ハンド入力 — 手番の席が光る。1 手 1 タップ</p>
+        <!-- X の投稿を書き写したもの。新しく投稿したら、いちばん上に足す -->
+        <div class="x-feed" tabindex="0" aria-label="X の投稿">
+          <article class="post">
+            <div class="post-head"><img src="./img/icon.svg" alt=""><div><b>LiveCache</b><small>@LiveCache_poker</small></div><time class="mono">2026.09.29</time></div>
+            <p>＼ アップデート情報 ／
+
+記録したハンドを「動画」で保存できるようになりました！
+保存した動画は X、LINE などで簡単に共有できます。もちろん無料で使えます。</p>
+            <video src="./video/feature-video-save.mp4" poster="./video/feature-video-save.jpg" controls muted playsinline preload="none"></video>
+            <a href="https://x.com/LiveCache_poker/status/2104912098287669751" target="_blank" rel="noopener">投稿を見る ↗</a>
+          </article>
+          <article class="post">
+            <div class="post-head"><img src="./img/icon.svg" alt=""><div><b>LiveCache</b><small>@LiveCache_poker</small></div><time class="mono">2026.09.26</time></div>
+            <p>記録時に毎回同じレートを打つのが大変…
+
+【機能紹介：レート自動入力】
+LiveCache はトナメのレートを事前登録すれば、ハンド入力時に自動設定されます！
+※リングゲームも同様にレート登録が可能です</p>
+            <video src="./video/feature-tournament.mp4" poster="./video/feature-tournament.jpg" controls muted playsinline preload="none"></video>
+            <a href="https://x.com/LiveCache_poker/status/2103810212734099762" target="_blank" rel="noopener">投稿を見る ↗</a>
+          </article>
+          <article class="post">
+            <div class="post-head"><img src="./img/icon.svg" alt=""><div><b>LiveCache</b><small>@LiveCache_poker</small></div><time class="mono">2026.09.25</time></div>
+            <p>＼ ポーカーハンド記録アプリの決定版 ／
+
+LiveCache（iOS 版）がリリースしました！
+
+・1 手 1 タップで爆速記録
+・店舗／トナメでレート登録、まとめて見返し
+・対戦相手ごとにハンド履歴＆タグ
+・ハンドを画像／テキストで共有</p>
+            <img class="post-media" src="./img/x/release.jpg" alt="" loading="lazy">
+            <a href="https://x.com/LiveCache_poker/status/2103437768148070751" target="_blank" rel="noopener">投稿を見る ↗</a>
+          </article>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ============ 1. 入力速度 ============ -->
-<section class="street-sec" id="speed">
+<!-- ================= 機能 ================= -->
+<section class="sec" id="features">
   <div class="wrap">
-    <div class="sec-grid flip">
-      <div class="copy">
-        <p class="eyebrow">SPEED · 圧倒的な入力速度</p>
-        <h2>ハンドの合間に、<br />打ち込み終わる</h2>
-        <p class="body">
-          カードを持っている間、スマホは触れません。だから、降りてから
-          次のハンドが配られるまでの数十秒で打ち終わる速さにしました。
-        </p>
-        <ul class="points">
-          <li><b>1 手 = 1 タップ、畳む席はまとめて 1 タップ。</b>打った席を直接タップすると、間の席は自動でフォールド（スマートフォールド）。9 人卓のプリフロップが数秒で終わります。</li>
-          <li><b>額は打たない。</b>オープンは 2bb〜3bb、レイズは 2x〜5x、ベットはポットの 33〜125% がワンタップ。細かい額だけテンキー。</li>
-          <li><b>起動から 2 秒で打ち始められる。</b>＋ を押した瞬間に記録が生まれるので、卓に呼ばれて中断しても書きかけが残ります。必須の欄はゼロ。</li>
+    <div class="sec-head center">
+      <p class="eyebrow">FEATURES</p>
+      <h2>卓で記録して、家で振り返る。</h2>
+    </div>
+    <div class="features">
+      <article class="feature">
+        <div class="feature-ic"><svg><use href="#i-tap"/></svg></div>
+        <h3>1 手 1 タップ</h3>
+        <p>打った席を押せば、あいだの席は自動でフォールド。</p>
+      </article>
+      <article class="feature">
+        <div class="feature-ic"><svg><use href="#i-scan"/></svg></div>
+        <h3>ボードを読む</h3>
+        <p>写真やカメラから、場のカードを入れる。</p>
+      </article>
+      <article class="feature">
+        <div class="feature-ic"><svg><use href="#i-replay"/></svg></div>
+        <h3>振り返る</h3>
+        <p>リプレイ<span class="pro-tag">PRO</span>と動画の保存。収支は自動で計算。</p>
+      </article>
+      <article class="feature">
+        <div class="feature-ic"><svg><use href="#i-people"/></svg></div>
+        <h3>相手を覚える</h3>
+        <p>人ごとにハンドが貯まり、タグとメモが付く。</p>
+      </article>
+    </div>
+    <div class="shots">
+      <img src="./img/shot-replay.png" alt="ハンド詳細の画面" loading="lazy" width="744" height="1613">
+      <img src="./img/shot-hands.png" alt="ハンド一覧の画面" loading="lazy" width="744" height="1613">
+      <img src="./img/shot-player.png" alt="プレイヤー詳細の画面" loading="lazy" width="744" height="1613">
+      <img src="./img/shot-tags.png" alt="プレイヤー一覧の画面" loading="lazy" width="1179" height="2556">
+    </div>
+  </div>
+</section>
+
+<!-- ================= 目玉：ボードを読む ================= -->
+<section class="sec" id="board">
+  <div class="wrap spot">
+    <div>
+      <p class="eyebrow">BOARD SCAN</p>
+      <h2>ボードはカメラで映すだけ。</h2>
+      <p class="lede">カメラを向けると、場のカードを読み取ります。全部そろったら、自動で撮って入れます。</p>
+      <ul class="checks">
+        <li>自信のないカードは「?」で残すので、あとから選ぶだけ</li>
+        <li>向きが逆に読めたら、⇄ で並びを直せる</li>
+        <li>撮ってある写真からも読める</li>
+        <li>読み取りは iPhone の中だけで行います</li>
+      </ul>
+    </div>
+    <div class="phone">
+      <video src="./video/demo-camera.mp4" poster="./video/demo-camera.jpg" autoplay muted loop playsinline preload="metadata" aria-label="カメラでボードを読み取っている実際の画面"></video>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 料金 ================= -->
+<section class="sec" id="plans">
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="eyebrow">PLANS</p>
+      <h2>無料で始めて、必要なら Pro。</h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">無料</div>
+        <div class="plan-price">¥0</div>
+        <div class="plan-sub">ずっと無料で使えます</div>
+        <ul>
+          <li>ハンドは月 20 件まで</li>
+          <li>プレイヤーは無制限</li>
+          <li>ボードの読み取り</li>
+          <li>動画・画像で保存</li>
         </ul>
       </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner">
-            <img class="shot" style="margin-top:0" decoding="async" alt="ハンド入力の実際の画面。リバーで BB（プレイヤーA）の席が光り、額の欄に 16、テンキーの右にポットの 33%・50%・75%・125% のプリセットが並ぶ" src="./img/shot-input.png" />
-          </div>
-        </div>
-        <p class="caption">ハンド入力 — 額はプリセットかテンキーで（実際の画面）</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 3. 再生 ============ -->
-<section class="street-sec">
-  <div class="wrap">
-    <div class="sec-grid">
-      <div class="copy">
-        <p class="eyebrow">HISTORY · 読み返せる</p>
-        <h2>見やすい、<br />ハンドヒストリー</h2>
-        <p class="body">
-          ストリートごとに 1 手ずつ、ボードも額も 1 画面で追えます。
-          帰り道に読み返して、次の卓に持っていく。
-        </p>
-        <ul class="points">
-          <li><b>ストリートごとに 4 列。</b>誰が・どのアクションを・いくらで、が 1 画面で追えます。めくれた札も列の頭に。</li>
-          <li><b>降りた席はそっと畳まれる。</b>戦った人のやり取りだけが濃く残るので、9 人卓でも読み返しが速い。</li>
-          <li><b>あとから直せる。</b>「ここが違う」と思ったら、その手をタップして打ち直し。後ろの記録は消えません。</li>
+      <div class="plan is-pro">
+        <div class="plan-name">LiveCache Pro</div>
+        <div class="plan-price">¥600 <small>／ 月</small></div>
+        <div class="plan-sub">年額 ¥4,800 ・ 7 日間無料</div>
+        <ul>
+          <li>ハンドが無制限</li>
+          <li>リプレイ再生</li>
+          <li>タグで絞り込み・逆引き</li>
+          <li>GTO Wizard 形式で書き出し</li>
         </ul>
       </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner shotcrop">
-            <img class="shot" decoding="async" alt="ハンド詳細の実際の画面。9 人卓の中央に BB WIN・Full House・+354 (118.0bb)、下にストリートごとのアクション履歴" src="./img/shot-replay.png" />
-          </div>
-        </div>
-        <p class="caption">ハンド詳細 — Full House で +118.0bb。下に 1 手ずつの履歴（実際の画面）</p>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 5. 収支・一覧 ============ -->
-<section class="street-sec">
+<!-- ================= アップデート履歴 ================= -->
+<section class="sec" id="updates">
   <div class="wrap">
-    <div class="sec-grid flip">
-      <div class="copy">
-        <p class="eyebrow">CASH OUT</p>
-        <h2>収支は、<br />自動で計算</h2>
-        <p class="body">
-          店ごとにレートとレーキを一度入れておけば、あとは選ぶだけ。
-          bb 換算まで出るので、レートの違う日をまたいでも比べられます。
-        </p>
-        <ul class="points">
-          <li><b>レーキの癖まで計算に入る。</b>1BB 単位の切り上げ、キャップ、ノーフロップノードロップ。大会は参加費に含まれるので卓では引きません。</li>
-          <li><b>タイトルは自動で付く。</b>「BTN vs BB SRP」のような呼び名が記録から立つので、あとから探すのも速い。</li>
-          <li><b>自分がいなかった卓も残せる。</b>「観戦」の行では、左端が収支ではなく POT になります。</li>
+    <div class="sec-head center">
+      <p class="eyebrow">UPDATES</p>
+      <h2>アップデート履歴</h2>
+    </div>
+    <!-- 新しい版はいちばん上に足し、前の版の NEW を外す。日付は App Store で公開された日 -->
+    <div class="updates">
+      <details class="update">
+        <summary><span class="u-ver mono">1.5.0</span><span class="u-title">ボードの読み取りに対応しました<span class="u-new">NEW</span></span><span class="u-date mono">2026.09.28</span></summary>
+        <ul>
+          <li>写真・カメラからボードを読めるようにしました</li>
+          <li>リプレイの動画の保存を無料にしました</li>
+          <li>プリフロップが終わると、ボードの入力が自動で開くようにしました</li>
+          <li>呼ばれなかったベットを戻してから、収支を計算するようにしました</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner shotcrop">
-            <img class="shot" decoding="async" alt="ハンド一覧の実際の画面。検索と絞り込みの札の下に、収支 −2.0bb / +118.0bb / +2.3bb の 3 行が並ぶ" src="./img/shot-hands.png" />
-          </div>
-        </div>
-        <p class="caption">ハンド一覧 — 「自分のハンド」「SRP」で絞り込み中（実際の画面）</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 2. プレイヤー × ハンドの紐付け ============ -->
-<section class="street-sec">
-  <div class="wrap">
-    <div class="sec-grid">
-      <div class="copy">
-        <p class="eyebrow">LINK · 人とハンドがつながる</p>
-        <h2>プレイヤーのハンド履歴が、<br />一覧でわかる</h2>
-        <p class="body">
-          ハンドの席に人を座らせておくと、その人のページに
-          そのハンドが並びます。しかも<b style="color:var(--fg)">その人の視点</b>で。
-        </p>
-        <ul class="points">
-          <li><b>相手の席・相手の手札・相手の収支で並ぶ。</b>「プレイヤーA が BB の K♦Q♠ で −13bb」が、その人の視点のまま読み返せます。</li>
-          <li><b>名前を知らなくても紐付く。</b>「白帽子の人」で登録して、本名を聞いたら書き換えるだけ。タグとメモもその人に付きます。</li>
-          <li><b>ハンド → 人、人 → ハンド。</b>どちらからでも辿れるので、「この人と前どう打ったっけ」が卓で 2 タップ。</li>
+      </details>
+      <details class="update">
+        <summary><span class="u-ver mono">1.4.0</span><span class="u-title">リプレイの動画とアンティに対応しました</span><span class="u-date mono">2026.09.26</span></summary>
+        <ul>
+          <li>リプレイを動画で保存できるようにしました（このときは Pro）</li>
+          <li>トーナメントのブラインドにアンティを入れられるようにしました</li>
+          <li>フォールドした席のカードが消えていく動きを付けました</li>
+          <li>カレンダーで先の月も見られるようにしました</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner shotcrop">
-            <img class="shot" decoding="async" alt="プレイヤー詳細の実際の画面。プレイヤーA にタグが 3 つ付き、その人のハンドが 2 件、−117.7bb と −2.0bb の収支つきで並ぶ" src="./img/shot-player.png" />
-          </div>
-        </div>
-        <p class="caption">プレイヤー詳細 — タグ・メモと、この人のハンド（実際の画面）</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ タグ ============ -->
-<section class="street-sec">
-  <div class="wrap">
-    <div class="sec-grid flip">
-      <div class="copy">
-        <p class="eyebrow">TAG · 人となりを一言で</p>
-        <h2>相手の特徴は、<br />タグで貼っておく</h2>
-        <p class="body">
-          ルースアグレ・タフコール・good reg。色分けしたタグを人に
-          貼っておけば、一覧を開いた瞬間に「どんな相手か」が戻ってきます。
-        </p>
-        <ul class="points">
-          <li><b>色は自分の物差しで。</b>レッドはプレイスタイル、ブルーは腕前、グリーンは癖 ―― グループごと自由に作れます。</li>
-          <li><b>あとから直せる。</b>タグ管理で名前も色も編集でき、何人に付いているかも一覧で見える。付け替えても記録は消えません。</li>
-          <li><b>タグから人へ辿れる。</b>「タイトアグレ」を押せば、そのタグが付いた 3 人が並ぶ。逆引きの絞り込みも 2 タップ。</li>
+      </details>
+      <details class="update">
+        <summary><span class="u-ver mono">1.2.0</span><span class="u-title">席をタップして入力できるようにしました</span><span class="u-date mono">2026.09.21</span></summary>
+        <ul>
+          <li>卓の席をタップするだけで、ハンドやプレイヤーを入力できるようにしました</li>
+          <li>無料プランのハンドを月 20 件までにしました（Pro は無制限）</li>
         </ul>
-      </div>
-
-      <div>
-        <div class="phone">
-          <div class="phone-inner shotcrop">
-            <img class="shot" style="margin-top:-14.3%" decoding="async" alt="プレイヤー一覧の実際の画面。★ のみで絞り込んだプレイヤーA〜D に、ルースアグレ・タフコール・good reg など色分けされたタグが 3 つずつ付く" src="./img/shot-tags.png" />
-          </div>
-        </div>
-        <p class="caption">プレイヤー一覧 — タグで人となりが一目で分かる（実際の画面）</p>
-      </div>
+      </details>
+      <details class="update">
+        <summary><span class="u-ver mono">1.1.0</span><span class="u-title">LiveCache Pro を始めました</span><span class="u-date mono">2026.09.18</span></summary>
+        <ul>
+          <li>月額・年額の LiveCache Pro を始めました（7 日間の無料お試しつき）</li>
+        </ul>
+      </details>
+      <details class="update">
+        <summary><span class="u-ver mono">1.0</span><span class="u-title">App Store で公開しました</span><span class="u-date mono">2026.09.02</span></summary>
+        <ul>
+          <li>ハンドの記録・プレイヤーとタグ・画像とテキストでの共有ができるアプリを公開しました</li>
+        </ul>
+      </details>
     </div>
   </div>
 </section>
 
-<!-- ============ 守り ============ -->
-<section class="vault" id="vault">
+<!-- ================= ご要望 ================= -->
+<section class="sec" id="request">
   <div class="wrap">
-    <p class="eyebrow">YOUR NOTES, YOUR PHONE</p>
-    <h2 style="max-width:20ch">記録は、この端末から出ません</h2>
-    <p class="body">
-      対戦相手についてのメモは、人に見せるためのものではありません。
-      だから最初から、外へ送る作りにしていません。共有するのは、あなたが選んだハンドだけ。
-    </p>
-    <div class="vault-grid">
-      <div class="vault-card"><div class="k">端末の中だけ</div><div class="v">記録はすべて端末内のデータベースに保存されます。</div></div>
-      <div class="vault-card"><div class="k">通信しない</div><div class="v">サーバーへ送る仕組みそのものがありません。圏外の店でも同じように使えます。</div></div>
-      <div class="vault-card"><div class="k">広告なし</div><div class="v">卓の上で広告が出ることはありません。</div></div>
-      <div class="vault-card"><div class="k">解析なし</div><div class="v">利用状況を集める仕組みを組み込んでいません。</div></div>
+    <div class="sec-head center">
+      <p class="eyebrow">REQUEST</p>
+      <h2>ご要望・不具合はお気軽に。</h2>
     </div>
+    <!--
+      送り先はアプリの「不具合の報告・要望」と同じ Formspree（中継）。livecache.app@gmail.com に届く。
+      無料枠は月 50 件まで（アプリとサイトの合計）。JS が動かないときは、そのまま POST して Formspree の画面に移る。
+    -->
+    <form class="form" id="request-form" action="https://formspree.io/f/mjybzokk" method="POST">
+      <div class="form-row">
+        <label class="field" for="kind">種類
+          <select id="kind" name="kind">
+            <option value="機能のご要望">ご要望</option>
+            <option value="不具合のご報告">不具合</option>
+            <option value="その他">その他</option>
+          </select>
+        </label>
+        <label class="field" for="email">メールアドレス（任意）
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="返信が要るときだけ">
+        </label>
+      </div>
+      <label class="field" for="message">内容
+        <textarea id="message" name="message" required maxlength="4000"></textarea>
+      </label>
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="source" value="Web サイト">
+      <div class="form-foot">
+        <a href="./privacy.html">プライバシーポリシー</a>
+        <button class="send" type="submit">送る</button>
+      </div>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 
-<!-- ============ 締め ============ -->
-<section class="close">
+<!-- ================= おわり ================= -->
+<section class="sec close center">
   <div class="wrap">
-    <p class="eyebrow">SHOWDOWN</p>
-    <h2 style="max-width:22ch; margin-inline:auto">今夜のハンドを、<br />今夜のうちに</h2>
-    <p class="lede" style="margin-top:14px">思い出せるうちに残す。それだけで、次の卓が変わります。</p>
-    <div class="cta-row">
-      <a class="cta" href="#speed">もう一度見る</a>
-      <a class="ghost" href="./support.html">困りごと・要望はサポートへ</a>
+    <h2>今夜のハンドを、今夜のうちに。</h2>
+    <div class="store-row">
+      <a class="store-badge" href="https://apps.apple.com/jp/app/id6804119041" target="_blank" rel="noopener"><img src="./img/app-store-badge-ja.png" alt="App Store からダウンロード" width="149" height="44"></a>
     </div>
-    <p class="platform">iOS / Android — 近日公開</p>
   </div>
 </section>
 
+</main>
 
 <footer class="site-foot">
-  <div class="wrap foot-grid" style="border-top:0; padding-top:0">
-    <span>LiveCache</span>
+  <div class="wrap foot-grid">
+    <span>© 2026 LiveCache</span>
     <span class="foot-links">
       <a href="./support.html">サポート</a>
       <a href="./privacy.html">プライバシーポリシー</a>
       <a href="./terms.html">利用規約</a>
+      <a href="https://x.com/LiveCache_poker" target="_blank" rel="noopener">X ↗</a>
     </span>
   </div>
 </footer>
 
 <script>
-/*
-  ヒーローの「動画」。CSS の一本道ではなく **台本（時刻 → 操作）** で動かす。
-  タップ 1 つごとに「指跡 → ボタンが沈む → 卓が応える」を実機と同じ順で
-  見せたいので、キーフレームより台本のほうが素直に書ける。
-
-  再現しているのは実機で撮った 1 ハンドそのもの:
-    1-3 / BTN Hero A♥8♥ vs BB プレイヤーA K♦Q♠ / A♠K♥9♣ 5♥ 4♠ / POT 63。
-  ポット表示はストリート頭の値で止まる（実機と同じ）。
-
-  画面から外れたら止める（IntersectionObserver）。動きを減らす設定では
-  回さず、決着後のプレイヤー詳細だけを見せる。
-*/
+/* ご要望の送信。Formspree に送り、その場で結果を出す（ページは移らない） */
 (function () {
-  var $ = function (id) { return document.getElementById(id); };
-  var vid = $('vid');
-  if (!vid) return;
-
-  var seats = {};
-  ['utg', 'utg1', 'utg2', 'bb', 'lj', 'sb', 'hj', 'co', 'btn'].forEach(function (k) {
-    seats[k] = $('s-' + k);
+  var form = document.getElementById('request-form');
+  var status = document.getElementById('form-status');
+  if (!form || !window.fetch) return;
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var button = form.querySelector('.send');
+    var data = new FormData(form);
+    if (data.get('_gotcha')) return;
+    button.disabled = true;
+    status.className = 'form-status';
+    status.textContent = '送っています…';
+    fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+      .then(function (response) {
+        if (!response.ok) throw new Error(String(response.status));
+        form.reset();
+        status.className = 'form-status ok';
+        status.textContent = '送りました。ありがとうございます。';
+      })
+      .catch(function () {
+        status.className = 'form-status err';
+        status.textContent = '送れませんでした。livecache.app@gmail.com へメールでお送りください。';
+      })
+      .finally(function () { button.disabled = false; });
   });
+})();
 
-  function setActing(k) {
-    Object.keys(seats).forEach(function (x) { seats[x].classList.remove('acting'); });
-    if (k) seats[k].classList.add('acting');
-  }
-  function fold(k) { seats[k].classList.add('folded'); }
-  function stack(k, v) { $('stk-' + k).textContent = v; }
-  function pot(v) {
-    var el = $('pot');
-    el.textContent = v;
-    el.classList.remove('potpop');
-    void el.offsetWidth;
-    el.classList.add('potpop');
-  }
-  function wag(id, label, amount) {
-    var w = $(id);
-    if (label === null) { w.style.opacity = 0; return; }
-    w.querySelector('.wl').textContent = label;
-    w.querySelector('.amt').textContent = amount;
-    w.style.opacity = 1;
-  }
-  function clearWagers() { ['w-sb', 'w-bb', 'w-btn'].forEach(function (id) { wag(id, null); }); }
-  function tapEl(el) {
-    var r = el.getBoundingClientRect();
-    var v = vid.getBoundingClientRect();
-    var tap = $('tap');
-    tap.style.left = (r.left + r.width / 2 - v.left) + 'px';
-    tap.style.top = (r.top + r.height / 2 - v.top) + 'px';
-    tap.classList.remove('go');
-    void tap.offsetWidth;
-    tap.classList.add('go');
-    el.classList.add('pressed');
-    setTimeout(function () { el.classList.remove('pressed'); }, 150);
-  }
-  function showPad(presets, amount) {
-    $('btnRow').style.display = 'none';
-    $('pad').style.display = 'block';
-    presets.forEach(function (pr, i) {
-      var el = $('pr' + (i + 1));
-      el.querySelector('.p1').textContent = pr[0];
-      el.querySelector('.p2').textContent = '（ ' + pr[1] + ' ）';
-    });
-    $('amtVal').textContent = amount;
-  }
-  function hidePad() { $('pad').style.display = 'none'; $('btnRow').style.display = 'flex'; }
-  function amt(v) { $('amtVal').textContent = v; }
-  /* チェックできる場面ではボタンが Bet / Check になり、Fold は消える（実装と同じ） */
-  function btnMode(mode, toCall) {
-    if (mode === 'check') {
-      $('btnRaise').textContent = 'Bet';
-      $('callLabel').textContent = 'Check';
-      $('callAmt').textContent = '';
-      $('btnFold').style.display = 'none';
-    } else {
-      $('btnRaise').textContent = 'Raise';
-      $('callLabel').textContent = 'Call';
-      $('callAmt').textContent = toCall;
-      $('btnFold').style.display = 'flex';
-    }
-  }
-  function flip(id) {
-    var f = $(id);
-    f.style.opacity = 1;
-    f.classList.add('flipin');
-  }
-  function street(tabId, colId, key) {
-    ['t-pre', 't-flop', 't-turn', 't-riv'].forEach(function (t) { $(t).classList.remove('sel'); });
-    $(tabId).classList.remove('off');
-    $(tabId).classList.add('sel');
-    $(colId).classList.remove('dim');
-    // その列のポットとボードは、ストリートに入った瞬間に出る
-    $('cp-' + key).classList.add('on');
-    $('cb-' + key).classList.add('on');
-    clearWagers();
-  }
-  function hist(id) { $(id).classList.add('on'); }
-
-  // プリセットは場面で変わる（bet-presets.ts と同じ出し分け。bb=3）
-  var OPEN_PRESETS = [['2bb', '6'], ['2.2bb', '7'], ['2.5bb', '8'], ['3bb', '9']];
-  var BET_FLOP = [['33%', '4'], ['50%', '7'], ['75%', '10'], ['125%', '16']];
-  var BET_RIVER = [['33%', '16'], ['50%', '24'], ['75%', '35'], ['125%', '59']];
-
-  var CAP_IN = 'ハンド入力 — 手番の席が光る。1 手 1 タップ';
-  var CAP_PL = 'プレイヤー詳細 — いま打ったハンドが、この人のページにも並ぶ';
-
-  function reset() {
-    $('scIn').classList.add('on');
-    $('scPl').classList.remove('on');
-    Object.keys(seats).forEach(function (k) { seats[k].classList.remove('folded'); });
-    setActing('utg');
-    stack('btn', '353');
-    stack('bb', '428');
-    $('pot').textContent = '4';
-    $('pot').classList.remove('potpop');
-    wag('w-sb', 'SB', '1');
-    wag('w-bb', 'BB', '3');
-    wag('w-btn', null);
-    hidePad();
-    btnMode('facing', '3');
-    ['bf1', 'bf2', 'bf3', 'bf4', 'bf5', 'oc1', 'oc2'].forEach(function (id) {
-      var f = $(id);
-      f.style.opacity = 0;
-      f.classList.remove('flipin');
-    });
-    $('t-pre').classList.add('sel');
-    ['t-flop', 't-turn', 't-riv'].forEach(function (t) { $(t).classList.remove('sel'); $(t).classList.add('off'); });
-    ['c-flop', 'c-turn', 'c-riv'].forEach(function (c) { $(c).classList.add('dim'); });
-    for (var i = 1; i <= 10; i++) $('r' + i).classList.remove('on');
-    ['cp-flop', 'cb-flop', 'cp-turn', 'cb-turn', 'cp-riv', 'cb-riv'].forEach(function (c) { $(c).classList.remove('on'); });
-    $('row-new').classList.remove('show');
-    $('row-old').classList.remove('show');
-    $('vidCap').textContent = CAP_IN;
-  }
-
-  // 台本。プリフロップは**スマートフォールド**（打つ席を直接タップすると、
-  // 間の席がまとめてフォールドする ―― action-flow.ts の autoActionsBetween）。
-  // BTN が 2bb オープン → BB コール → フロップ 17 → ターンはチェックで回り →
-  // リバーで BB の 16 をコール。
-  var STEPS = [
-    [1000,  function () {
-      // UTG の番で Hero の席をタップ → UTG〜CO が連鎖でフォールド
-      tapEl(seats.btn.querySelector('.sbox'));
-      ['utg', 'utg1', 'utg2', 'lj', 'hj', 'co'].forEach(function (k, i) {
-        timers.push(setTimeout(function () { fold(k); }, 150 + i * 110));
-      });
-      timers.push(setTimeout(function () { setActing('btn'); }, 150));
-    }],
-    [2600,  function () { tapEl($('btnRaise')); showPad(OPEN_PRESETS, '0'); }],
-    [3700,  function () { tapEl($('pr1')); amt('6'); }],
-    [4700,  function () {
-      tapEl($('padOk')); hidePad();
-      wag('w-btn', 'RAISE', '6'); hist('r1'); stack('btn', '347');
-      setActing('sb'); btnMode('facing', '5');
-    }],
-    [5700,  function () { tapEl($('btnFold')); fold('sb'); wag('w-sb', null); setActing('bb'); btnMode('facing', '3'); }],
-    [6700,  function () {
-      tapEl($('btnCall'));
-      wag('w-bb', 'CALL', '6'); hist('r2'); stack('bb', '422');
-      setActing(null);
-    }],
-    [7900,  function () {
-      street('t-flop', 'c-flop', 'flop');
-      flip('bf1'); setTimeout(function () { flip('bf2'); }, 150); setTimeout(function () { flip('bf3'); }, 300);
-      pot('13'); btnMode('check'); setActing('bb');
-    }],
-    [9100,  function () { tapEl($('btnCall')); hist('r3'); setActing('btn'); }],
-    [10200, function () { tapEl($('btnRaise')); showPad(BET_FLOP, '0'); }],
-    [11300, function () { tapEl($('k1')); amt('1'); }],
-    [11650, function () { tapEl($('k7')); amt('17'); }],
-    [12600, function () {
-      tapEl($('padOk')); hidePad();
-      wag('w-btn', 'BET', '17'); hist('r4'); stack('btn', '330');
-      setActing('bb'); btnMode('facing', '17');
-    }],
-    [13800, function () {
-      tapEl($('btnCall'));
-      wag('w-bb', 'CALL', '17'); hist('r5'); stack('bb', '405');
-      setActing(null);
-    }],
-    [15000, function () {
-      street('t-turn', 'c-turn', 'turn');
-      flip('bf4');
-      pot('47'); btnMode('check'); setActing('bb');
-    }],
-    [16200, function () { tapEl($('btnCall')); hist('r6'); setActing('btn'); }],
-    [17200, function () { tapEl($('btnCall')); hist('r7'); setActing(null); }],
-    [18400, function () {
-      street('t-riv', 'c-riv', 'riv');
-      flip('bf5');
-      btnMode('check'); setActing('bb');
-    }],
-    [19600, function () { tapEl($('btnRaise')); showPad(BET_RIVER, '0'); }],
-    [20700, function () { tapEl($('pr1')); amt('16'); }],
-    [21700, function () {
-      tapEl($('padOk')); hidePad();
-      wag('w-bb', 'BET', '16'); hist('r8'); stack('bb', '389');
-      setActing('btn'); btnMode('facing', '16');
-    }],
-    [22900, function () {
-      tapEl($('btnCall'));
-      wag('w-btn', 'CALL', '16'); hist('r9'); stack('btn', '314');
-      setActing(null);
-    }],
-    [23900, function () {
-      // ショーダウン。相手の K♦Q♠ が開いて、履歴に BTN WIN が立つ
-      flip('oc1'); setTimeout(function () { flip('oc2'); }, 150);
-      hist('r10');
-    }],
-    [26200, function () {
-      $('scIn').classList.remove('on');
-      $('scPl').classList.add('on');
-      $('vidCap').textContent = CAP_PL;
-    }],
-    [26900, function () { $('row-old').classList.add('show'); }],
-    [27600, function () { $('row-new').classList.add('show'); }],
-  ];
-  var LOOP_MS = 34500;
-
-  var timers = [];
-  function run() {
-    reset();
-    STEPS.forEach(function (st) { timers.push(setTimeout(st[1], st[0])); });
-    timers.push(setTimeout(run, LOOP_MS));
-  }
-  function stop() {
-    timers.forEach(clearTimeout);
-    timers = [];
-  }
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // 動かさない。決着まで届いた姿（プレイヤー詳細に 2 件）で読ませる。
-    $('scIn').classList.remove('on');
-    $('scPl').classList.add('on');
-    $('row-old').classList.add('show');
-    $('row-new').classList.add('show');
-    $('vidCap').textContent = '入力からプレイヤー紐付けまで — 実機の画面を再現';
+/* 動画は、画面に入っているあいだだけ流す（スマホの電池と通信のため）。視差効果を減らす設定なら流さない */
+(function () {
+  var videos = document.querySelectorAll('video[autoplay]');
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    videos.forEach(function (video) { video.removeAttribute('autoplay'); video.pause(); video.setAttribute('controls', ''); });
     return;
   }
-
-  reset();
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) { if (timers.length === 0) run(); }
-      else stop();
+  if (!('IntersectionObserver' in window)) return;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) { var p = entry.target.play(); if (p && p.catch) p.catch(function () {}); }
+      else entry.target.pause();
     });
   }, { threshold: 0.25 });
-  io.observe(vid);
+  videos.forEach(function (video) { observer.observe(video); });
 })();
 </script>
 </body>

@@ -85,3 +85,45 @@ footer { border-top: 1px solid var(--line); padding: 26px 0 46px; font-size: 12.
 footer .wrap { display: flex; gap: 14px 24px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
 footer a { color: var(--fg-3); text-decoration: none; }
 footer a:hover { color: var(--fg-2); }
+
+/*
+  ---- トップ（index.html）と同じ上の帯・光の筋・足（2026-10-02） ----
+  下の 3 枚もトップと同じ見た目にそろえる。ここから下が、上の古い帯・足の決まりより後に効く。
+*/
+:root { --surface: rgba(13,19,36,.7); --line: #1B2640; --line-soft: #151E3166; --indigo-400: #818CF8; }
+body { overflow-x: hidden; }
+.glow { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  background: radial-gradient(ellipse 1100px 800px at 30% -10%, rgba(99,102,241,.22), rgba(99,102,241,0) 62%),
+              linear-gradient(135deg, #0B1122 0%, #020617 55%); }
+.beam { position: absolute; top: -60vh; height: 220vh; filter: blur(38px); transform: rotate(35deg); }
+.b1 { left: 25%; width: 20.6%; background: linear-gradient(transparent, rgba(124,92,255,.50), transparent); }
+.b2 { left: 47%; width: 9.4%; background: linear-gradient(transparent, rgba(192,132,252,.40), transparent); }
+.b3 { left: 69%; width: 27%; background: linear-gradient(transparent, rgba(99,102,241,.32), transparent); }
+@media (max-width: 620px) { .b1 { width: 34%; left: 12%; } .b2 { width: 16%; left: 48%; } .b3 { width: 40%; left: 66%; } }
+/* 読み物の頁は字が主役なので、光は少し弱める */
+body:has(.doc) .glow .beam { opacity: .7; }
+
+.sitebar { position: sticky; top: 0; z-index: 30; background: rgba(6, 9, 15, .72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--line-soft); padding-top: env(safe-area-inset-top, 0px); }
+.sitebar .wrap, .site-foot .wrap { max-width: 1040px; padding: 0 clamp(20px, 6vw, 48px); }
+.sitebar-in { display: flex; align-items: center; gap: clamp(16px, 4vw, 28px); height: 60px; }
+.sb-brand { display: inline-flex; align-items: center; gap: 9px; color: var(--fg); text-decoration: none; font-weight: 800; letter-spacing: -.02em; font-size: 17px; margin-right: auto; }
+.sb-brand img { width: 26px; height: 26px; display: block; }
+.sb-brand em { font-style: normal; color: var(--indigo-mark); }
+.sb-nav { margin-left: 0; display: flex; gap: 26px; font-size: 13.5px; }
+.sb-nav a { color: var(--fg-2); text-decoration: none; font-weight: 400; font-size: 13.5px; }
+.sb-nav a:hover { color: var(--fg); }
+.sb-nav a:not(.keep) { display: none; }
+@media (min-width: 760px) { .sb-nav a:not(.keep) { display: inline; } }
+.sb-get { display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 9px; background: var(--fg); color: #05070C; text-decoration: none; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.sb-get .apple { width: 13px; height: 13px; margin-top: -2px; }
+
+.doc { padding: clamp(56px, 12vw, 96px) 0 clamp(88px, 16vw, 140px); }
+.doc .eyebrow { letter-spacing: .22em; margin-bottom: 16px; }
+.doc h1 { font-size: clamp(26px, 6vw, 38px); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; }
+
+.site-foot { border-top: 1px solid var(--line-soft); padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); font-size: 13px; color: var(--fg-3); }
+.foot-grid { display: flex; flex-wrap: wrap; gap: 14px 24px; justify-content: space-between; align-items: center; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.foot-links a { color: var(--fg-2); text-decoration: none; }
+.foot-links a[aria-current="page"] { color: var(--fg); }
