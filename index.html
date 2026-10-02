@@ -618,7 +618,12 @@ LiveCache（iOS 版）がリリースしました！
   if (!('IntersectionObserver' in window)) return;
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
-      if (entry.isIntersecting) { var p = entry.target.play(); if (p && p.catch) p.catch(function () {}); }
+      if (entry.isIntersecting) {
+        var video = entry.target;
+        var p = video.play();
+        // 省電力モードなどで自動で流せないときは、再生ボタンを出して押せるようにする
+        if (p && p.catch) p.catch(function () { video.setAttribute('controls', ''); });
+      }
       else entry.target.pause();
     });
   }, { threshold: 0.25 });
