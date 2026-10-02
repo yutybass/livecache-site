@@ -226,6 +226,16 @@
   .plan li { display: flex; gap: 10px; }
   .plan li::before { content: "✓"; color: var(--win); font-weight: 800; }
 
+  /* スマホの幅（1 列）では、料金のカードも低くする（2 列にすると字が折り返すので、1 列のまま詰める） */
+  @media (max-width: 679px) {
+    .plans { gap: 10px; }
+    .plan { padding: 18px 20px; border-radius: 18px; }
+    .plan-price { margin-top: 2px; font-size: 26px; }
+    .plan-sub { min-height: 0; }
+    .plan ul { margin-top: 12px; gap: 4px; font-size: 13.5px; line-height: 1.6; }
+    .plan li { gap: 6px; }
+  }
+
   /* ---------- アップデート履歴 ---------- */
   .updates { display: grid; gap: 10px; max-width: 760px; margin: 0 auto; }
   .update { border: 1px solid var(--line); border-radius: 16px; background: rgba(13,19,36,.7); }
