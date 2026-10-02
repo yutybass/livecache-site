@@ -91,17 +91,22 @@
 
   /* ---------- 後ろの光の筋（ページ全体に 1 枚、固定） ---------- */
   .glow { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  /* 機能紹介の動画の地と同じ、太い斜めの藍と紫の光。上ほど明るく、下へ消える */
   .glow::before, .glow::after {
-    content: ""; position: absolute; top: -40%; left: -30%; width: 160%; height: 180%;
-    background: linear-gradient(115deg, transparent 38%, rgba(99,102,241,.16) 46%, rgba(139,92,246,.10) 50%, transparent 58%);
-    filter: blur(40px);
-    animation: drift 22s ease-in-out infinite alternate;
+    content: ""; position: absolute; top: -30%; left: -40%; width: 180%; height: 160%;
+    background:
+      linear-gradient(118deg, transparent 30%, rgba(79,70,229,.62) 39%, rgba(124,58,237,.48) 45%, transparent 54%),
+      linear-gradient(118deg, transparent 56%, rgba(67,56,202,.45) 63%, transparent 71%);
+    filter: blur(36px);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%);
+    mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.55) 55%, rgba(0,0,0,.25) 100%);
+    animation: drift 18s ease-in-out infinite alternate;
   }
   .glow::after {
-    background: linear-gradient(115deg, transparent 58%, rgba(79,70,229,.12) 64%, transparent 72%);
-    animation-duration: 30s; animation-direction: alternate-reverse;
+    background: linear-gradient(118deg, transparent 12%, rgba(99,102,241,.32) 20%, transparent 28%);
+    animation-duration: 26s; animation-direction: alternate-reverse;
   }
-  @keyframes drift { from { transform: translateX(-8%); } to { transform: translateX(8%); } }
+  @keyframes drift { from { transform: translateX(-10%); } to { transform: translateX(10%); } }
 
   /* ---------- 上の帯 ---------- */
   .sitebar {
@@ -142,8 +147,8 @@
   .ver { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--fg-2); font-size: 12.5px; text-decoration: none; background: rgba(13,19,36,.6); }
   .ver b { color: var(--fg); }
   .ver i { width: 7px; height: 7px; border-radius: 999px; background: var(--win); box-shadow: 0 0 0 4px rgba(52,211,153,.15); }
-  .hero h1 { margin-top: 28px; font-size: clamp(36px, 10.4vw, 72px); line-height: 1.2; letter-spacing: -.045em; font-weight: 800; }
-  .hero h1 span { display: inline-block; } /* 句の途中で折り返さない */
+  /* 1 行で。スマホの幅（390）でも収まる大きさ */
+  .hero h1 { margin-top: 28px; font-size: clamp(24px, 6.6vw, 50px); line-height: 1.3; letter-spacing: -.04em; font-weight: 800; white-space: nowrap; }
   .hero h1 em { font-style: normal; color: var(--indigo-300); }
   .hero .store-row { margin-top: 36px; }
   .facts { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 22px 0 0; padding: 0; font-size: 13px; color: var(--fg-3); }
@@ -183,6 +188,9 @@
   .pro-tag { display: inline-block; margin-left: 4px; padding: 0 6px; border-radius: 5px; font-size: 10px; font-weight: 800; color: var(--amber); background: rgba(251,191,36,.14); vertical-align: 1px; }
 
   /* 目玉の機能：ボードを読む */
+  .checks { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 10px; font-size: 14.5px; color: var(--fg-2); }
+  .checks li { display: flex; gap: 10px; }
+  .checks li::before { content: "✓"; color: var(--win); font-weight: 800; }
   .spot { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(48px, 10vw, 64px); align-items: center; }
   @media (min-width: 860px) { .spot { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 
@@ -282,7 +290,7 @@
 <section class="hero">
   <div class="wrap">
     <a class="ver" href="#updates"><i aria-hidden="true"></i><b>v1.5.0</b> 公開しました</a>
-    <h1><span>ハンドの合間に、</span><span><em>打ち終わる。</em></span></h1>
+    <h1>ハンドの合間に、<em>打ち終わる。</em></h1>
     <p class="lede">ライブポーカーのハンド記録アプリ</p>
     <div class="store-row">
       <a class="store-badge" href="https://apps.apple.com/jp/app/id6804119041" target="_blank" rel="noopener"><img src="./img/app-store-badge-ja.png" alt="App Store からダウンロード" width="183" height="54"></a>
@@ -388,7 +396,13 @@ LiveCache（iOS 版）がリリースしました！
     <div>
       <p class="eyebrow">BOARD SCAN</p>
       <h2>ボードは、<br>映すだけ。</h2>
-      <p class="lede">カメラを向けると読み取って、自動で撮ります。</p>
+      <p class="lede">カメラを向けると、場のカードを読み取ります。全部そろったら、自動で撮って入れます。</p>
+      <ul class="checks">
+        <li>自信のないカードは「?」で残すので、あとから選ぶだけ</li>
+        <li>向きが逆に読めたら、⇄ で並びを直せる</li>
+        <li>撮ってある写真からも読める</li>
+        <li>読み取りは iPhone の中だけで行います</li>
+      </ul>
     </div>
     <div class="phone">
       <video src="./video/demo-camera.mp4" poster="./video/demo-camera.jpg" autoplay muted loop playsinline preload="metadata" aria-label="カメラでボードを読み取っている実際の画面"></video>
