@@ -62,3 +62,9 @@ App Store Connect に入れる URL:
   文はアプリの `assets/store/store-copy.md` の What's New をそのまま使う
 - **ご要望の欄**：送り先はアプリの「不具合の報告・要望」と同じ Formspree（`https://formspree.io/f/mjybzokk`）。
   無料枠は月 50 件まで（アプリとサイトの合計）
+
+## Google Search Console
+
+- 2026-10-20 に、HTML ファイルで持ち主の確認を通した（`googlee143d1943b1d41b0.html`）
+- **このファイルは消さない。** 消すと確認が外れ、Search Console で検索の様子が見られなくなる
+- サイトの地図は `sitemap.xml`。ページを足したら、ここにも足す
