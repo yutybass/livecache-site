@@ -44,7 +44,7 @@
   "description": "ライブポーカーのハンドと対戦相手を、iPhone で 1 手 1 タップで記録するアプリ。",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
   "author": { "@type": "Person", "name": "YUTO YOSHIDA" },
-  "sameAs": ["https://x.com/LiveCache_poker"]
+  "sameAs": ["https://x.com/LiveCache_poker", "https://note.com/yutybass/n/naf13785d4c7a"]
 }
 </script>
 <style>
@@ -215,6 +215,13 @@
   @media (min-width: 760px) { .shots { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; } }
   .shots img { width: 100%; height: auto; aspect-ratio: 744 / 1613; object-fit: cover; object-position: top; border-radius: 22px; border: 1px solid var(--line); }
 
+  /* note の記事へ（機能の画面写真の下）。作った訳と工夫を読みたい人向けの 1 行 */
+  .note-link { display: flex; align-items: center; gap: 14px; max-width: 560px; margin: clamp(32px, 7vw, 48px) auto 0; padding: 16px 20px;
+    border: 1px solid var(--line); border-radius: 16px; background: rgba(13,19,36,.7); color: var(--fg); text-decoration: none; }
+  .note-link:hover { border-color: rgba(99,102,241,.55); }
+  .note-link b { flex: none; padding: 2px 9px; border-radius: 7px; background: var(--fg); color: #05070C; font-size: 12px; font-weight: 800; }
+  .note-link span { flex: 1; min-width: 0; font-size: 14.5px; line-height: 1.6; }
+  .note-link i { flex: none; font-style: normal; color: var(--indigo-300); }
   /* ---------- 料金 ---------- */
   .plans { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; max-width: 760px; margin: 0 auto; }
   @media (min-width: 680px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -410,6 +417,9 @@ LiveCache（iOS 版）がリリースしました！
       <img src="./img/shot-player.png" alt="プレイヤー詳細の画面" loading="lazy" width="744" height="1613">
       <img src="./img/shot-tags.png" alt="プレイヤー一覧の画面" loading="lazy" width="1179" height="2556">
     </div>
+    <a class="note-link" href="https://note.com/yutybass/n/naf13785d4c7a" target="_blank" rel="noopener">
+      <b>note</b><span>LiveCache を作ったきっかけと、工夫したところ</span><i>↗</i>
+    </a>
   </div>
 </section>
 
@@ -585,6 +595,7 @@ LiveCache（iOS 版）がリリースしました！
       <a href="./support.html">サポート</a>
       <a href="./privacy.html">プライバシーポリシー</a>
       <a href="./terms.html">利用規約</a>
+      <a href="https://note.com/yutybass/n/naf13785d4c7a" target="_blank" rel="noopener">note ↗</a>
       <a href="https://x.com/LiveCache_poker" target="_blank" rel="noopener">X ↗</a>
     </span>
   </div>
